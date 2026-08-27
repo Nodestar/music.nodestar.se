@@ -436,17 +436,17 @@ function K(){ return KITS[kit]; }
 /* ---------------- state ---------------- */
 var riddim=0, bpm=140, swingOn=false, playing=false, allSpace=false;
 var CH=[
- {id:1,name:"Drums<br>kete · perc",key:"1",vol:1,mute:false,echo:.12,verb:.10},
- {id:2,name:"Bass",key:"2",vol:1,mute:false,echo:.05,verb:.05},
- {id:3,name:"Skanks<br>pno + org",key:"3",vol:.92,mute:true,echo:.30,verb:.34},
- {id:4,name:"Horns",key:"4",vol:.92,mute:true,echo:.38,verb:.24},
- {id:5,name:"Gtr<br>+ clav",key:"5",vol:.85,mute:true,echo:.22,verb:.18}
+ {id:1,name:"Drums<br>kete · perc",key:"1",vol:1,mute:false,echo:.06,verb:.05},
+ {id:2,name:"Bass",key:"2",vol:1,mute:false,echo:.02,verb:.02},
+ {id:3,name:"Skanks<br>pno + org",key:"3",vol:.92,mute:true,echo:.15,verb:.16},
+ {id:4,name:"Horns",key:"4",vol:.92,mute:true,echo:.18,verb:.12},
+ {id:5,name:"Gtr<br>+ clav",key:"5",vol:.85,mute:true,echo:.10,verb:.08}
 ];
 var FX=[
- {id:11,name:"Delay<br>→ EQ",vol:.55},
- {id:12,name:"Reverb 1<br>long · post",vol:.45},
- {id:13,name:"Space<br>echo",vol:.42},
- {id:14,name:"Reverb 2<br>short · pre",vol:.30}
+ {id:11,name:"Delay<br>→ EQ",vol:.30},
+ {id:12,name:"Reverb 1<br>long · post",vol:.22},
+ {id:13,name:"Space<br>echo",vol:.20},
+ {id:14,name:"Reverb 2<br>short · pre",vol:.15}
 ];
 
 /* ---------------- audio graph ---------------- */
@@ -508,7 +508,7 @@ function init(){
     var s1=ac.createGain(); s1.gain.value=c.echo;   // aux 1 post
     var s2=ac.createGain(); s2.gain.value=c.verb;   // aux 2 post
     var s3=ac.createGain(); s3.gain.value=0;        // aux 3 post (global)
-    var p4=ac.createGain(); p4.gain.value=c.id===2?.04:.20;      // aux 4 PRE (bass stays dry)
+    var p4=ac.createGain(); p4.gain.value=c.id===2?.02:.10;      // aux 4 PRE (bass stays dry)
     g.connect(master); g.connect(s1); g.connect(s2); g.connect(s3);
     s1.connect(delayIn); s2.connect(rv1In); s3.connect(spIn); p4.connect(rv2In);
     chNode[c.id]=g; chSend[c.id]={e:s1,v:s2}; spcSend[c.id]=s3; preSend[c.id]=p4;
