@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { demos, demoHref, demoImage } from '$lib/demos';
-	import * as Card from '$lib/components/ui/card';
-	import { Badge } from '$lib/components/ui/badge';
 	import Logo from '$lib/components/Logo.svelte';
 
 	const sorted = [...demos].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+	const pad = (n: number) => String(n).padStart(2, '0');
 </script>
 
 <svelte:head>
@@ -12,66 +11,69 @@
 	<meta name="description" content="Demos av musikvisualiseringar." />
 </svelte:head>
 
-<div class="min-h-svh bg-background text-foreground">
+<div class="min-h-svh bg-background font-mono text-foreground lowercase antialiased">
 	<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
 		<Logo />
-		<a
-			href="https://github.com/Nodestar/music.nodestar.se"
-			target="_blank"
-			rel="noreferrer"
-			class="font-mono text-sm lowercase text-muted-foreground transition-colors hover:text-foreground"
-		>
-			github
-		</a>
+		<nav class="flex gap-6 text-sm text-muted-foreground">
+			<a
+				href="https://github.com/Nodestar/music.nodestar.se"
+				target="_blank"
+				rel="noreferrer"
+				class="transition-colors hover:text-foreground"
+			>
+				github
+			</a>
+		</nav>
 	</header>
 
 	<main class="mx-auto max-w-6xl px-6 pb-24">
-		<section class="py-10">
-			<h1 class="text-4xl font-semibold tracking-tight sm:text-5xl">Musikvisualiseringar</h1>
-			<p class="mt-4 max-w-2xl text-lg text-muted-foreground">
-				En samling experiment med ljud, rytm och grafik. Klicka på en demo för att öppna den.
+		<section class="grid gap-6 border-b border-border py-16 md:grid-cols-[1fr_2fr]">
+			<h1 class="text-sm text-muted-foreground">musikvisualiseringar</h1>
+			<p class="max-w-2xl text-xl leading-snug tracking-tight sm:text-2xl">
+				experiment med ljud, rytm och grafik. klicka på en demo för att öppna den.
 			</p>
 		</section>
 
 		{#if sorted.length === 0}
-			<p class="text-muted-foreground">Inga demos ännu.</p>
+			<p class="py-16 text-sm text-muted-foreground">inga demos ännu.</p>
 		{:else}
-			<section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{#each sorted as demo (demo.slug)}
-					<a href={demoHref(demo)} class="group block rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-ring">
-						<Card.Root class="h-full overflow-hidden py-0 transition-colors group-hover:border-foreground/30">
-							<div class="aspect-video w-full overflow-hidden bg-muted">
-								<img
-									src={demoImage(demo)}
-									alt="Skärmdump av {demo.title}"
-									loading="lazy"
-									class="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
-								/>
-							</div>
-							<Card.Header class="pb-4 pt-4">
-								<Card.Title class="flex items-center justify-between gap-2">
-									<span>{demo.title}</span>
-									{#if demo.date}
-										<time datetime={demo.date} class="text-xs font-normal text-muted-foreground">{demo.date}</time>
-									{/if}
-								</Card.Title>
-								<Card.Description>{demo.description}</Card.Description>
-							</Card.Header>
-							{#if demo.tags?.length}
-								<Card.Footer class="flex flex-wrap gap-2 pb-4">
-									{#each demo.tags as tag (tag)}
-										<Badge variant="secondary">{tag}</Badge>
-									{/each}
-								</Card.Footer>
+			<section class="grid gap-x-8 gap-y-14 py-14 sm:grid-cols-2 lg:grid-cols-3">
+				{#each sorted as demo, i (demo.slug)}
+					<a
+						href={demoHref(demo)}
+						class="group block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+					>
+						<div class="aspect-video w-full overflow-hidden border border-border bg-muted">
+							<img
+								src={demoImage(demo)}
+								alt="skärmdump av {demo.title}"
+								loading="lazy"
+								class="h-full w-full object-cover grayscale-[.25] transition duration-300 group-hover:grayscale-0"
+							/>
+						</div>
+						<div class="mt-4 flex items-baseline justify-between gap-4 text-sm">
+							<span class="flex items-baseline gap-3">
+								<span class="text-muted-foreground">{pad(i + 1)}</span>
+								<span class="text-foreground underline decoration-transparent underline-offset-4 transition group-hover:decoration-foreground">{demo.title}</span>
+							</span>
+							{#if demo.date}
+								<time datetime={demo.date} class="shrink-0 text-muted-foreground">{demo.date}</time>
 							{/if}
-						</Card.Root>
+						</div>
+						<p class="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
+						{#if demo.tags?.length}
+							<p class="mt-3 text-xs text-muted-foreground">
+								{#each demo.tags as tag, j (tag)}<span>{tag}</span>{#if j < demo.tags.length - 1}<span class="mx-2 opacity-50">/</span>{/if}{/each}
+							</p>
+						{/if}
 					</a>
 				{/each}
 			</section>
 		{/if}
 	</main>
 
-	<footer class="mx-auto max-w-6xl px-6 py-8 text-sm text-muted-foreground">
-		© {new Date().getFullYear()} Nodestar
+	<footer class="mx-auto flex max-w-6xl justify-between border-t border-border px-6 py-8 text-xs text-muted-foreground">
+		<span>© {new Date().getFullYear()} nodestar</span>
+		<span>{pad(sorted.length)} demos</span>
 	</footer>
 </div>
