@@ -722,7 +722,7 @@ function trigger(id, t, vel){
     o = audio.createOscillator(); o.type="sine";
     o.frequency.setValueAtTime(132, t);
     o.frequency.exponentialRampToValueAtTime(44, t+0.11);
-    g = audio.createGain(); env(g, t, 0.95*vel, 0.42, 0.003);
+    g = audio.createGain(); env(g, t, 0.62*vel, 0.42, 0.003);
     o.connect(g); out(g, t); o.start(t); o.stop(t+0.55);
   } else if(id==="snare"){
     s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1850; f.Q.value=0.7;
