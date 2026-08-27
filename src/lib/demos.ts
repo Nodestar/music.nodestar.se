@@ -35,14 +35,6 @@ export const demos: Demo[] = [
 			'Ett dubmixerbord byggt från Messian Dreads tutorial: sex riddims, tre trumkit, percussion och fyra effektreturer.',
 		tags: ['webaudio', 'dub', 'mixer', 'reggae'],
 		date: '2026-08-27'
-	},
-	{
-		slug: 'example',
-		title: 'Exempeldemo',
-		description: 'Placeholder – byt ut mot din första visualisering.',
-		tags: ['placeholder'],
-		image: '/demos/example/screenshot.svg',
-		date: '2026-08-27'
 	}
 ];
 
