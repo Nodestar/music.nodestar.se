@@ -609,10 +609,12 @@ function drum(kind,t,v,id){
     g=ac.createGain();env(g,t,.6*v,kk.tomDec,.003);o.connect(g);toDrum(g);o.start(t);o.stop(t+kk.tomDec+.2);
   }else if(kind==="kete"||kind==="kete2"||kind==="funde"){
     var lo=kind==="funde", sc=kk.tomF0/210;
+    // kete sits well back: it plays 16ths when the perc rack is on, so a little goes a long way
+    var amp=lo?.62:(kind==="kete2"?.17:.24);
     o=ac.createOscillator();o.type="triangle";
     o.frequency.setValueAtTime((lo?190:340)*sc,t);
     o.frequency.exponentialRampToValueAtTime((lo?118:205)*sc,t+.06);
-    g=ac.createGain();env(g,t,(lo?.62:.44)*v,(lo?.24:.14)*(kk.tomDec/.3),.002);
+    g=ac.createGain();env(g,t,amp*v,(lo?.24:.14)*(kk.tomDec/.3),.002);
     o.connect(g);toDrum(g);o.start(t);o.stop(t+.45);
     s=nz();f=ac.createBiquadFilter();f.type="bandpass";f.frequency.value=lo?900:1800;f.Q.value=1.2;
     var gk=ac.createGain();env(gk,t,.13*v,.035,.001);
