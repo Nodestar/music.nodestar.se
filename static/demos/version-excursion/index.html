@@ -172,7 +172,7 @@ input[type=range].h::-moz-range-thumb{width:12px;height:12px;background:var(--re
   background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);
 }
 .strip{
-  flex:1 1 0;min-width:88px;display:flex;flex-direction:column;gap:8px;align-items:center;
+  flex:1 1 0;min-width:112px;display:flex;flex-direction:column;gap:8px;align-items:center;
   padding:10px 8px;background:var(--panel-2);border:1px solid var(--line-soft);
 }
 .strip.fx{background:var(--slot)}
@@ -185,16 +185,16 @@ input[type=range].h::-moz-range-thumb{width:12px;height:12px;background:var(--re
   text-transform:uppercase;text-align:center;line-height:1.15;min-height:2.3em;
 }
 .strip.fx .nm{color:var(--cyan)}
-.knobs{display:flex;gap:10px}
+.knobs{display:flex;gap:6px}
 .knob{display:flex;flex-direction:column;align-items:center;gap:3px}
 .knob .kl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
 .dial{
-  width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
+  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
   cursor:ns-resize;position:relative;touch-action:none;
 }
 .dial::after{
-  content:"";position:absolute;left:50%;top:3px;width:2px;height:12px;background:var(--red);
-  transform-origin:50% 14px;transform:translateX(-50%) rotate(var(--a,-135deg));
+  content:"";position:absolute;left:50%;top:3px;width:2px;height:10px;background:var(--red);
+  transform-origin:50% 12px;transform:translateX(-50%) rotate(var(--a,-135deg));
 }
 .dial:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 
@@ -273,7 +273,7 @@ footer a{color:var(--cyan)}
 @media (max-width:880px){
   .cols{grid-template-columns:1fr}
   .desk{padding:10px}
-  .strip{min-width:78px}
+  .strip{min-width:104px}
 }
 </style>
 
@@ -447,16 +447,16 @@ function K(){ return KITS[kit]; }
 /* ---------------- state ---------------- */
 var riddim=0, bpm=140, swingOn=false, playing=false, allSpace=false;
 var CH=[
- {id:1,name:"Drums<br>kete · perc",key:"1",vol:1,mute:false,echo:.06,verb:.05},
- {id:2,name:"Bass",key:"2",vol:1,mute:false,echo:.02,verb:.02},
- {id:3,name:"Skanks<br>pno + org",key:"3",vol:.92,mute:true,echo:.15,verb:.16},
- {id:4,name:"Horns",key:"4",vol:.92,mute:true,echo:.18,verb:.12},
- {id:5,name:"Gtr<br>+ clav",key:"5",vol:.85,mute:true,echo:.10,verb:.08}
+ {id:1,name:"Drums<br>kete · perc",key:"1",vol:1,mute:false,echo:.06,verb:.05,space:0},
+ {id:2,name:"Bass",key:"2",vol:1,mute:false,echo:.02,verb:.02,space:0},
+ {id:3,name:"Skanks<br>pno + org",key:"3",vol:.92,mute:true,echo:.15,verb:.16,space:0},
+ {id:4,name:"Horns",key:"4",vol:.92,mute:true,echo:.18,verb:.12,space:0},
+ {id:5,name:"Gtr<br>+ clav",key:"5",vol:.85,mute:true,echo:.10,verb:.08,space:0}
 ];
 var FX=[
  {id:11,name:"Delay<br>→ EQ",vol:.30},
  {id:12,name:"Reverb 1<br>long · post",vol:.22},
- {id:13,name:"Space<br>echo",vol:.20},
+ {id:13,name:"Space<br>echo",vol:.30},
  {id:14,name:"Reverb 2<br>short · pre",vol:.15}
 ];
 
@@ -565,7 +565,7 @@ function applyAll(){
     chNode[c.id].gain.setTargetAtTime(c.mute?0:c.vol, ac.currentTime, .012);
     chSend[c.id].e.gain.setTargetAtTime(c.echo,ac.currentTime,.02);
     chSend[c.id].v.gain.setTargetAtTime(c.verb,ac.currentTime,.02);
-    spcSend[c.id].gain.setTargetAtTime(allSpace?.42:0,ac.currentTime,.05);
+    spcSend[c.id].gain.setTargetAtTime(Math.max(c.space,allSpace?.42:0),ac.currentTime,.05);  // dial, or the global throw
   });
   delayRet.gain.setTargetAtTime(FX[0].vol,ac.currentTime,.02);
   delayFb.gain.setTargetAtTime(Math.min(.82,FX[0].vol*.95),ac.currentTime,.05);
@@ -948,6 +948,7 @@ CH.forEach(function(c){
   var kb=document.createElement("div"); kb.className="knobs";
   kb.appendChild(dial(c.echo,function(v){c.echo=v;applyAll();},"Echo"));
   kb.appendChild(dial(c.verb,function(v){c.verb=v;applyAll();},"Verb"));
+  kb.appendChild(dial(c.space,function(v){c.space=v;applyAll();},"Space"));
   var fb=document.createElement("div"); fb.className="faderbox";
   var mt=document.createElement("div"); mt.className="meter"; var mi=document.createElement("i");
   mt.appendChild(mi); meters[c.id]=mi;

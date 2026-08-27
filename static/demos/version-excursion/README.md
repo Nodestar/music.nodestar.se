@@ -40,6 +40,9 @@ Riddim i a-moll → e-moll, två takter var (i grundtonarten). 140 BPM som stand
 
 - `mellanslag` startar och stoppar
 - `1`–`5` mut:ar kanalerna
+- Varje kanal har rattarna **Echo**, **Verb** och **Space** (sänd till delay,
+  reverb 1 respektive space echo). **All → Space** kastar in allt i space-ekot
+  oavsett rattarna, som i kapitel 31.
 - Fader 11 **är** ekot — delayn har noll feedback internt, repetitionerna kommer
   av att returen loopas tillbaka in. Drar du upp den för långt fastnar den,
   precis som ett riktigt bord.
