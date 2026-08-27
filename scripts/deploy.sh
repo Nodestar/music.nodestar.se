@@ -5,7 +5,14 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 
 [ -f .env.deploy ] || { echo "Saknar .env.deploy – kopiera .env.deploy.example och fyll i." >&2; exit 1; }
-set -a; . ./.env.deploy; set +a
+# Läs KEY=value rad för rad utan att köra filen som skalskript, så att
+# specialtecken i lösenordet (#, $, !, mellanslag …) tas bokstavligt.
+while IFS= read -r line || [ -n "$line" ]; do
+  case "$line" in ''|\#*) continue ;; esac
+  key="${line%%=*}"; val="${line#*=}"
+  case "$val" in \"*\") val="${val#\"}"; val="${val%\"}" ;; \'*\') val="${val#\'}"; val="${val%\'}" ;; esac
+  export "$key=$val"
+done < .env.deploy
 : "${FTP_HOST:?}" "${FTP_USER:?}" "${FTP_PASS:?}" "${FTP_DIR:?}"
 PROTO="${FTP_PROTOCOL:-ftps}"
 command -v lftp >/dev/null || { echo "lftp saknas: brew install lftp" >&2; exit 1; }
