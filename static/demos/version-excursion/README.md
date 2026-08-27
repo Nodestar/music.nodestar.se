@@ -31,8 +31,9 @@ Riddim i a-moll → e-moll, två takter var (i grundtonarten). 140 BPM som stand
 
 - **Tonart**: väljaren *Key* transponerar bas, skank, orgel, horn och gitarr/clav
   till valfri molltonart (E–E♭). Trummorna påverkas inte.
-- **Bass + skank**: knapp som lägger till baslinjen och skank/orgel-slagen som
-  rader i mönstervyn under trummönstret, med ackordnamn och basens toner per takt.
+- **Show**: knapparna *Bass*, *Skank*, *Horns* och *Gtr* lägger till respektive
+  stämma som rad i mönstervyn under trummönstret, med ackordnamn per takt och
+  tonnamn vid hover.
 - Basen är en ren sinus med lite triangel, utan suboktav och resonant filter.
 
 ## Styrning

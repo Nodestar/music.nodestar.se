@@ -304,7 +304,12 @@ footer a{color:var(--cyan)}
       <span class="legend">Kit</span><span class="grp" id="kits"></span>
       <span class="legend">Fills — ch.18</span><span class="grp" id="fills"></span>
       <span class="legend">Key</span><select class="key" id="key" aria-label="Key"></select>
-      <button class="btn sm" id="tonal" type="button" aria-pressed="false" title="Show the bass line and the skank/organ hits in the pattern readout">Bass + skank</button>
+      <span class="legend">Show</span><span class="grp" id="showgrp">
+        <button class="btn sm" type="button" data-show="bass" aria-pressed="false" title="Bass line in the pattern readout">Bass</button>
+        <button class="btn sm" type="button" data-show="skank" aria-pressed="false" title="Skank and organ bubble">Skank</button>
+        <button class="btn sm" type="button" data-show="horns" aria-pressed="false" title="Horn figure (bars 2 and 6) and chord stabs (bars 3 and 7)">Horns</button>
+        <button class="btn sm" type="button" data-show="gtr" aria-pressed="false" title="Muted 16ths off the chord, accented where the skank lands">Gtr</button>
+      </span>
     </div>
     <p class="kitnote" id="kitnote"></p>
     <p class="rq2" id="rq2">Percussion off. <b>Perc</b> adds the chapter 21 rack: kete on 16ths over two bars, a four-bar shaker/woodblock/cowbell rhythm — the woodblock “at two places in a bar, repeated every two bars” — and a tambourine that isn't written out at all, because he says it's there to “enhance the Hi Hat pattern”, so it's taken from the hats. Bells and vibraslap stay on buttons: “just once or twice.”</p>
@@ -393,7 +398,8 @@ var PERC=[
  {kete2:"x-Xx|x-xX|x-Xx|xX-x", shaker:"----|--x-|----|--x-", wood:"----|-x--|----|-x--"},
  {kete2:"x-Xx|xX-x|x-Xx|x-XX", shaker:"--x-|----|--x-|----", cowbell:"----|----|x---|--x-"}
 ];
-var percOn=false, showTonal=false;
+var percOn=false, show={bass:false,skank:false,horns:false,gtr:false};
+function anyShown(){ return show.bass||show.skank||show.horns||show.gtr; }
 
 /* Chapter 16: two chords, "The A chord contains the A-C-E tones" and "the other
    chord the E-G-B tones" — Am and Em, a "2 by 2" progression (ch.19). The bass
@@ -812,7 +818,7 @@ function draw(){
   if(cur){
     for(var k=0;k<SPB;k++) patCells.forEach(function(r){ r[k].classList.toggle("now",k===cur.i); });
     barLeds.forEach(function(el,n){ el.classList.toggle("on",n===cur.b); });
-    if(cur.b!==lastBar){ var multi=curBars().length>1||percOn||showTonal; lastBar=cur.b; if(multi) renderPat(); }
+    if(cur.b!==lastBar){ var multi=curBars().length>1||percOn||anyShown(); lastBar=cur.b; if(multi) renderPat(); }
   }
   CH.forEach(function(c){
     lvl[c.id]*=.86;
@@ -1061,22 +1067,40 @@ function renderPat(){
     var perc=PERCROWS.indexOf(row)>=0||row==="tamb";
     addRow(ROWNAME[row],arr,perc?"p":"",null);
   });
-  if(showTonal){
-    var bb=b%8, ch=chordFor(bb);
-    var bassArr=[],bassT=[],k;
-    for(k=0;k<16;k++){bassArr.push(0);bassT.push("");}
-    BASS[bb].forEach(function(n){ bassArr[n[0]]=(n[0]===4||n[0]===12)?2:1; bassT[n[0]]=noteName(T(n[1])); });
-    addRow("Bass",bassArr,"t",bassT);
-    var skArr=[],skT=[];
-    for(k=0;k<16;k++){
-      var v=(k===4||k===12)?2:((k===2||k===6||k===10||k===14)?1:0);
-      skArr.push(v); skT.push(v===2?"Skank + organ":(v?"Organ bubble":""));
+  if(anyShown()){
+    var bb=b%8, ch=chordFor(bb), k, arr, tit;
+    function blank(){ arr=[]; tit=[]; for(var j=0;j<16;j++){arr.push(0);tit.push("");} }
+    if(show.bass){
+      blank();
+      BASS[bb].forEach(function(n){ arr[n[0]]=(n[0]===4||n[0]===12)?2:1; tit[n[0]]=noteName(T(n[1])); });
+      addRow("Bass",arr,"t",tit);
     }
-    addRow("Skank",skArr,"t",skT);
+    if(show.skank){
+      blank();
+      for(k=0;k<16;k++){
+        var v=(k===4||k===12)?2:((k===2||k===6||k===10||k===14)?1:0);
+        arr[k]=v; tit[k]=v===2?"Skank + organ":(v?"Organ bubble":"");
+      }
+      addRow("Skank",arr,"t",tit);
+    }
+    if(show.horns){
+      blank();
+      var hf=HORN_FIG[bb];
+      if(hf) hf.forEach(function(n){ arr[n[0]]=1; tit[n[0]]=noteName(T(n[1])); });
+      if(HORN_STAB[bb]){ arr[4]=2; arr[12]=2; tit[4]=tit[12]="Chord stab: "+ch.map(function(n){return noteName(T(n+12));}).join(" "); }
+      addRow("Horns",arr,"t",tit);
+    }
+    if(show.gtr){
+      blank();
+      for(k=0;k<16;k+=2){ arr[k]=(k===4||k===12)?2:1; tit[k]=noteName(T(ch[(k/2)%3]+12)); }
+      addRow("Gtr + clav",arr,"t",tit);
+    }
     var chordName=noteName(T(ch[0])).replace(/-?\d+$/,"")+"m";
     var note=document.createElement("div"); note.className="chordnote";
-    note.textContent="Bar "+(bb+1)+" · chord "+chordName+" · key "+keyName()+" minor. Bass: "+
-      BASS[bb].map(function(n){return noteName(T(n[1]));}).join(" ")+". Hover a bass cell for its note.";
+    note.textContent="Bar "+(bb+1)+" · chord "+chordName+" · key "+keyName()+" minor"+
+      (show.bass?" · bass "+BASS[bb].map(function(n){return noteName(T(n[1]));}).join(" "):"")+
+      (show.horns&&!HORN_FIG[bb]&&!HORN_STAB[bb]?" · horns rest this bar":"")+
+      ". Hover a cell for its note.";
     patEl.appendChild(note);
   }
   patEl.style.gridTemplateColumns="94px repeat(16,minmax(0,1fr))";
@@ -1112,8 +1136,10 @@ KEYS.forEach(function(k){
   var o=document.createElement("option"); o.value=k[1]; o.textContent=k[0]+" minor"; if(k[1]===0)o.selected=true; keyEl.appendChild(o);
 });
 keyEl.addEventListener("change",function(e){ keyShift=+e.target.value; renderPat(); });
-document.getElementById("tonal").addEventListener("click",function(e){
-  showTonal=!showTonal; e.currentTarget.setAttribute("aria-pressed",String(showTonal)); renderPat();
+document.getElementById("showgrp").querySelectorAll("[data-show]").forEach(function(b){
+  b.addEventListener("click",function(){
+    var k=b.dataset.show; show[k]=!show[k]; b.setAttribute("aria-pressed",String(show[k])); renderPat();
+  });
 });
 document.getElementById("perc").addEventListener("click",function(e){
   percOn=!percOn; e.currentTarget.setAttribute("aria-pressed",String(percOn));
