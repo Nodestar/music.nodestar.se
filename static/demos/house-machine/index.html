@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>One Drop Machine</title>
-<meta name="description" content="Eight foundation reggae drum patterns on a playable 16-step MIDI grid — one drop, rockers, steppers, flying cymbal, rub-a-dub, nyabinghi and ska, with the notes and history behind each one.">
+<title>House Machine</title>
+<meta name="description" content="Five house drum patterns from Studio Brootle — 707, 909, 606, a live-kit jazz loop and one weird one — read from their MIDI files onto a playable 16-step grid at 126 BPM.">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#DCDFD4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0E110C" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E4E1DA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121114" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="One Drop Machine">
-<meta property="og:description" content="Eight foundation reggae drum patterns on a playable 16-step MIDI grid — one drop, rockers, steppers, flying cymbal, rub-a-dub, nyabinghi and ska, with the notes and history behind each one.">
+<meta property="og:title" content="House Machine">
+<meta property="og:description" content="Five house drum patterns from Studio Brootle — 707, 909, 606, a live-kit jazz loop and one weird one — on a playable 16-step grid at 126 BPM.">
 <meta name="twitter:card" content="summary">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A5%81%3C/text%3E%3C/svg%3E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Ccircle%20cx='32'%20cy='32'%20r='29'%20fill='#FFE600'%20stroke='#111'%20stroke-width='4'/%3E%3Cellipse%20cx='22'%20cy='25'%20rx='4'%20ry='6'%20fill='#111'/%3E%3Cellipse%20cx='42'%20cy='25'%20rx='4'%20ry='6'%20fill='#111'/%3E%3Cpath%20d='M15%2038%20Q32%2056%2049%2038'%20fill='none'%20stroke='#111'%20stroke-width='4'%20stroke-linecap='round'/%3E%3C/svg%3E">
 <style>*,*::before,*::after{box-sizing:border-box}body{margin:0}</style>
 </head>
 <body>
@@ -46,8 +46,8 @@
   color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:10.5px;
   letter-spacing:.08em;text-transform:uppercase;padding:5px 9px;border-radius:3px;
 }
-.themebtn:hover,.backlink:hover{border-color:var(--brass);color:var(--ink)}
-.themebtn:focus-visible,.backlink:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+.themebtn:hover,.backlink:hover{border-color:var(--acc);color:var(--ink)}
+.themebtn:focus-visible,.backlink:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .backlink{
   color:var(--ink-3);text-decoration:none;border:1px solid transparent;
   font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
@@ -55,78 +55,87 @@
 }
 
 :root{
-  --ground:#DCDFD4;
-  --panel:#EFF1E9;
-  --panel-2:#E4E7DB;
-  --ink:#14180E;
-  --ink-2:#4E5445;
-  --ink-3:#787E6C;
-  --line:#C1C6B3;
-  --line-soft:#D2D6C6;
-  --brass:#8E5E0D;
-  --brass-soft:#B98A2A;
+  --ground:#E4E1DA;
+  --panel:#F2F0EB;
+  --panel-2:#E9E6DF;
+  --ink:#17161A;
+  --ink-2:#4F4D55;
+  --ink-3:#7E7B84;
+  --line:#C9C5BC;
+  --line-soft:#D8D4CC;
+  --acc:#D2461B;
+  --acc-soft:#E37A58;
 
-  --c-kick:#A83F1B;
-  --c-snare:#9B2F4C;
+  --c-kick:#C13A16;
+  --c-snare:#B0285C;
+  --c-clap:#D4610E;
   --c-rim:#6F4A9B;
-  --c-hh:#1B6669;
-  --c-oh:#256B3D;
-  --c-ride:#8E5E0D;
-  --c-tom:#3F529B;
-  --c-skank:#5B6152;
+  --c-ch:#1A6C72;
+  --c-ph:#3F7C5A;
+  --c-oh:#2D8A46;
+  --c-ltom:#2E4FA5;
+  --c-mtom:#3D63B8;
+  --c-htom:#5A7BCB;
+  --c-ride:#8A6A12;
 
-  --cell-off:#D7DBCB;
-  --shadow:0 1px 0 rgba(20,24,14,.06);
+  --cell-off:#DBD8D0;
+  --shadow:0 1px 0 rgba(23,22,26,.06);
   --radius:3px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#0E110C;
-    --panel:#171B14;
-    --panel-2:#1E2319;
-    --ink:#E9EBDF;
-    --ink-2:#A3A995;
-    --ink-3:#7C826F;
-    --line:#2C3226;
-    --line-soft:#242A1F;
-    --brass:#DFA940;
-    --brass-soft:#A87F2E;
+    --ground:#121114;
+    --panel:#1A191D;
+    --panel-2:#212024;
+    --ink:#ECEAE5;
+    --ink-2:#A8A5AD;
+    --ink-3:#7E7B84;
+    --line:#302E35;
+    --line-soft:#28272C;
+    --acc:#FF6A3D;
+    --acc-soft:#C4562F;
 
-    --c-kick:#EC7B4F;
-    --c-snare:#E76A90;
+    --c-kick:#FF7A52;
+    --c-snare:#F06A9C;
+    --c-clap:#F5A257;
     --c-rim:#B892E6;
-    --c-hh:#4FC3C8;
-    --c-oh:#69C98B;
-    --c-ride:#DFA940;
-    --c-tom:#8299EC;
-    --c-skank:#9AA189;
+    --c-ch:#4FC8CF;
+    --c-ph:#6FC79A;
+    --c-oh:#6BD48A;
+    --c-ltom:#7B95EC;
+    --c-mtom:#8FA8F0;
+    --c-htom:#A9BDF5;
+    --c-ride:#E4B647;
 
-    --cell-off:#21261C;
+    --cell-off:#26252A;
     --shadow:none;
   }
 }
 :root[data-theme="dark"]{
-  --ground:#0E110C;
-  --panel:#171B14;
-  --panel-2:#1E2319;
-  --ink:#E9EBDF;
-  --ink-2:#A3A995;
-  --ink-3:#7C826F;
-  --line:#2C3226;
-  --line-soft:#242A1F;
-  --brass:#DFA940;
-  --brass-soft:#A87F2E;
+  --ground:#121114;
+  --panel:#1A191D;
+  --panel-2:#212024;
+  --ink:#ECEAE5;
+  --ink-2:#A8A5AD;
+  --ink-3:#7E7B84;
+  --line:#302E35;
+  --line-soft:#28272C;
+  --acc:#FF6A3D;
+  --acc-soft:#C4562F;
 
-  --c-kick:#EC7B4F;
-  --c-snare:#E76A90;
+  --c-kick:#FF7A52;
+  --c-snare:#F06A9C;
+  --c-clap:#F5A257;
   --c-rim:#B892E6;
-  --c-hh:#4FC3C8;
-  --c-oh:#69C98B;
-  --c-ride:#DFA940;
-  --c-tom:#8299EC;
-  --c-skank:#9AA189;
+  --c-ch:#4FC8CF;
+  --c-ph:#6FC79A;
+  --c-oh:#6BD48A;
+  --c-ltom:#7B95EC;
+  --c-mtom:#8FA8F0;
+  --c-htom:#A9BDF5;
+  --c-ride:#E4B647;
 
-  --cell-off:#21261C;
+  --cell-off:#26252A;
   --shadow:none;
 }
 
@@ -149,15 +158,16 @@ body{
 }
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--brass);
+  letter-spacing:.18em;text-transform:uppercase;color:var(--acc);
   display:block;margin-bottom:8px;
 }
 h1{
   font-family:"Archivo Black",Impact,sans-serif;font-weight:400;margin:0;
   font-size:clamp(30px,5.4vw,54px);line-height:.95;letter-spacing:-.015em;text-transform:uppercase;
 }
-h1 em{font-style:normal;color:var(--brass);}
+h1 em{font-style:normal;color:var(--acc);}
 .lede{margin:14px 0 0;max-width:46ch;color:var(--ink-2);font-size:15px}
+.lede a{color:inherit;text-decoration-color:var(--acc)}
 
 /* ---------- transport ---------- */
 .deck{
@@ -174,8 +184,7 @@ h1 em{font-style:normal;color:var(--brass);}
   text-transform:uppercase;padding:11px 18px;border-radius:var(--radius);cursor:pointer;
   display:inline-flex;align-items:center;gap:9px;min-width:118px;justify-content:center;
 }
-.play:hover{background:var(--brass);border-color:var(--brass);color:#12150C}
-.play[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#12150C}
+.play:hover,.play[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#15120F}
 .play .glyph{font-size:10px;line-height:1}
 
 .knob{display:flex;flex-direction:column;gap:3px;min-width:126px;flex:1 1 126px}
@@ -184,25 +193,20 @@ h1 em{font-style:normal;color:var(--brass);}
   text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;gap:10px;
 }
 .knob label b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
-input[type=range]{
-  appearance:none;width:100%;height:18px;background:transparent;cursor:pointer;margin:0;
-}
+input[type=range]{appearance:none;width:100%;height:18px;background:transparent;cursor:pointer;margin:0}
 input[type=range]::-webkit-slider-runnable-track{height:3px;background:var(--line);border-radius:2px}
 input[type=range]::-moz-range-track{height:3px;background:var(--line);border-radius:2px}
-input[type=range]::-webkit-slider-thumb{
-  appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;
-  background:var(--brass);border:none;
-}
-input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--brass);border:none}
-input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px}
+input[type=range]::-webkit-slider-thumb{appearance:none;width:13px;height:13px;margin-top:-5px;border-radius:50%;background:var(--acc);border:none}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:var(--acc);border:none}
+input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:2px}
 
 .toggle{
   appearance:none;border:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);
   font-family:"IBM Plex Mono",monospace;font-size:10px;font-weight:500;letter-spacing:.14em;
   text-transform:uppercase;padding:9px 12px;border-radius:var(--radius);cursor:pointer;
 }
-.toggle:hover{border-color:var(--brass);color:var(--ink)}
-.toggle[aria-pressed="true"]{background:var(--brass);border-color:var(--brass);color:#12150C}
+.toggle:hover{border-color:var(--acc);color:var(--ink)}
+.toggle[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#15120F}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .seg button{
   appearance:none;border:0;border-left:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);
@@ -212,7 +216,7 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
 .seg button:first-child{border-left:0}
 .seg button:hover{color:var(--ink)}
 .seg button[aria-pressed="true"]{background:var(--ink);color:var(--ground)}
-.seg button:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
+.seg button:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 
 /* ---------- pattern rack ---------- */
 .rack{display:flex;flex-wrap:wrap;gap:7px}
@@ -221,7 +225,7 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
   border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);
   padding:8px 13px 9px;display:flex;flex-direction:column;gap:1px;min-width:0;
 }
-.chip:hover{border-color:var(--brass-soft)}
+.chip:hover{border-color:var(--acc-soft)}
 .chip .cname{
   font-family:Anton,"Arial Narrow",sans-serif;font-size:15px;letter-spacing:.03em;
   text-transform:uppercase;color:var(--ink);line-height:1.1;white-space:nowrap;
@@ -232,9 +236,9 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
 }
 .chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
 .chip[aria-pressed="true"] .cname{color:var(--ground)}
-.chip[aria-pressed="true"] .cbpm{color:var(--brass-soft)}
+.chip[aria-pressed="true"] .cbpm{color:var(--acc-soft)}
 .chip:focus-visible,.play:focus-visible,.toggle:focus-visible,.rowlabel:focus-visible,.cell:focus-visible{
-  outline:2px solid var(--brass);outline-offset:2px;
+  outline:2px solid var(--acc);outline-offset:2px;
 }
 
 /* ---------- stage ---------- */
@@ -252,13 +256,13 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
   font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-3);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
 }
-.stagehead .meta b{display:block;color:var(--brass);font-size:19px;letter-spacing:.02em;font-weight:600}
+.stagehead .meta b{display:block;color:var(--acc);font-size:19px;letter-spacing:.02em;font-weight:600}
 
 .scroller{overflow-x:auto;padding:16px 18px 8px}
 .grid{
   display:grid;
-  grid-template-columns:196px repeat(16,minmax(30px,1fr));
-  min-width:724px;
+  grid-template-columns:196px repeat(var(--steps,16),minmax(26px,1fr));
+  min-width:calc(196px + var(--steps,16) * 29px);
   gap:3px;
   align-items:stretch;
 }
@@ -267,7 +271,7 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
   text-align:center;font-size:11px;color:var(--ink-3);
 }
 .marker{height:16px;line-height:16px;font-size:9px;letter-spacing:.1em;text-transform:uppercase}
-.marker.on{color:var(--brass);font-weight:600}
+.marker.on{color:var(--acc);font-weight:600}
 .count{padding:2px 0 6px;letter-spacing:.04em}
 .count.beat{color:var(--ink);font-weight:600}
 .gutter{grid-column:1}
@@ -280,48 +284,45 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
 .fader{flex:0 0 52px;height:14px;padding:0}
 .fader::-webkit-slider-runnable-track{height:2px;background:var(--line)}
 .fader::-moz-range-track{height:2px;background:var(--line)}
-.fader::-webkit-slider-thumb{width:9px;height:9px;margin-top:-3.5px}
-.fader::-moz-range-thumb{width:9px;height:9px}
+.fader::-webkit-slider-thumb{width:9px;height:9px;margin-top:-3.5px;background:var(--rc)}
+.fader::-moz-range-thumb{width:9px;height:9px;background:var(--rc)}
+.fader:focus-visible{outline-offset:2px}
 .rowhead .nt{margin-left:auto}
 .rowlabel .nm{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rowhead .nt{
   font-family:"IBM Plex Mono",monospace;font-size:10px;color:var(--ink-3);
   font-variant-numeric:tabular-nums;border:1px solid var(--line);border-radius:2px;padding:0 4px;
 }
-.rowlabel::before{
-  content:"";width:8px;height:8px;border-radius:50%;background:var(--rc);flex:0 0 8px;
-}
+.rowlabel::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--rc);flex:0 0 8px}
 .rowlabel[data-muted="true"]{opacity:.34}
 .rowlabel[data-muted="true"] .nm{text-decoration:line-through}
 
 .cell{
   appearance:none;border:0;padding:0;cursor:pointer;
-  height:26px;border-radius:2px;background:var(--cell-off);position:relative;
+  height:24px;border-radius:2px;background:var(--cell-off);position:relative;
   transition:background .08s linear,transform .08s linear;
 }
 .cell.dsep{box-shadow:inset 2px 0 0 var(--line)}
+.cell.bsep{box-shadow:inset 3px 0 0 var(--ink-3)}
 .cell[data-v="1"]{background:color-mix(in srgb,var(--rc) 52%,var(--cell-off))}
 .cell[data-v="2"]{background:var(--rc)}
 .cell:hover{transform:translateY(-1px)}
-.row-muted .cell[data-v="1"],.row-muted .cell[data-v="2"]{opacity:.28}
-.grid.playing .cell.now{box-shadow:inset 0 0 0 1px var(--brass)}
+.grid.playing .cell.now{box-shadow:inset 0 0 0 1px var(--acc)}
 .cell.flash{transform:translateY(-2px)}
-.playhead{
-  height:4px;border-radius:2px;background:var(--line-soft);
-}
-.playhead.on{background:var(--brass)}
+.playhead{height:4px;border-radius:2px;background:var(--line-soft)}
+.playhead.on{background:var(--acc)}
 
 .annot{
   margin:0;padding:2px 18px 16px;font-size:13px;color:var(--ink-2);
   display:flex;gap:10px;align-items:flex-start;
 }
-.annot .tick{color:var(--brass);font-family:"IBM Plex Mono",monospace;font-size:12px;flex:0 0 auto;padding-top:1px}
+.annot .tick{color:var(--acc);font-family:"IBM Plex Mono",monospace;font-size:12px;flex:0 0 auto;padding-top:1px}
 
 /* ---------- notes ---------- */
 .notes{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:24px}
 .notes h3,.map h3{
   font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--brass);margin:0 0 10px;
+  text-transform:uppercase;color:var(--acc);margin:0 0 10px;
 }
 .notes p{margin:0 0 12px;font-size:15px;max-width:62ch}
 .notes p:last-child{margin-bottom:0}
@@ -331,6 +332,7 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
   color:var(--ink-3);padding-top:3px;
 }
 .facts dd{margin:0;color:var(--ink)}
+.facts dd a{color:inherit;text-decoration-color:var(--acc)}
 
 /* ---------- map ---------- */
 .map{border-top:1px solid var(--line);padding-top:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px}
@@ -341,16 +343,19 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
   border-bottom:1px solid var(--line);
 }
 .maptable td{padding:6px 8px 6px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
-.maptable td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--brass);font-weight:500}
+.maptable td.num{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--acc);font-weight:500}
 .maptable td .swatch{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px}
 .map p{font-size:14px;color:var(--ink-2);margin:0 0 11px;max-width:52ch}
 .map p b{color:var(--ink);font-weight:600}
+.map p a{color:var(--ink);text-decoration-color:var(--acc)}
+.kits p{max-width:58ch}
 
 footer{
   border-top:1px solid var(--line);padding-top:16px;
   font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink-3);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
 }
+footer a{color:inherit}
 
 @media (max-width:820px){
   .masthead{grid-template-columns:1fr;align-items:start;gap:20px}
@@ -378,9 +383,9 @@ footer{
 
   <header class="masthead">
     <div class="brand">
-      <span class="eyebrow">Riddim programming reference</span>
-      <h1>One Drop<br><em>Machine</em></h1>
-      <p class="lede">Eight foundation reggae drum patterns on a 16-step grid — what each one puts on which beat, why it feels the way it does, and the MIDI notes to program it with. Click any cell to change it.</p>
+      <span class="eyebrow">Four-on-the-floor programming reference</span>
+      <h1>House<br><em>Machine</em></h1>
+      <p class="lede">Five house drum patterns from <a href="https://www.studiobrootle.com/house-drum-patterns/" target="_blank" rel="noreferrer">Studio Brootle</a>, read straight out of their MIDI files and laid on a 16-step grid — 707, 909, 606, a live-kit jazz loop and one weird one. All at 126 BPM. Click any cell to change it.</p>
     </div>
 
   </header>
@@ -390,17 +395,17 @@ footer{
   <div class="console" role="group" aria-label="Transport">
     <button class="play" id="play" aria-pressed="false"><span class="glyph" id="playGlyph">▶</span><span id="playLabel">Play</span></button>
     <div class="knob">
-      <label for="tempo">Tempo <b><span id="tempoVal">78</span> BPM</b></label>
-      <input type="range" id="tempo" min="54" max="160" step="1" value="78">
+      <label for="tempo">Tempo <b><span id="tempoVal">126</span> BPM</b></label>
+      <input type="range" id="tempo" min="100" max="140" step="1" value="126">
     </div>
     <div class="knob">
-      <label for="swing">Swing <b><span id="swingVal">18</span>%</b></label>
-      <input type="range" id="swing" min="0" max="67" step="1" value="18">
+      <label for="swing">Swing <b><span id="swingVal">25</span>%</b></label>
+      <input type="range" id="swing" min="0" max="67" step="1" value="25">
     </div>
-    <div class="seg" role="group" aria-label="Skank sound" id="skankSeg"></div>
+    <div class="seg" role="group" aria-label="Kit" id="kitSeg"></div>
     <div class="knob">
-      <label for="echo">Tape echo <b><span id="echoVal">0</span>%</b></label>
-      <input type="range" id="echo" min="0" max="100" step="1" value="0">
+      <label for="drive">Drive <b><span id="driveVal">0</span>%</b></label>
+      <input type="range" id="drive" min="0" max="100" step="1" value="0">
     </div>
     <button class="toggle" id="reset">Reset</button>
   </div>
@@ -409,10 +414,10 @@ footer{
   <section class="stage" aria-label="Step grid">
     <div class="stagehead">
       <div>
-        <h2 id="pName">One Drop</h2>
+        <h2 id="pName"></h2>
         <p class="tagline" id="pTag"></p>
       </div>
-      <div class="meta"><b id="pBpm">78</b><span id="pEra"></span></div>
+      <div class="meta"><b id="pBpm">126</b><span id="pEra"></span></div>
     </div>
     <div class="scroller">
       <div class="grid" id="grid"></div>
@@ -426,31 +431,47 @@ footer{
       <div id="pWhy"></div>
     </div>
     <div>
-      <h3>Provenance</h3>
+      <h3>Source</h3>
       <dl class="facts" id="pFacts"></dl>
     </div>
   </section>
 
   <section class="map">
     <div>
-      <h3>General MIDI note map</h3>
+      <h3>Note map (Ableton drum-rack pads, GM names)</h3>
       <table class="maptable">
         <thead><tr><th>Voice</th><th>Note</th><th>GM name</th></tr></thead>
         <tbody id="mapBody"></tbody>
       </table>
     </div>
     <div>
-      <h3>Getting it into hardware</h3>
-      <p>Note numbers matter on a sampler or a kit mapped to one MIDI channel. On a <b>drum machine with one track per voice</b> — a TR-6S, an EP-133, an OP-XY drum patch — the note number is whatever that track listens on; what transfers is the <b>step positions</b>, so read the grid columns and copy them.</p>
-      <p>The grid is one bar of 4/4 at 16th resolution. Column 1 is beat one. The brass tick marks <b>the drop</b> — the beat the whole feel hangs off.</p>
-      <p>The skank row is not a drum. It is the guitar or keyboard chop on the offbeats, drawn here because the drums only make sense against it. The <b>skank selector</b> swaps the sound — guitar by default, or piano, organ and clav — without touching the pattern. Mute it to hear how bare the kit part actually is.</p>
-      <p>Swing at <b>67%</b> is a full triplet shuffle — the ska and rocksteady setting. Roots patterns sit between 8 and 20: not straight, not swung, just late.</p>
+      <h3>Reading the grid</h3>
+      <p>The MIDI clips were written for Ableton's Core kits, where pad C1 is note <b>36</b> and pads climb chromatically. The note numbers here are what the clips actually contain; the GM names are the closest reading. On a <b>drum machine with one track per voice</b> only the step positions transfer — read the columns and copy them.</p>
+      <p>Each row has a <b>level fader</b> (0–150 %) next to its name and the name itself mutes; Reset puts every fader back to 100. Each column is a 16th. Bold numbers are beats. The heavy divider in the two-bar pattern marks bar two. The accent tick points at the step that gives the pattern its character.</p>
+      <p>Three of the five clips were played through Ableton's <b>MPC 16 Swing-75</b> groove at 25 % — a light 16th-note shuffle. The swing knob here delays every other 16th by the same proportion, so <b>25</b> is the article's setting; 0 is dead straight.</p>
+      <p><b>Kit</b> swaps every voice for a different parameter set — the article used Ableton's 707, 909 and 606 Core kits plus two sampled ones; here you get 707, 808, 909 and, as a wildcard, a Simmons SDS-V. <span id="kitNote">Roland TR-909 — 1983, analogue kick and snare with sampled cymbals: the house kit.</span></p>
+      <p><b>Drive</b> is a parallel soft-clip on the master, off by default, standing in for the Overdrive and Drum Buss units the article puts on the 909, the weird one and the 606.</p>
+    </div>
+  </section>
+
+  <section class="map kits" aria-label="Kits">
+    <div>
+      <h3>The kits</h3>
+      <p><b>707</b> — Roland TR-707, 1985. The first Roland box with sampled (PCM) drums instead of analogue circuits: 12-bit, short and crisp, no tuning, a slightly grainy top end. Cheap second-hand by the late eighties, which is why it is all over early Chicago house alongside the 909.</p>
+      <p><b>808</b> — Roland TR-808, 1980. Fully analogue: a sine kick that can ring for most of a second, a snappy tonal snare, a clap made of noise bursts and hats built from six square waves. A commercial flop that became the sound of hip-hop, electro and Miami bass; in house it turns up mostly as the kick under a 909 top.</p>
+      <p><b>909</b> — Roland TR-909, 1983. Hybrid: analogue kick, snare, toms and rim, sampled hats and cymbals. Tunable kick with a hard click, a snare with its own snappy noise — the default house and techno kit, and what three of the five patterns here were written on.</p>
+    </div>
+    <div>
+      <h3>Why Simmons is the odd one out</h3>
+      <p>The <b>Simmons SDS-V</b> (1981) is not a drum machine at all. It is an <b>electronic drum kit</b>: a rack of analogue synth modules, one per drum, triggered by hexagonal pads that a drummer hits with sticks. Dave Simmons built it in Hertfordshire, England, and it was the first electronic kit to sell in numbers.</p>
+      <p>Each module has a pitch-bend knob, a decay, a noise-to-tone mix and a click. Set the bend deep and the tom does the descending <b>“pyoow”</b> that defines early-eighties pop — Duran Duran, Spandau Ballet, Howard Jones, Phil Collins, Rush and Bill Bruford all played them. The snare is more noise than drum; the kick is a sharp thud with a big click.</p>
+      <p>It is here because house patterns almost never get played on it — 1981 pads and 1987 Chicago barely overlap — so it is the one kit where these grooves sound genuinely unfamiliar. Try it on <b>Weird Punchy Banger</b>: the hi tom on the last 16th becomes a full sweep, and the whole loop turns into something off a Trevor Horn record.</p>
     </div>
   </section>
 
   <footer>
-    <span>One Drop Machine — 8 riddims, 16 steps, Web Audio</span>
-    <span class="tools">Click a cell: off → hit → accent · Fader: level, name: mute</span>
+    <span>House Machine — 5 patterns, 4 kits, 126 BPM, Web Audio</span>
+    <span class="tools">Patterns © <a href="https://www.studiobrootle.com/" target="_blank" rel="noreferrer">Studio Brootle</a> · Click a cell: off → hit → accent · Fader: level, name: mute</span>
   </footer>
 </div>
 
@@ -459,131 +480,106 @@ footer{
 "use strict";
 
 var ROWS = [
-  {id:"kick",  name:"Kick",       note:36, gm:"Bass Drum 1",   c:"--c-kick"},
-  {id:"snare", name:"Snare",      note:38, gm:"Acoustic Snare",c:"--c-snare"},
-  {id:"rim",   name:"Cross-stick",note:37, gm:"Side Stick",    c:"--c-rim"},
-  {id:"hh",    name:"Hi-hat",     note:42, gm:"Closed Hi-Hat", c:"--c-hh"},
-  {id:"oh",    name:"Open hat",   note:46, gm:"Open Hi-Hat",   c:"--c-oh"},
-  {id:"ride",  name:"Ride bell",  note:53, gm:"Ride Bell",     c:"--c-ride"},
-  {id:"tom",   name:"Low tom",    note:45, gm:"Low Tom",       c:"--c-tom"},
-  {id:"skank", name:"Skank",      note:null,gm:"guide — guitar / keys chop", c:"--c-skank"}
+  {id:"kick",  name:"Kick",       note:36, gm:"Bass Drum 1",    c:"--c-kick"},
+  {id:"snare", name:"Snare",      note:40, gm:"Electric Snare", c:"--c-snare"},
+  {id:"clap",  name:"Clap",       note:39, gm:"Hand Clap",      c:"--c-clap"},
+  {id:"rim",   name:"Rim",        note:37, gm:"Side Stick",     c:"--c-rim"},
+  {id:"ch",    name:"Closed hat", note:42, gm:"Closed Hi-Hat",  c:"--c-ch"},
+  {id:"ph",    name:"Pedal hat",  note:44, gm:"Pedal Hi-Hat",   c:"--c-ph"},
+  {id:"oh",    name:"Open hat",   note:46, gm:"Open Hi-Hat",    c:"--c-oh"},
+  {id:"ltom",  name:"Low tom",    note:41, gm:"Low Floor Tom",  c:"--c-ltom"},
+  {id:"mtom",  name:"Mid tom",    note:45, gm:"Low Tom",        c:"--c-mtom"},
+  {id:"htom",  name:"Hi tom",     note:48, gm:"Hi-Mid Tom (48 / 50)", c:"--c-htom"},
+  {id:"ride",  name:"Ride",       note:51, gm:"Ride Cymbal 1",  c:"--c-ride"}
 ];
 
-function P(s){
+function P(s, n){
   var out=[],i,ch;
   for(i=0;i<s.length;i++){ch=s[i];
     if(ch==="X")out.push(2); else if(ch==="x")out.push(1); else if(ch==="-")out.push(0);
   }
-  while(out.length<16)out.push(0);
-  return out.slice(0,16);
+  while(out.length<n)out.push(0);
+  return out.slice(0,n);
 }
-var Z = "----|----|----|----";
 
 var PATTERNS = [
 {
-  id:"onedrop", name:"One Drop", bpm:78, swing:18, drop:8,
-  tag:"Beat one is left empty. Kick and cross-stick land together on beat three.",
-  era:"Roots · early 1970s",
-  annot:"Beat 3 — kick and cross-stick hit as one sound. Nothing on beat 1: that silence is the whole pattern.",
-  why:["The name describes an absence. Where almost every other popular music puts its heaviest accent — the downbeat — reggae drops it, and the kick and a cross-stick snare arrive together on beat three instead. The bar has one weight-bearing hit and it is in the wrong place, which is why the groove floats rather than marches.",
-       "Everything else is upkeep. Hi-hats run straight eighths, the guitar chops the offbeats, and the drummer's job is to not fill the hole on beat one. Programming it, the temptation is to add a kick on the downbeat for confidence. That single note turns a one drop into a generic pop beat."],
-  facts:[["Feel","Sparse, unhurried, weight on 3"],["Credited","Carlton Barrett (Bob Marley & The Wailers); also attributed to Aston Barrett and Winston Grennan"],["Listen","Bob Marley & The Wailers — “One Drop”, “Natural Mystic”"],["Tempo","roughly 60–90 BPM"]],
-  g:{kick:"----|----|X---|----", snare:Z, rim:"----|----|X---|----", hh:"X-x-|X-x-|X-x-|X-x-", oh:Z, ride:Z, tom:Z, skank:"--X-|--X-|--X-|--X-"}
+  id:"707", name:"Simple 707", bpm:126, swing:25, bars:1, drop:3,
+  tag:"Skippy, shuffled 707: two hat rows playing off each other, a ghosted tom filling out the bottom.",
+  era:"Roland TR-707 · 707 Core kit",
+  annot:"The ‘a’ of beat 1: closed hat, then the open hat lands on the ‘&’ and the two rows leapfrog each other for the rest of the bar.",
+  why:["Four kicks, a snare on 2 and 4 with a 16th pickup at the very end of the bar, and a clap that does not sit on the backbeat at all — it doubles the ‘e’ and ‘&’ of beat one and then only shows up again on beat four. That displaced clap is what makes the loop feel like it starts before you expect it to.",
+       "The hats are the real programming. The closed hat is busy but has holes in it — on the ‘&’ of every beat — and the open hat fills exactly those holes. Neither row is a full 16th line; together they are. The mid tom is one ghost note at velocity 41, so quiet it reads as kick weight rather than a fill. Mute it and the bottom end thins out."],
+  facts:[["Kit","707 Core Kit (Ableton Live Suite)"],["Groove","MPC 16 Swing-75 at 25 %"],["Clip","Simple-707-House-Drum-Pattern.mid — 1 bar"],["Read","Studio Brootle, “House Drum Patterns”"]],
+  g:{kick:"X---|X---|X---|X---", snare:"----|X---|----|X--X", clap:"-XX-|----|----|X---", rim:"", ch:"X--X|X--X|XX-X|XX-X", ph:"", oh:"--X-|--X-|--X-|--XX", ltom:"", mtom:"----|----|-x--|----", htom:"", ride:""}
 },
 {
-  id:"rockers", name:"Rockers", bpm:74, swing:10, drop:8,
-  tag:"The one drop with a steady kick on every quarter — plus a 16th push into the drop.",
-  era:"Sly Dunbar · mid 1970s",
-  annot:"Beat 3 still carries the accent, but the kick now walks all four beats, with a 16th pickup on the ‘a’ of 2 shoving you into it.",
-  why:["Sly Dunbar's answer to the one drop: keep the snare on three, but fill the empty downbeat with a kick and keep it going on every quarter. The result is heavier and more insistent while the accent stays exactly where roots reggae put it.",
-       "The detail that separates rockers from a plain four-on-the-floor is the syncopated push — a 16th-note kick just before beat three. It is the “boom-b-boom” that makes the pattern rock rather than plod. Definitions vary between sources; some describe rockers purely as the quarter-note kick, and add the push as taste."],
-  facts:[["Feel","Militant but rolling; often slower than a one drop"],["Credited","Sly Dunbar (1952–2026), with Robbie Shakespeare"],["Listen","The Mighty Diamonds — “Right Time” (1976)"],["Tempo","roughly 68–85 BPM"]],
-  g:{kick:"x---|x--x|X---|x---", snare:"----|----|X---|----", rim:Z, hh:"X-x-|X-x-|X-x-|X-x-", oh:Z, ride:Z, tom:Z, skank:"--X-|--X-|--X-|--X-"}
+  id:"909", name:"Swung 909", bpm:126, swing:25, bars:1, drop:9,
+  tag:"The most-used drum machine of all time doing what it does: pedal hats on the offbeats, a single rim shot to break the symmetry.",
+  era:"Roland TR-909 · 909 Core kit",
+  annot:"The ‘e’ of beat 3: one rim shot and nothing else. It is the only event in the bar that is not part of a repeating figure.",
+  why:["Textbook 909 house. Kick on every beat, snare on 2 and 4, an open hat on every ‘&’. The clap does not simply double the snare — it hits the ‘e’ of beat one first, then joins the snare on 2 and 4, a small asymmetry that keeps the loop from sounding quantised even before the swing is applied.",
+       "The pedal hat carries the shuffle: a mostly-16th line with gaps, sitting on the odd steps so it is exactly the notes that the MPC groove delays. Then a slight Overdrive with the wet/dry low — the article's trick for making a clean Ableton kit sound like it was sampled into an MPC. Turn Drive on to hear the equivalent here."],
+  facts:[["Kit","909 Core Kit (Ableton Live Suite)"],["Groove","MPC 16 Swing-75 at 25 %"],["Processing","Overdrive, low wet/dry, slight drive"],["Clip","Swung-909-House-Beat.mid — 1 bar"]],
+  g:{kick:"X---|X---|X---|X---", snare:"----|X---|----|X---", clap:"-X--|X---|----|X---", rim:"----|----|-X--|----", ch:"", ph:"X--X|-X-X|-X--|---X", oh:"--X-|--X-|--X-|--X-", ltom:"", mtom:"", htom:"", ride:""}
 },
 {
-  id:"steppers", name:"Steppers", bpm:82, swing:0, drop:8,
-  tag:"Kick on every beat, dead straight, no push. Marching music for dub.",
-  era:"Militant dub · late 1970s",
-  annot:"Every quarter gets the same weight. The snare on 3 is the only thing left telling you this is reggae and not a disco record.",
-  why:["Steppers strips the syncopation back out of rockers. The kick is even and relentless — four to the floor — and the swing goes to zero. That evenness is the point: it is the sound of walking, which is what the militant, Rasta-political dub of the late seventies wanted.",
-       "Sources disagree on the strict definition; some describe steppers as a kick on every eighth note rather than every quarter. Both exist on record. Double the kick row into eighths and you get the harder version, which is also the direct ancestor of the four-on-the-floor in UK dub, jungle and steppers-influenced house."],
-  facts:[["Feel","Even, driving, hypnotic"],["Context","Militant roots and dub — Keith Hudson, Bunny Wailer, Burning Spear-era productions"],["Descendants","UK dub, digital steppers, dub techno"],["Tempo","roughly 72–95 BPM"]],
-  g:{kick:"X---|X---|X---|X---", snare:"----|----|X---|----", rim:Z, hh:"X-x-|X-x-|X-x-|X-x-", oh:Z, ride:"--x-|--x-|--x-|--x-", tom:Z, skank:"--X-|--X-|--X-|--X-"}
+  id:"weird", name:"Weird Punchy Banger", bpm:126, swing:0, bars:1, drop:15,
+  tag:"No swing, an alien kit, and a bar that ends on a hi tom and a ghosted clap instead of resolving.",
+  era:"Ichor kit · no groove",
+  annot:"Step 16: a full-velocity hi tom and a barely-there clap, right before the downbeat. The bar leans forward into the next one.",
+  why:["The kick and snare are plain four-on-the-floor. Everything else is deliberately off: the rim hits the ‘e’ and ‘a’ of beat one and then disappears, the closed hat is a lopsided line that stops dead after beat three, the open hats sit on the ‘e’ of 3 and the ‘&’ of 4 — never where a house open hat normally goes.",
+       "It is the only pattern here with zero swing, and that is intentional; the weirdness is in the placement, not the timing. The article adds a 2 % left/right offset delay on one cymbal for width and a second Drum Buss for crunch. The hi tom at velocity 100 on the last 16th is the tell — it is the loudest thing in the bar and it is not on a beat."],
+  facts:[["Kit","Ichor Kit (Ableton Live Suite)"],["Groove","none"],["Processing","Delay on a cymbal (2 % L/R offset), extra Drum Buss"],["Clip","Weird-Punchy-House-Banger.mid — 1 bar"]],
+  g:{kick:"X---|X---|X---|X---", snare:"----|X---|----|X---", clap:"----|----|----|---x", rim:"-X-X|----|----|----", ch:"X-XX|--X-|X-XX|----", ph:"", oh:"----|----|-X--|--X-", ltom:"", mtom:"", htom:"----|----|----|---X", ride:""}
 },
 {
-  id:"flyers", name:"Flying Cymbal", bpm:80, swing:12, drop:8,
-  tag:"Closed hat on the beat, open hat on the ‘and’. The chick-cha that ate 1975.",
-  era:"Sly Dunbar · 1974–76",
-  annot:"The kit part is ordinary rockers. The signature is entirely in the two hat rows alternating closed and open across the bar.",
-  why:["Take a rockers pattern and hand the hi-hat a disco job: closed on every beat, wide open on every offbeat. The pedal does the work and the cymbal breathes — “chick-cha, chick-cha” — across the whole bar, washing over the space that roots reggae normally leaves dry.",
-       "It swept Jamaican records in the mid-seventies and dated almost as fast, which is exactly why it is such a precise period signal. Program it when you want a track to sound like 1975 and nothing else."],
-  facts:[["Feel","Wet, propulsive, faintly disco"],["Credited","Sly Dunbar, drawing on Philadelphia soul records"],["Listen","Cornell Campbell — “Queen of the Minstrel” (1975)"],["Watch for","Open hat length: too short and it is just a busy hat part"]],
-  g:{kick:"x---|x---|X---|x---", snare:"----|----|X---|----", rim:Z, hh:"x---|x---|x---|x---", oh:"--X-|--X-|--X-|--X-", ride:Z, tom:Z, skank:"--x-|--x-|--x-|--x-"}
+  id:"jazz", name:"Jazz Sampled", bpm:126, swing:25, bars:2, drop:29,
+  tag:"Two bars from a live-sampled kit: dense closed hats, a ride that only appears mid-bar, and a fill that only happens on the second time round.",
+  era:"Battu kit · live drum samples",
+  annot:"Bar 2, the ‘e’ of 4: kick and snare double up into a two-16th fill that bar 1 does not have. The whole loop is built so you notice the second bar.",
+  why:["The only two-bar clip in the set. Bar one is the pattern; bar two repeats it and then adds a kick-and-snare stumble on the last two 16ths. Kick lands on every beat plus the ‘&’ of four, which is what pushes the loop into the next bar. That plus the swing is what makes it sound like a chopped record rather than a programmed one.",
+       "The closed hat is nearly a full 16th line with holes on the ‘&’ of 1, the ‘e’ of 2 and the ‘e’ of 3 — the open hats sit on every ‘&’ and fill some of them. The ride is quiet (velocity 85) and only plays around beat two, so it reads as a sampled artefact bleeding through. The pedal hat is a single note on the ‘e’ of 2."],
+  facts:[["Kit","Battu Kit (Ableton Live Suite) — live drum samples"],["Groove","MPC 16 Swing-75 at 25 %"],["Clip","Jazz-Sampled-House-Beat.mid — 2 bars"],["Length","32 steps; the grid scrolls sideways on narrow screens"]],
+  g:{kick:"X---|X---|X---|X-X-|X---|X---|X---|X-XX", snare:"----|X---|----|X---|----|X---|----|X-XX", clap:"", rim:"", ch:"XX-X|X--X|X--X|XX-X|XX-X|X--X|X--X|XX-X", ph:"----|-X--|----|----|----|-X--|----|----", oh:"--X-|--X-|--X-|--X-|--X-|--X-|--X-|--X-", ltom:"", mtom:"", htom:"", ride:"----|---x|-x--|----|----|--xx|-x--|----"}
 },
 {
-  id:"rubadub", name:"Rub-a-Dub", bpm:66, swing:22, drop:8,
-  tag:"Slower, emptier, heavier. A one drop with the kick doubled and the hats halved.",
-  era:"Roots Radics · 1979–83",
-  annot:"The drop, then a second kick a 16th later. That short delay is what makes the pattern lurch instead of land.",
-  why:["When the Roots Radics slowed everything down at the turn of the eighties, the one drop lost its eighth-note hats and gained space. Hats sit only on the offbeats, the cross-stick is heavy and dry, and the kick doubles just after the drop — a stumble that pulls the tempo backwards.",
-       "This is the bridge between roots and dancehall: still played by a band, already sparse enough for a deejay to ride. Fewer notes than any other pattern here, and the hardest to program convincingly, because every remaining hit has to sound deliberate."],
-  facts:[["Feel","Slow, dragging, deliberately empty"],["Credited","Style Scott and the Roots Radics"],["Listen","Barrington Levy, Gregory Isaacs and Scientist dubs of the era"],["Tempo","roughly 60–72 BPM"]],
-  g:{kick:"----|----|X---|--x-", snare:Z, rim:"----|----|X---|----", hh:"--x-|--x-|--x-|--x-", oh:Z, ride:Z, tom:"----|----|----|---x", skank:"--X-|--X-|--X-|--X-"}
-},
-{
-  id:"nyabinghi", name:"Nyabinghi", bpm:70, swing:26, drop:8,
-  tag:"The Rastafari hand-drum heartbeat the one drop came out of. No skank, no kit.",
-  era:"Count Ossie · 1950s onward",
-  annot:"Thunder on 1, the drop on 3 — the two-beat heartbeat. The funde marks 2 and 4; the repeater fills everything between.",
-  why:["Nyabinghi is a three-drum ensemble, not a kit pattern: a bass drum (“thunder”) playing the heartbeat, a funde holding a steady two-beat pulse, and a repeater improvising across the top. It predates reggae and is where the weight on beat three ultimately comes from.",
-       "What you see here is a simplification — hand drums flattened onto kit voices so the relationship to the one drop is visible. Play it, then switch to One Drop: the same skeleton, with a guitar chop added and the improvisation removed."],
-  facts:[["Feel","Ceremonial, 12/8-leaning, swung hard"],["Credited","Count Ossie & The Mystic Revelation of Rastafari"],["Listen","“Grounation” (1973)"],["Note","Shown here on kit voices; the real ensemble is three hand drums and no skank"]],
-  g:{kick:"----|----|X---|----", snare:Z, rim:"----|x---|----|x---", hh:"--xx|--x-|--xx|--x-", oh:Z, ride:Z, tom:"X---|----|----|----", skank:Z}
-},
-{
-  id:"ska", name:"Ska Shuffle", bpm:142, swing:55, drop:null,
-  tag:"Twice the tempo, snare on 2 and 4, triplet shuffle. Reggae before it slowed down.",
-  era:"Skatalites · 1962–66",
-  annot:"No drop here — the accents are on 2 and 4 like a jump-blues record. Slow this to 80 BPM and you can hear rocksteady arriving.",
-  why:["Ska runs the offbeat skank at nearly double speed over a shuffled backbeat: snare on two and four, kick on one and three, ride or hat in triplets. The swing control belongs near the top of its range — this pattern is unplayable straight.",
-       "The history is a tempo curve. Drop the BPM and the shuffle and you get rocksteady; move the snare from 2-and-4 onto 3 alone and you have invented the one drop. Every other pattern here is downstream of this one."],
-  facts:[["Feel","Fast, swung, jump-blues backbeat"],["Credited","Lloyd Knibb and The Skatalites"],["Listen","The Skatalites — “Guns of Navarone” (1965)"],["Swing","Set 55–67 for a genuine triplet shuffle"]],
-  g:{kick:"X---|----|X---|----", snare:"----|X---|----|X---", rim:Z, hh:"x-x-|x-x-|x-x-|x-x-", oh:Z, ride:Z, tom:Z, skank:"--X-|--X-|--X-|--X-"}
-},
-{
-  id:"dkg", name:"Dub × 2-Step", bpm:132, swing:26, drop:null,
-  tag:"Not traditional — a garage skeleton wearing a reggae skank. Included as a working hybrid.",
-  era:"Hybrid · contemporary",
-  annot:"Snare on 2 and 4, kick displaced onto the ‘&’ of 3. The skank is the only reggae thing left, and it is enough.",
-  why:["This one is a construction, not a documented style — flagged so it does not get filed alongside the foundation patterns. It is a 2-step UK garage kit part: snare on two and four, the kick pulled off the grid onto the ‘and’ of three, hats shuffled around 26%.",
-       "What makes it read as dub rather than garage is the untouched offbeat skank and the tape echo on the cross-stick. At 132 BPM the reggae offbeat and the garage shuffle sit on the same subdivision, which is why the two graft cleanly at this tempo and get muddy outside it."],
-  facts:[["Feel","Shuffled, syncopated, offbeat-led"],["Status","Hybrid — invented for this page, not a historical pattern"],["Tempo","132 BPM is the sweet spot; the graft breaks up past ~138"],["Try","Echo on, then mute the hi-hat row entirely"]],
-  g:{kick:"X---|----|--x-|----", snare:"----|X---|----|X---", rim:"----|---x|----|----", hh:"x-x-|x-X-|x-x-|x-X-", oh:"----|--x-|----|----", ride:Z, tom:Z, skank:"--X-|--X-|--X-|--X-"}
+  id:"606", name:"606 Core Trax", bpm:126, swing:0, bars:1, drop:0,
+  tag:"Acid-house staple: a bare 606 kit, straight time, a hi tom on the downbeat instead of a crash.",
+  era:"Roland TR-606 · 606 Core kit",
+  annot:"Beat 1: kick, pedal hat and a hi tom all together. The tom is the 606 stand-in for a crash — it has no cymbal to speak of.",
+  why:["This is a trax beat in the Chicago sense: as few parts as possible, none of them clever. Kick on every beat, snare on 2 and 4, open hat on the ‘&’ of 1, 2 and 3 but not 4 — the missing last open hat leaves room for the low tom and the ride that close the bar.",
+       "The hats split across two rows again. Pedal hat on the beats plus a push on the ‘a’ of 3; closed hat only on the ‘e’ and ‘a’ of beat one, a small flourish right after the downbeat and never again. No swing, and the article runs it through a second Drum Buss for drive and weight — the 606's thin voices are the whole reason people process it hard."],
+  facts:[["Kit","606 Core Kit (Ableton Live Suite)"],["Groove","none"],["Processing","extra Drum Buss — drive, bass weight, transients"],["Clip","606-Core-Trax.mid — 1 bar"]],
+  g:{kick:"X---|X---|X---|X---", snare:"----|X---|----|X---", clap:"", rim:"", ch:"-X-X|----|----|----", ph:"X---|X---|X--X|----", oh:"--X-|--X-|--X-|----", ltom:"----|----|----|---X", mtom:"", htom:"X---|----|----|----", ride:"----|----|----|--X-"}
 }
 ];
 
 /* ---------------- state ---------------- */
 var current = 0;
-var bpm = 78, swing = 0.18, echo = 0, playing = false;
+var bpm = 126, swing = 0.25, drive = 0, playing = false;
 var muted = {};
 var gains = {};
 var live = null;
+var STEPS = 16;
 
 function loadPattern(i, keepTransport){
   current = i;
   var p = PATTERNS[i];
+  var n = p.bars*16;
+  if(n !== STEPS){ STEPS = n; buildGrid(); }
   live = {};
-  ROWS.forEach(function(r){ live[r.id] = P(p.g[r.id] || Z); });
+  ROWS.forEach(function(r){ live[r.id] = P(p.g[r.id] || "", STEPS); });
   if(!keepTransport){
     bpm = p.bpm; swing = p.swing/100;
     document.getElementById("tempo").value = bpm;
     document.getElementById("swing").value = p.swing;
   }
+  if(playing){ step = 0; }
   syncTransportLabels();
   renderInfo();
   renderCells();
   updateRack();
-  updateDelayTime();
 }
 
 function syncTransportLabels(){
@@ -599,7 +595,7 @@ PATTERNS.forEach(function(p,i){
   b.className = "chip"; b.type="button"; b.setAttribute("aria-pressed", i===0?"true":"false");
   b.innerHTML = '<span class="cname"></span><span class="cbpm"></span>';
   b.querySelector(".cname").textContent = p.name;
-  b.querySelector(".cbpm").textContent = p.bpm + " BPM";
+  b.querySelector(".cbpm").textContent = p.bars + (p.bars>1?" bars · ":" bar · ") + (p.swing ? "swing "+p.swing : "straight");
   b.addEventListener("click", function(){ loadPattern(i,false); });
   rack.appendChild(b);
 });
@@ -614,68 +610,68 @@ var cellEls = {}, markerEls = [], headEls = [];
 
 function buildGrid(){
   grid.innerHTML = "";
+  grid.style.setProperty("--steps", STEPS);
   cellEls = {}; markerEls = []; headEls = [];
-  var i, r;
+  var i;
 
-  // marker row
   var mg = document.createElement("div"); mg.className="marker gutter"; grid.appendChild(mg);
-  for(i=0;i<16;i++){
+  for(i=0;i<STEPS;i++){
     var m = document.createElement("div"); m.className="marker"; grid.appendChild(m); markerEls.push(m);
   }
-  // count row
   var cg = document.createElement("div"); cg.className="count gutter"; grid.appendChild(cg);
-  for(i=0;i<16;i++){
+  for(i=0;i<STEPS;i++){
     var c = document.createElement("div");
     c.className = "count" + (i%4===0 ? " beat" : "");
-    c.textContent = i%4===0 ? (i/4+1) : (i%4===1 ? "e" : (i%4===2 ? "&" : "a"));
+    c.textContent = i%4===0 ? ((i%16)/4+1) : (i%4===1 ? "e" : (i%4===2 ? "&" : "a"));
     grid.appendChild(c);
   }
-  // instrument rows
   ROWS.forEach(function(row){
     var lab = document.createElement("button");
     lab.type="button"; lab.className="rowlabel"; lab.style.setProperty("--rc","var("+row.c+")");
-    lab.setAttribute("aria-pressed","false");
+    lab.setAttribute("aria-pressed", muted[row.id] ? "true":"false");
+    lab.dataset.muted = muted[row.id] ? "true":"false";
     lab.title = "Mute / unmute " + row.name;
     lab.innerHTML = '<span class="nm"></span>';
     lab.querySelector(".nm").textContent = row.name;
-    var head = document.createElement("div"); head.className="rowhead"; head.dataset.row = row.id;
+    var head = document.createElement("div"); head.className="rowhead";
     var fader = document.createElement("input"); fader.type="range"; fader.className="fader";
     fader.min=0; fader.max=150; fader.step=1; fader.value=Math.round((gains[row.id] === undefined ? 1 : gains[row.id])*100);
-    fader.setAttribute("aria-label", row.name + " level"); fader.title = row.name + " level";
+    fader.style.setProperty("--rc","var("+row.c+")");
+    fader.setAttribute("aria-label", row.name + " level");
+    fader.title = row.name + " level";
     fader.addEventListener("input", function(e){ setGain(row.id, (+e.target.value)/100); });
-    var nt = document.createElement("span"); nt.className="nt"; nt.textContent = row.note === null ? skank.nt : row.note;
+    var nt = document.createElement("span"); nt.className="nt"; nt.textContent=row.note;
     head.appendChild(lab); head.appendChild(fader); head.appendChild(nt);
     lab.addEventListener("click", function(){
       muted[row.id] = !muted[row.id];
       lab.dataset.muted = muted[row.id] ? "true" : "false";
       lab.setAttribute("aria-pressed", muted[row.id] ? "true":"false");
-      cellEls[row.id].forEach(function(el){ el.classList.toggle("row-muted-cell", !!muted[row.id]); });
       cellEls[row.id].forEach(function(el){ el.style.opacity = muted[row.id] ? .28 : 1; });
     });
     grid.appendChild(head);
 
     cellEls[row.id] = [];
-    for(i=0;i<16;i++){
+    for(i=0;i<STEPS;i++){
       (function(step){
         var b = document.createElement("button");
-        b.type="button"; b.className="cell" + (step%4===0 ? " dsep":"");
+        b.type="button"; b.className="cell" + (step%16===0 && step>0 ? " bsep" : (step%4===0 ? " dsep":""));
         b.style.setProperty("--rc","var("+row.c+")");
         b.dataset.v = "0";
+        if(muted[row.id]) b.style.opacity = .28;
         b.setAttribute("aria-label", row.name + " step " + (step+1));
         b.addEventListener("click", function(){
           var v = (live[row.id][step] + 1) % 3;
           live[row.id][step] = v;
           b.dataset.v = v;
-          if(v>0){ initAudio(); trigger(row.id, audio.currentTime, v===2?1:.72); }
+          if(v>0){ initAudio(); trigger(row.id, audio.currentTime, v===2?1:.6); }
         });
         grid.appendChild(b);
         cellEls[row.id].push(b);
       })(i);
     }
   });
-  // playhead row
   var pg = document.createElement("div"); pg.className="gutter"; grid.appendChild(pg);
-  for(i=0;i<16;i++){
+  for(i=0;i<STEPS;i++){
     var h = document.createElement("div"); h.className="playhead"; grid.appendChild(h); headEls.push(h);
   }
 }
@@ -683,7 +679,7 @@ function buildGrid(){
 function renderCells(){
   ROWS.forEach(function(row){
     var arr = live[row.id];
-    for(var i=0;i<16;i++) cellEls[row.id][i].dataset.v = arr[i];
+    for(var i=0;i<STEPS;i++) cellEls[row.id][i].dataset.v = arr[i];
   });
   var d = PATTERNS[current].drop;
   markerEls.forEach(function(m,i){
@@ -696,7 +692,7 @@ function renderInfo(){
   var p = PATTERNS[current];
   document.getElementById("pName").textContent = p.name;
   document.getElementById("pTag").textContent = p.tag;
-  document.getElementById("pEra").textContent = p.era;
+  document.getElementById("pEra").textContent = p.era + " · played on " + kit.name;
   document.getElementById("pAnnot").textContent = p.annot;
   var why = document.getElementById("pWhy"); why.innerHTML = "";
   p.why.forEach(function(t){ var el=document.createElement("p"); el.textContent=t; why.appendChild(el); });
@@ -716,7 +712,7 @@ function renderInfo(){
     var td1 = document.createElement("td");
     var sw = document.createElement("span"); sw.className="swatch"; sw.style.background="var("+r.c+")";
     td1.appendChild(sw); td1.appendChild(document.createTextNode(r.name));
-    var td2 = document.createElement("td"); td2.className="num"; td2.textContent = r.note===null ? "—" : r.note;
+    var td2 = document.createElement("td"); td2.className="num"; td2.textContent = r.note;
     var td3 = document.createElement("td"); td3.textContent = r.gm;
     tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
     tb.appendChild(tr);
@@ -724,31 +720,35 @@ function renderInfo(){
 })();
 
 /* ---------------- audio ---------------- */
-var audio=null, master=null, echoSend=null, delayNode=null, fbNode=null, noise=null;
+var audio=null, master=null, shaper=null, dryGain=null, wetGain=null, noise=null;
 var bus = {}, curBus = null;
 function setGain(id, v){
   gains[id] = v;
   if(bus[id]) bus[id].gain.setTargetAtTime(v, audio.currentTime, 0.02);
 }
 
+function makeCurve(k){
+  var n=1024, c=new Float32Array(n), i, x;
+  for(i=0;i<n;i++){ x=i*2/n-1; c[i]=(1+k)*x/(1+k*Math.abs(x)); }
+  return c;
+}
 function initAudio(){
   if(audio) return;
   var AC = window.AudioContext || window.webkitAudioContext;
   audio = new AC();
 
-  master = audio.createGain(); master.gain.value = 0.85;
+  master = audio.createGain(); master.gain.value = 0.8;
   var comp = audio.createDynamicsCompressor();
-  comp.threshold.value = -14; comp.ratio.value = 3.5; comp.attack.value = .004; comp.release.value = .18;
-  master.connect(comp); comp.connect(audio.destination);
+  comp.threshold.value = -12; comp.ratio.value = 3; comp.attack.value = .004; comp.release.value = .16;
 
-  delayNode = audio.createDelay(2.0);
-  fbNode = audio.createGain(); fbNode.gain.value = 0.4;
-  var damp = audio.createBiquadFilter(); damp.type="lowpass"; damp.frequency.value = 2400;
-  echoSend = audio.createGain(); echoSend.gain.value = echo*0.6;
-  echoSend.connect(delayNode);
-  delayNode.connect(damp); damp.connect(fbNode); fbNode.connect(delayNode);
-  damp.connect(master);
-  updateDelayTime();
+  dryGain = audio.createGain(); dryGain.gain.value = 1;
+  wetGain = audio.createGain(); wetGain.gain.value = 0;
+  var pre = audio.createGain(); pre.gain.value = 2.6;
+  shaper = audio.createWaveShaper(); shaper.curve = makeCurve(6); shaper.oversample = "2x";
+  var post = audio.createGain(); post.gain.value = 0.45;
+  master.connect(dryGain); dryGain.connect(comp);
+  master.connect(pre); pre.connect(shaper); shaper.connect(post); post.connect(wetGain); wetGain.connect(comp);
+  comp.connect(audio.destination);
 
   var len = audio.sampleRate * 2, buf = audio.createBuffer(1, len, audio.sampleRate), d = buf.getChannelData(0);
   for(var i=0;i<len;i++) d[i] = Math.random()*2-1;
@@ -757,11 +757,7 @@ function initAudio(){
     var g = audio.createGain(); g.gain.value = gains[r.id] === undefined ? 1 : gains[r.id];
     g.connect(master); bus[r.id] = g;
   });
-}
-function updateDelayTime(){
-  if(!delayNode) return;
-  var beat = 60/bpm;
-  delayNode.delayTime.setValueAtTime(Math.min(1.9, beat*0.75), audio ? audio.currentTime : 0);
+  setDrive(drive);
 }
 function noiseSrc(){ var s = audio.createBufferSource(); s.buffer = noise; s.loop = true; return s; }
 function env(g, t, peak, dec, att){
@@ -770,137 +766,177 @@ function env(g, t, peak, dec, att){
   g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t+att);
   g.gain.exponentialRampToValueAtTime(0.0001, t+att+dec);
 }
-function out(node, t, dur, send){
-  node.connect(curBus || master);
-  if(send) node.connect(echoSend);
+function out(node){ node.connect(curBus || master); }
+
+
+/* ---------------- kits ----------------
+   Every voice is a small parametric synth; a kit is a table of parameters.
+   kick: f0/f1 pitch sweep, sw sweep time, dec decay, click amount, sat drive
+   snare: nf noise bandpass, nq Q, ndec, tones [[f,amp,dec]...]
+   clap: bursts, gap, bp, tail
+   rim: f0/f1, dec, noise bp
+   hat: mode "metal"|"noise", hp cutoff, dec (ch/ph/oh), tone (metal ratios base)
+   tom: [f0 ratio, f1 ratio, dec] per size, wave, noise
+   ride: metal ratios base f, dec, hp
+*/
+var KITS = {
+  "707": { name:"707", label:"Roland TR-707 — 1985, PCM samples: short, crisp, slightly lo-fi.",
+    kick:{f0:150,f1:58,sw:0.05,dec:0.22,click:0.3,wave:"sine"},
+    snare:{nf:2600,nq:0.8,ndec:0.13,tones:[[210,0.22,0.07],[400,0.1,0.05]]},
+    clap:{bursts:3,gap:0.009,bp:1700,q:1.6,tail:0.1},
+    rim:{f0:1100,f1:600,dec:0.03,nbp:3400},
+    hat:{mode:"noise",hp:8500,ch:0.04,ph:0.03,oh:0.22,amp:0.26},
+    tom:{wave:"sine",ratio:[1,0.55],dec:[0.28,0.24,0.2],base:[140,190,260],noise:0.12},
+    ride:{base:380,dec:0.7,hp:4500,amp:0.4}
+  },
+  "808": { name:"808", label:"Roland TR-808 — 1980, analogue: long boomy kick, tonal snare, metallic hats.",
+    kick:{f0:110,f1:46,sw:0.03,dec:0.75,click:0.08,wave:"sine"},
+    snare:{nf:1800,nq:0.5,ndec:0.18,tones:[[176,0.28,0.16],[238,0.18,0.12]]},
+    clap:{bursts:4,gap:0.012,bp:1100,q:1.2,tail:0.2},
+    rim:{f0:1700,f1:900,dec:0.025,nbp:4200},
+    hat:{mode:"metal",hp:7000,ch:0.06,ph:0.045,oh:0.42,amp:0.24,base:205},
+    tom:{wave:"sine",ratio:[1,0.62],dec:[0.5,0.42,0.34],base:[90,130,180],noise:0.05},
+    ride:{base:330,dec:1.4,hp:3200,amp:0.38}
+  },
+  "909": { name:"909", label:"Roland TR-909 — 1983, analogue kick and snare with sampled cymbals: the house kit.",
+    kick:{f0:170,f1:48,sw:0.09,dec:0.36,click:0.22,wave:"sine"},
+    snare:{nf:2200,nq:0.6,ndec:0.19,tones:[[185,0.2,0.1],[330,0.12,0.1]]},
+    clap:{bursts:4,gap:0.011,bp:1500,q:1.4,tail:0.16},
+    rim:{f0:900,f1:420,dec:0.05,nbp:3200},
+    hat:{mode:"mix",hp:7500,ch:0.05,ph:0.035,oh:0.32,amp:0.28,base:220},
+    tom:{wave:"sine",ratio:[1,0.5],dec:[0.4,0.32,0.26],base:[150,210,300],noise:0.08},
+    ride:{base:420,dec:1.0,hp:3500,amp:0.45}
+  },
+  "sds": { name:"Simmons", label:"Simmons SDS-V — 1981, an electronic drum kit rather than a drum machine: hexagonal pads driving analogue modules with pitch-swept toms, a noise snare and a clicky kick. See ‘The kits’ below.",
+    kick:{f0:260,f1:40,sw:0.14,dec:0.32,click:0.4,wave:"triangle"},
+    snare:{nf:1400,nq:0.4,ndec:0.26,tones:[[240,0.3,0.14],[120,0.2,0.2]],sweep:1},
+    clap:{bursts:2,gap:0.02,bp:900,q:0.8,tail:0.3},
+    rim:{f0:2400,f1:600,dec:0.06,nbp:2600},
+    hat:{mode:"noise",hp:5500,ch:0.05,ph:0.04,oh:0.36,amp:0.3},
+    tom:{wave:"triangle",ratio:[2.6,0.55],dec:[0.7,0.58,0.48],base:[110,160,230],noise:0.2},
+    ride:{base:260,dec:1.6,hp:2200,amp:0.4}
+  }
+};
+var KIT_ORDER = ["707","808","909","sds"];
+var kit = KITS["909"];
+
+function tomVoice(t, vel, idx){
+  var k = kit.tom, base = k.base[idx], dec = k.dec[idx];
+  var o = audio.createOscillator(); o.type=k.wave;
+  o.frequency.setValueAtTime(base*k.ratio[0], t);
+  o.frequency.exponentialRampToValueAtTime(base*k.ratio[1], t+dec*0.55);
+  var g = audio.createGain(); env(g, t, 0.68*vel, dec, 0.003);
+  o.connect(g); out(g); o.start(t); o.stop(t+dec+0.1);
+  if(k.noise>0){
+    var s = noiseSrc(), f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=base*3; f.Q.value=0.8;
+    var g2 = audio.createGain(); env(g2, t, k.noise*vel, 0.04, 0.001);
+    s.connect(f); f.connect(g2); out(g2); s.start(t); s.stop(t+0.1);
+  }
+}
+function hatVoice(t, vel, dec, amp){
+  var k = kit.hat, mix = audio.createGain(), i, o;
+  var ratios=[2,3,4.16,5.43,6.79,8.21];
+  if(k.mode!=="noise"){
+    mix.gain.value = 0.05;
+    for(i=0;i<ratios.length;i++){
+      o = audio.createOscillator(); o.type="square"; o.frequency.value = k.base*ratios[i];
+      o.connect(mix); o.start(t); o.stop(t+dec+0.05);
+    }
+  }
+  if(k.mode!=="metal"){
+    var s = noiseSrc(), ng = audio.createGain(); ng.gain.value = k.mode==="noise" ? 0.9 : 0.5;
+    s.connect(ng); ng.connect(mix); s.start(t); s.stop(t+dec+0.05);
+  }
+  var f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value=k.hp;
+  var bp = audio.createBiquadFilter(); bp.type="peaking"; bp.frequency.value=9000; bp.gain.value=4;
+  var g = audio.createGain(); env(g, t, amp*vel, dec, 0.001);
+  mix.connect(f); f.connect(bp); bp.connect(g); out(g);
 }
 
 function trigger(id, t, vel){
   if(!audio) return;
   if(muted[id]) return;
   curBus = bus[id];
-  var g, o, s, f, i;
+  var g, o, s, f, i, k;
   if(id==="kick"){
-    o = audio.createOscillator(); o.type="sine";
-    o.frequency.setValueAtTime(132, t);
-    o.frequency.exponentialRampToValueAtTime(44, t+0.11);
-    g = audio.createGain(); env(g, t, 0.62*vel, 0.42, 0.003);
-    o.connect(g); out(g, t); o.start(t); o.stop(t+0.55);
-  } else if(id==="snare"){
-    s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1850; f.Q.value=0.7;
-    g = audio.createGain(); env(g, t, 0.5*vel, 0.17);
-    s.connect(f); f.connect(g); out(g, t, 0, true); s.start(t); s.stop(t+0.3);
-    o = audio.createOscillator(); o.type="triangle"; o.frequency.value=186;
-    var g2 = audio.createGain(); env(g2, t, 0.16*vel, 0.11);
-    o.connect(g2); out(g2, t, 0, true); o.start(t); o.stop(t+0.2);
-  } else if(id==="rim"){
-    o = audio.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(540, t);
-    o.frequency.exponentialRampToValueAtTime(300, t+0.04);
-    g = audio.createGain(); env(g, t, 0.55*vel, 0.055, 0.001);
-    o.connect(g); out(g, t, 0, true); o.start(t); o.stop(t+0.12);
-    s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=2600; f.Q.value=3;
-    var g3 = audio.createGain(); env(g3, t, 0.3*vel, 0.03, 0.001);
-    s.connect(f); f.connect(g3); out(g3, t, 0, true); s.start(t); s.stop(t+0.1);
-  } else if(id==="hh" || id==="oh"){
-    var open = id==="oh";
-    s = noiseSrc(); f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value = open?6800:8200;
-    g = audio.createGain(); env(g, t, (open?0.22:0.16)*vel, open?0.3:0.045, 0.001);
-    s.connect(f); f.connect(g); out(g, t); s.start(t); s.stop(t + (open?0.5:0.12));
-  } else if(id==="ride"){
-    var ratios=[2,3,4.16,5.43,6.79,8.21], mix = audio.createGain();
-    for(i=0;i<ratios.length;i++){
-      o = audio.createOscillator(); o.type="square"; o.frequency.value = 262*ratios[i];
-      o.connect(mix); o.start(t); o.stop(t+0.5);
+    k = kit.kick;
+    o = audio.createOscillator(); o.type=k.wave;
+    o.frequency.setValueAtTime(k.f0, t);
+    o.frequency.exponentialRampToValueAtTime(k.f1, t+k.sw);
+    g = audio.createGain(); env(g, t, 0.9*vel, k.dec, 0.002);
+    o.connect(g); out(g); o.start(t); o.stop(t+k.dec+0.15);
+    if(k.click>0){
+      s = noiseSrc(); f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value=1200;
+      var kc = audio.createGain(); env(kc, t, k.click*vel, 0.012, 0.001);
+      s.connect(f); f.connect(kc); out(kc); s.start(t); s.stop(t+0.05);
     }
-    mix.gain.value = 0.07;
-    f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value=5200;
-    g = audio.createGain(); env(g, t, 0.5*vel, 0.38, 0.001);
-    mix.connect(f); f.connect(g); out(g, t, 0, true);
-  } else if(id==="tom"){
-    o = audio.createOscillator(); o.type="sine";
-    o.frequency.setValueAtTime(196, t); o.frequency.exponentialRampToValueAtTime(92, t+0.2);
-    g = audio.createGain(); env(g, t, 0.6*vel, 0.33, 0.003);
-    o.connect(g); out(g, t, 0, true); o.start(t); o.stop(t+0.45);
-  } else if(id==="skank"){
-    skankVoice(t, vel);
+  } else if(id==="snare"){
+    k = kit.snare;
+    s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=k.nf; f.Q.value=k.nq;
+    if(k.sweep){ f.frequency.setValueAtTime(k.nf*3, t); f.frequency.exponentialRampToValueAtTime(k.nf, t+0.12); }
+    g = audio.createGain(); env(g, t, 0.45*vel, k.ndec);
+    s.connect(f); f.connect(g); out(g); s.start(t); s.stop(t+k.ndec+0.1);
+    for(i=0;i<k.tones.length;i++){
+      var tn = k.tones[i];
+      o = audio.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(tn[0]*1.3, t);
+      o.frequency.exponentialRampToValueAtTime(tn[0], t+0.05);
+      var g2 = audio.createGain(); env(g2, t, tn[1]*vel, tn[2]);
+      o.connect(g2); out(g2); o.start(t); o.stop(t+tn[2]+0.1);
+    }
+  } else if(id==="clap"){
+    k = kit.clap;
+    for(i=0;i<k.bursts;i++){
+      var tt = t + i*k.gap, last = i===k.bursts-1;
+      s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=k.bp; f.Q.value=k.q;
+      g = audio.createGain(); env(g, tt, (last?0.5:0.3)*vel, last?k.tail:0.012, 0.001);
+      s.connect(f); f.connect(g); out(g); s.start(tt); s.stop(tt+k.tail+0.1);
+    }
+  } else if(id==="rim"){
+    k = kit.rim;
+    o = audio.createOscillator(); o.type="triangle"; o.frequency.setValueAtTime(k.f0, t);
+    o.frequency.exponentialRampToValueAtTime(k.f1, t+0.03);
+    g = audio.createGain(); env(g, t, 0.5*vel, k.dec, 0.001);
+    o.connect(g); out(g); o.start(t); o.stop(t+0.1);
+    s = noiseSrc(); f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=k.nbp; f.Q.value=4;
+    var g3 = audio.createGain(); env(g3, t, 0.3*vel, 0.025, 0.001);
+    s.connect(f); f.connect(g3); out(g3); s.start(t); s.stop(t+0.08);
+  } else if(id==="ch"){
+    hatVoice(t, vel, kit.hat.ch, kit.hat.amp);
+  } else if(id==="ph"){
+    hatVoice(t, vel, kit.hat.ph, kit.hat.amp*0.8);
+  } else if(id==="oh"){
+    hatVoice(t, vel, kit.hat.oh, kit.hat.amp*1.05);
+  } else if(id==="ltom"){
+    tomVoice(t, vel, 0);
+  } else if(id==="mtom"){
+    tomVoice(t, vel, 1);
+  } else if(id==="htom"){
+    tomVoice(t, vel, 2);
+  } else if(id==="ride"){
+    k = kit.ride;
+    var ratios=[1,1.48,2.05,2.94,3.6,4.9], mix = audio.createGain(); mix.gain.value=0.08;
+    for(i=0;i<ratios.length;i++){
+      o = audio.createOscillator(); o.type="square"; o.frequency.value = k.base*ratios[i];
+      o.connect(mix); o.start(t); o.stop(t+k.dec+0.1);
+    }
+    f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value=k.hp;
+    g = audio.createGain(); env(g, t, k.amp*vel, k.dec, 0.001);
+    mix.connect(f); f.connect(g); out(g);
   }
 }
 
-/* ---------------- skank voices ----------------
-   The same Cm chop on the offbeat, four ways. Guitar is the default — the
-   tutorial-era skank is a muted electric through a small amp. */
-var SKANKS = [
-  {id:"gtr",  name:"Guitar", nt:"gtr",  label:"Muted electric: four detuned saws, bandpass, fast pluck."},
-  {id:"pno",  name:"Piano",  nt:"pno",  label:"Piano bang: two partials per note, quick lowpass, longer ring."},
-  {id:"org",  name:"Organ",  nt:"org",  label:"Organ bubble: sines with a 2nd/3rd drawbar, flat envelope, no attack."},
-  {id:"clav", name:"Clav",   nt:"clav", label:"Clavinet: narrow pulse through a highpass, dry and percussive."}
-];
-var skank = SKANKS[0];
-var SKANK_FREQS = [261.63, 311.13, 392.00, 523.25];
-function skankVoice(t, vel){
-  var i, o, f, g, hp, mix = audio.createGain();
-  if(skank.id==="gtr"){
-    mix.gain.value=0.12;
-    for(i=0;i<SKANK_FREQS.length;i++){
-      o = audio.createOscillator(); o.type="sawtooth";
-      o.frequency.value = SKANK_FREQS[i] * (1 + (i%2? 0.0025 : -0.0025));
-      o.connect(mix); o.start(t); o.stop(t+0.2);
-    }
-    f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1450; f.Q.value=1.1;
-    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=520;
-    g = audio.createGain(); env(g, t, 0.5*vel, 0.12, 0.004);
-    mix.connect(f); f.connect(hp); hp.connect(g); out(g, t, 0, true);
-  } else if(skank.id==="pno"){
-    mix.gain.value=0.09;
-    for(i=0;i<SKANK_FREQS.length;i++){
-      o = audio.createOscillator(); o.type="triangle"; o.frequency.value = SKANK_FREQS[i];
-      o.connect(mix); o.start(t); o.stop(t+0.45);
-      var o2 = audio.createOscillator(); o2.type="sine"; o2.frequency.value = SKANK_FREQS[i]*2.01;
-      var g2 = audio.createGain(); env(g2, t, 0.35, 0.08, 0.002);
-      o2.connect(g2); g2.connect(mix); o2.start(t); o2.stop(t+0.2);
-    }
-    f = audio.createBiquadFilter(); f.type="lowpass"; f.frequency.setValueAtTime(5200, t);
-    f.frequency.exponentialRampToValueAtTime(1400, t+0.25); f.Q.value=0.6;
-    g = audio.createGain(); env(g, t, 0.55*vel, 0.3, 0.002);
-    mix.connect(f); f.connect(g); out(g, t, 0, true);
-  } else if(skank.id==="org"){
-    mix.gain.value=0.07;
-    for(i=0;i<SKANK_FREQS.length;i++){
-      [1, 2, 3].forEach(function(h, j){
-        var oo = audio.createOscillator(); oo.type="sine"; oo.frequency.value = SKANK_FREQS[i]*h;
-        var gg = audio.createGain(); gg.gain.value = j===0 ? 1 : (j===1 ? 0.5 : 0.28);
-        oo.connect(gg); gg.connect(mix); oo.start(t); oo.stop(t+0.24);
-      });
-    }
-    g = audio.createGain();
-    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(0.5*vel, t+0.012);
-    g.gain.setValueAtTime(0.5*vel, t+0.13); g.gain.linearRampToValueAtTime(0.0001, t+0.19);
-    mix.connect(g); out(g, t, 0, true);
-  } else {
-    mix.gain.value=0.11;
-    var real = new Float32Array(16), imag = new Float32Array(16);
-    for(i=1;i<16;i++){ imag[i] = Math.sin(i*Math.PI*0.18)/i; }
-    var wave = audio.createPeriodicWave(real, imag);
-    for(i=0;i<SKANK_FREQS.length;i++){
-      o = audio.createOscillator(); o.setPeriodicWave(wave); o.frequency.value = SKANK_FREQS[i]*0.5;
-      o.connect(mix); o.start(t); o.stop(t+0.16);
-    }
-    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=900; hp.Q.value=1.4;
-    f = audio.createBiquadFilter(); f.type="peaking"; f.frequency.value=2600; f.gain.value=6;
-    g = audio.createGain(); env(g, t, 0.6*vel, 0.09, 0.001);
-    mix.connect(hp); hp.connect(f); f.connect(g); out(g, t, 0, true);
-  }
-}
+/* ---------------- kit selector ---------------- */
 (function(){
-  var seg = document.getElementById("skankSeg");
-  SKANKS.forEach(function(sk){
-    var b = document.createElement("button"); b.type="button"; b.textContent = sk.name; b.title = sk.label;
-    b.setAttribute("aria-pressed", sk===skank ? "true":"false");
+  var seg = document.getElementById("kitSeg");
+  KIT_ORDER.forEach(function(id){
+    var b = document.createElement("button"); b.type="button";
+    b.textContent = KITS[id].name; b.title = KITS[id].label;
+    b.setAttribute("aria-pressed", kit===KITS[id] ? "true":"false");
     b.addEventListener("click", function(){
-      skank = sk;
+      kit = KITS[id];
       for(var i=0;i<seg.children.length;i++) seg.children[i].setAttribute("aria-pressed", seg.children[i]===b ? "true":"false");
-      var nt = document.querySelector('.rowhead[data-row="skank"] .nt'); if(nt) nt.textContent = sk.nt;
-      initAudio(); trigger("skank", audio.currentTime, 0.8);
+      var el = document.getElementById("kitNote"); if(el) el.textContent = KITS[id].label;
+      var pn = document.getElementById("pEra"); if(pn) pn.textContent = PATTERNS[current].era + " · played on " + KITS[id].name;
     });
     seg.appendChild(b);
   });
@@ -919,13 +955,13 @@ function stepOffset(i){
 function scheduleStep(i, t){
   ROWS.forEach(function(r){
     var v = live[r.id][i];
-    if(v>0) trigger(r.id, t + stepOffset(i), v===2 ? 1 : 0.68);
+    if(v>0) trigger(r.id, t + stepOffset(i), v===2 ? 1 : 0.55);
   });
   queue.push({s:i, t:t});
 }
 function advance(){
   nextTime += stepDur();
-  step = (step+1)%16;
+  step = (step+1)%STEPS;
 }
 function scheduler(){
   while(nextTime < audio.currentTime + 0.12){
@@ -937,8 +973,8 @@ function draw(){
   if(!playing) return;
   var now = audio.currentTime, cur = -1;
   while(queue.length && queue[0].t <= now){ cur = queue.shift().s; }
-  if(cur >= 0){
-    for(var i=0;i<16;i++) headEls[i].classList.toggle("on", i===cur);
+  if(cur >= 0 && cur < STEPS){
+    for(var i=0;i<STEPS;i++) headEls[i].classList.toggle("on", i===cur);
     ROWS.forEach(function(r){
       var el = cellEls[r.id][cur];
       if(live[r.id][cur]>0 && !muted[r.id]){
@@ -974,23 +1010,26 @@ function stop(){
 playBtn.addEventListener("click", function(){ playing ? stop() : start(); });
 
 document.getElementById("tempo").addEventListener("input", function(e){
-  bpm = +e.target.value; syncTransportLabels(); updateDelayTime();
+  bpm = +e.target.value; syncTransportLabels();
 });
 document.getElementById("swing").addEventListener("input", function(e){
   swing = (+e.target.value)/100; syncTransportLabels();
 });
-function setEcho(v){
-  echo = v;
-  document.getElementById("echoVal").textContent = Math.round(v*100);
-  if(echoSend) echoSend.gain.setTargetAtTime(v*0.6, audio.currentTime, 0.05);
+function setDrive(v){
+  drive = v;
+  document.getElementById("driveVal").textContent = Math.round(v*100);
+  if(!audio) return;
+  wetGain.gain.setTargetAtTime(v, audio.currentTime, 0.05);
+  dryGain.gain.setTargetAtTime(1 - 0.65*v, audio.currentTime, 0.05);
 }
-document.getElementById("echo").addEventListener("input", function(e){
-  initAudio(); setEcho((+e.target.value)/100);
+document.getElementById("drive").addEventListener("input", function(e){
+  initAudio(); setDrive((+e.target.value)/100);
 });
 document.getElementById("reset").addEventListener("click", function(){
-  document.getElementById("echo").value = 0; setEcho(0);
+  document.getElementById("drive").value = 0; setDrive(0);
   ROWS.forEach(function(r){ setGain(r.id, 1); });
-  var pos = {}; buildGrid(); loadPattern(current, false);
+  gains = {}; ROWS.forEach(function(r){ if(bus[r.id]) bus[r.id].gain.setTargetAtTime(1, audio.currentTime, 0.02); });
+  buildGrid(); loadPattern(current, false);
 });
 
 document.addEventListener("keydown", function(e){
@@ -1007,19 +1046,18 @@ loadPattern(0, false);
 <script>
 (function(){
   var modes=["system","light","dark"], el=document.documentElement, i=0;
-  try{ var st=localStorage.getItem("odm-theme"); if(st&&modes.indexOf(st)>=0) i=modes.indexOf(st); }catch(e){}
+  try{ var st=localStorage.getItem("hm-theme"); if(st&&modes.indexOf(st)>=0) i=modes.indexOf(st); }catch(e){}
   var btn=document.getElementById("themeBtn");
   if(!btn) return;
   function apply(){
     var m=modes[i];
     if(m==="system") el.removeAttribute("data-theme"); else el.setAttribute("data-theme",m);
     btn.textContent="Theme: "+m.charAt(0).toUpperCase()+m.slice(1);
-    try{ localStorage.setItem("odm-theme",m); }catch(e){}
+    try{ localStorage.setItem("hm-theme",m); }catch(e){}
   }
   btn.addEventListener("click",function(){ i=(i+1)%modes.length; apply(); });
   apply();
 })();
 </script>
-
 </body>
 </html>

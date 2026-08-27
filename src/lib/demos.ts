@@ -21,6 +21,14 @@ export type Demo = {
 
 export const demos: Demo[] = [
 	{
+		slug: 'house-machine',
+		title: 'House Machine',
+		description:
+			'Fem housetrummönster från Studio Brootle – 707, 909, 606, en jazzsamplad loop och en konstig – lästa ur MIDI-filerna till ett spelbart 16-stegsrutnät.',
+		tags: ['webaudio', 'house', 'midi', 'sequencer'],
+		date: '2026-08-27'
+	},
+	{
 		slug: 'one-drop-machine',
 		title: 'One Drop Machine',
 		description:

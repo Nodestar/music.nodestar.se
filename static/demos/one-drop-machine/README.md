@@ -58,7 +58,22 @@ Rolling Stone.
   plus en rad text under rutnätet som pekar ut den. Den flyttar sig med mönstret
   och försvinner för ska och 2-step, där ingen droppe finns.
 - **Tape echo**: punkterad åttondels feedback-delay på virvel, cross-stick och
-  skank. En enda utsvävning, resten hålls tyst.
+  skank, som en fader 0–100 % (standard 0). Reset nollar den. En enda
+  utsvävning, resten hålls tyst.
+
+## Skankljud
+
+Väljare i konsolen: **Gitarr** (standard — fyra avstämda sågtänder genom
+bandpass, snabbt anslag), **Piano** (triangel + oktavpartial, lågpass som
+stänger, längre klang), **Orgel** (sinus med 2:a/3:e drawbar, platt envelope)
+och **Clav** (smal puls genom highpass, torr och perkussiv). Samma Cm-chop på
+samma steg — bara klangen byts.
+
+## Gain per rad
+
+Varje röst går genom en egen GainNode-buss före mastern; fadern (0–150 %)
+sitter i radetiketten bredvid namnet, namnet mutar. Reset återställer fadrarna
+till 100 tillsammans med mönstret.
 
 ## Ljudarkitektur
 

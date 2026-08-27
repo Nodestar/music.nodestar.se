@@ -16,4 +16,7 @@
 	<span class="font-mono text-[15px] leading-none tracking-tight lowercase">
 		<span class="text-foreground">music</span><span class="text-muted-foreground">.nodestar.se</span>
 	</span>
+	<span
+		class="-rotate-6 select-none rounded-[2px] border border-[#D2461B] px-1 py-[2px] font-mono text-[8px] leading-none tracking-[.16em] text-[#D2461B] uppercase"
+		aria-label="beta">beta</span>
 </a>

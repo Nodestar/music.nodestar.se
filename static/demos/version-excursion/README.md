@@ -171,3 +171,11 @@ tutorialens skärmdumpar och kunde alltså inte återskapas:
 En sak till, värd att veta: **kapitel 15 motsäger sig själv.** Det utskrivna
 rutnätet visar en bastrumma på trean, brödtexten bredvid nämner den inte. Sidan
 följer rutnätet.
+
+## Kit trim
+
+Under bordet finns en trim-panel med en gain-fader (0–150 %) per trumröst — kick,
+snare, rim, hattar, tom, kete, funde, kete 2, shaker, wood, cowbell, tamb. Varje
+röst har en egen GainNode som matar drum-bussen **före** kitets waveshaper och
+lågpass, så trimmen påverkar hur hårt Tape-kitet drivs; kanal 1:s fader och
+sändningar ligger efter som förut.
