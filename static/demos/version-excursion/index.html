@@ -469,7 +469,12 @@ function init(){
   master=ac.createGain(); master.gain.value=.9;
   var lim=ac.createDynamicsCompressor();
   lim.threshold.value=-10; lim.knee.value=12; lim.ratio.value=3.5; lim.attack.value=.025; lim.release.value=.25;
-  master.connect(lim); lim.connect(ac.destination);
+  /* Chrome's compressor adds fixed make-up gain (≈ the reduction a 0 dBFS input
+     would get: 7 dB here, ×2.3) whether or not the signal reaches the threshold.
+     Left uncompensated it pushed a clean bass straight into the output clip. */
+  var makeupDb=-(lim.threshold.value+(0-lim.threshold.value)/lim.ratio.value);
+  var trim=ac.createGain(); trim.gain.value=Math.pow(10,-makeupDb/20)*.85;
+  master.connect(lim); lim.connect(trim); trim.connect(ac.destination);
 
   // aux 1: delay (feedback 0 in the device) -> EQ -> return channel 11 -> loops back in
   delayIn=ac.createGain();
