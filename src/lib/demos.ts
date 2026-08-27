@@ -10,7 +10,7 @@ export type Demo = {
 	slug: string;
 	title: string;
 	description: string;
-	/** Absolut eller relativ URL till demon. Default: `/demos/<slug>/` */
+	/** Absolut eller relativ URL till demon. Default: `/demos/<slug>/index.html` */
 	href?: string;
 	/** Bild-URL. Default: `/demos/<slug>/screenshot.png` */
 	image?: string;
@@ -20,6 +20,22 @@ export type Demo = {
 };
 
 export const demos: Demo[] = [
+	{
+		slug: 'one-drop-machine',
+		title: 'One Drop Machine',
+		description:
+			'Åtta grundläggande reggaetrummönster på ett spelbart 16-stegs MIDI-rutnät, med noter och historik bakom varje.',
+		tags: ['webaudio', 'reggae', 'midi', 'sequencer'],
+		date: '2026-08-27'
+	},
+	{
+		slug: 'version-excursion',
+		title: 'Version Excursion',
+		description:
+			'Ett dubmixerbord byggt från Messian Dreads tutorial: sex riddims, tre trumkit, percussion och fyra effektreturer.',
+		tags: ['webaudio', 'dub', 'mixer', 'reggae'],
+		date: '2026-08-27'
+	},
 	{
 		slug: 'example',
 		title: 'Exempeldemo',
@@ -31,7 +47,7 @@ export const demos: Demo[] = [
 ];
 
 export function demoHref(d: Demo): string {
-	return d.href ?? `/demos/${d.slug}/`;
+	return d.href ?? `/demos/${d.slug}/index.html`;
 }
 
 export function demoImage(d: Demo): string {
