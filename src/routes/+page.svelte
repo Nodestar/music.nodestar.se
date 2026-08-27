@@ -3,6 +3,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
+	import Logo from '$lib/components/Logo.svelte';
 
 	const sorted = [...demos].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
 </script>
@@ -14,7 +15,7 @@
 
 <div class="min-h-svh bg-background text-foreground">
 	<header class="mx-auto flex max-w-6xl items-center justify-between px-6 py-8">
-		<a href="/" class="text-lg font-semibold tracking-tight">music.nodestar.se</a>
+		<Logo />
 		<Button variant="ghost" size="sm" href="https://github.com/Nodestar/music.nodestar.se" target="_blank" rel="noreferrer">
 			GitHub
 		</Button>
