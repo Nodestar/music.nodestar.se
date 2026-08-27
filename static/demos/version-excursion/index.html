@@ -468,7 +468,7 @@ function init(){
   var AC=window.AudioContext||window.webkitAudioContext; ac=new AC();
   master=ac.createGain(); master.gain.value=.9;
   var lim=ac.createDynamicsCompressor();
-  lim.threshold.value=-8; lim.ratio.value=12; lim.attack.value=.003; lim.release.value=.2;
+  lim.threshold.value=-10; lim.knee.value=12; lim.ratio.value=3.5; lim.attack.value=.025; lim.release.value=.25;
   master.connect(lim); lim.connect(ac.destination);
 
   // aux 1: delay (feedback 0 in the device) -> EQ -> return channel 11 -> loops back in
@@ -485,7 +485,8 @@ function init(){
 
   // aux 2: reverb 1, long, post
   rv1In=ac.createGain(); var rv1=ac.createConvolver(); rv1.buffer=irBuffer(3.4,2.2);
-  rv1Ret=ac.createGain(); rv1In.connect(rv1); rv1.connect(rv1Ret); rv1Ret.connect(master);
+  rv1Ret=ac.createGain(); var rv1hp=ac.createBiquadFilter(); rv1hp.type="highpass"; rv1hp.frequency.value=220;
+  rv1In.connect(rv1hp); rv1hp.connect(rv1); rv1.connect(rv1Ret); rv1Ret.connect(master);
 
   // aux 3: space echo — wobbling delay with its own feedback
   spIn=ac.createGain(); spDelay=ac.createDelay(2);
@@ -499,14 +500,15 @@ function init(){
 
   // aux 4: reverb 2, short, pre-fader
   rv2In=ac.createGain(); var rv2=ac.createConvolver(); rv2.buffer=irBuffer(.9,3.4);
-  rv2Ret=ac.createGain(); rv2In.connect(rv2); rv2.connect(rv2Ret); rv2Ret.connect(master);
+  rv2Ret=ac.createGain(); var rv2hp=ac.createBiquadFilter(); rv2hp.type="highpass"; rv2hp.frequency.value=220;
+  rv2In.connect(rv2hp); rv2hp.connect(rv2); rv2.connect(rv2Ret); rv2Ret.connect(master);
 
   CH.forEach(function(c){
     var g=ac.createGain();                 // channel fader + mute
     var s1=ac.createGain(); s1.gain.value=c.echo;   // aux 1 post
     var s2=ac.createGain(); s2.gain.value=c.verb;   // aux 2 post
     var s3=ac.createGain(); s3.gain.value=0;        // aux 3 post (global)
-    var p4=ac.createGain(); p4.gain.value=.20;      // aux 4 PRE
+    var p4=ac.createGain(); p4.gain.value=c.id===2?.04:.20;      // aux 4 PRE (bass stays dry)
     g.connect(master); g.connect(s1); g.connect(s2); g.connect(s3);
     s1.connect(delayIn); s2.connect(rv1In); s3.connect(spIn); p4.connect(rv2In);
     chNode[c.id]=g; chSend[c.id]={e:s1,v:s2}; spcSend[c.id]=s3; preSend[c.id]=p4;
@@ -658,14 +660,14 @@ function bass(t,m,v){
   var fr=mtof(T(m));
   var o=ac.createOscillator();o.type="sine";o.frequency.setValueAtTime(fr,t);
   var o2=ac.createOscillator();o2.type="triangle";o2.frequency.setValueAtTime(fr,t);
-  var g2=ac.createGain();g2.gain.value=.35;o2.connect(g2);
+  var g2=ac.createGain();g2.gain.value=.22;o2.connect(g2);
   var hp=ac.createBiquadFilter();hp.type="highpass";hp.frequency.value=32;hp.Q.value=.5;
   var f=ac.createBiquadFilter();f.type="lowpass";f.Q.value=.7;
   f.frequency.setValueAtTime(fr*4+120,t); f.frequency.exponentialRampToValueAtTime(Math.max(90,fr*1.6),t+.2);
   var g=ac.createGain();
   g.gain.setValueAtTime(.0001,t);
-  g.gain.exponentialRampToValueAtTime(.8*v,t+.02);
-  g.gain.setValueAtTime(.8*v,t+.18);
+  g.gain.exponentialRampToValueAtTime(.5*v,t+.02);
+  g.gain.setValueAtTime(.5*v,t+.18);
   g.gain.setTargetAtTime(.0001,t+.18,.07);
   o.connect(hp);g2.connect(hp);hp.connect(f);f.connect(g);toCh(g,2);
   o.start(t);o2.start(t);o.stop(t+.7);o2.stop(t+.7);
