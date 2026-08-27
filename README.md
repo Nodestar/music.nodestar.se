@@ -36,3 +36,14 @@ Resultatet hamnar i `build/` – ren HTML/CSS/JS. Kopiera mappen till valfri web
 `href` och `image` kan sättas explicit om demon ligger någon annanstans.
 
 Allt under `static/` kopieras oförändrat till `build/`, så demos kan byggas helt separat (t.ex. i en annan Claude-instans) utan att röra SvelteKit-koden.
+
+## Publicera (FTP)
+
+```sh
+cp .env.deploy.example .env.deploy   # fyll i host/user/pass/dir – filen är gitignorad
+brew install lftp
+npm run deploy:dry                   # visar vad som skulle laddas upp/raderas
+npm run deploy                       # bygger och speglar build/ till servern
+```
+
+`scripts/deploy.sh` använder `lftp mirror --reverse --delete`, dvs. servern blir en exakt kopia av `build/` inom `FTP_DIR`.
