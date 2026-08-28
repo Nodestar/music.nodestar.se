@@ -119,7 +119,7 @@ body{
 /* nameplate */
 .plate{
   display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
-  border-bottom:3px double var(--line);padding-bottom:14px;
+  border-bottom:2px solid var(--ink);padding-bottom:22px;
 }
 .eyebrow{
   font-family:"IBM Plex Mono",monospace;font-size:11px;font-weight:500;
@@ -135,10 +135,46 @@ h1 span{color:var(--red)}
 .sub a{color:var(--cyan)}
 
 /* transport */
-.transport{
-  display:flex;gap:14px;align-items:center;flex-wrap:wrap;
-  background:var(--panel);border:1px solid var(--line);padding:11px 13px;box-shadow:var(--shadow);
+.deck{
+  background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:12px 14px;
+  box-shadow:var(--shadow);display:flex;flex-direction:column;gap:12px;
 }
+.console{
+  display:flex;gap:14px 16px;align-items:center;flex-wrap:wrap;
+  padding-top:12px;border-top:1px solid var(--line-soft);
+}
+.ctl{display:flex;align-items:center;gap:10px}
+.ctl .legend{white-space:nowrap}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:3px;box-shadow:var(--shadow)}
+.stagehead{
+  display:flex;justify-content:space-between;align-items:baseline;gap:18px;flex-wrap:wrap;
+  padding:16px 18px 14px;border-bottom:1px solid var(--line-soft);
+}
+.stagehead h2{
+  font-family:Anton,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;
+  font-size:clamp(24px,4vw,34px);line-height:1;margin:0;letter-spacing:.02em;
+}
+.stagehead .meta{
+  font-family:"DM Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.stagehead .meta b{display:block;color:var(--red);font-size:19px;letter-spacing:.02em;font-weight:600}
+.filters{
+  display:flex;gap:10px 22px;align-items:center;flex-wrap:wrap;
+  padding:12px 18px;border-bottom:1px solid var(--line-soft);
+}
+.stage .patwrap{padding:14px 18px 6px}
+.annot{padding:0 18px 14px;display:flex;flex-direction:column;gap:4px}
+.riddims .btn{
+  display:flex;flex-direction:column;gap:1px;align-items:flex-start;text-align:left;
+  padding:8px 13px 9px;border-radius:3px;background:var(--panel);letter-spacing:0;text-transform:none;
+}
+.riddims .btn .cname{
+  font-family:Anton,"Arial Narrow",sans-serif;font-weight:400;font-size:15px;letter-spacing:.03em;
+  text-transform:uppercase;line-height:1.1;white-space:nowrap;
+}
+.riddims .btn .cdesc{font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.1em;color:var(--ink-3)}
+.riddims .btn[aria-pressed="true"] .cdesc{color:var(--cyan)}
 button{font-family:inherit}
 .btn{
   appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);
@@ -168,14 +204,11 @@ input[type=range].h::-moz-range-thumb{width:12px;height:12px;background:var(--re
 .barled.beat1{border-color:var(--ink-3)}
 
 /* riddim selector */
-.riddims{display:flex;gap:6px;flex-wrap:wrap}
-.rq{
-  margin:0;padding:9px 12px;background:var(--panel);border-left:3px solid var(--red);
-  color:var(--ink-2);font-size:14px;
-}
+.riddims{display:flex;gap:7px;flex-wrap:wrap}
+.rq{margin:4px 0 0;color:var(--ink-2);font-size:13.5px;max-width:70ch}
 .rq b{color:var(--ink);font-weight:600}
 .rq cite{font-style:normal;color:var(--ink-3);font-size:12.5px;display:block;margin-top:3px}
-.rq2{margin:6px 0 0;padding:0 0 0 15px;color:var(--ink-3);font-size:12.5px;max-width:96ch}
+.rq2{margin:0;color:var(--ink-3);font-size:12.5px;max-width:96ch}
 .rq2 b{color:var(--green);font-weight:600}
 .subrow{display:flex;gap:10px 14px;align-items:center;flex-wrap:wrap;margin-top:9px}
 .subrow .legend{white-space:nowrap}
@@ -184,16 +217,13 @@ input[type=range].h::-moz-range-thumb{width:12px;height:12px;background:var(--re
 .btn.sm i{font-style:normal;color:var(--ink-3);font-family:"DM Mono",monospace;margin-left:5px}
 .btn.sm[aria-pressed="true"] i{color:var(--ground)}
 .btn.sm.armed{border-color:var(--amber);color:var(--amber)}
-.kitnote{margin:5px 0 0;padding:0 0 0 15px;font-size:12.5px;color:var(--ink-3)}
+.kitnote{margin:0;font-size:12.5px;color:var(--ink-3)}
 
 /* desk */
-.desk{
-  display:flex;gap:8px;overflow-x:auto;padding:14px;
-  background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow);
-}
+.desk{display:flex;gap:6px;overflow-x:auto;padding:14px 16px}
 .strip{
-  flex:1 1 0;min-width:112px;display:flex;flex-direction:column;gap:8px;align-items:center;
-  padding:10px 8px;background:var(--panel-2);border:1px solid var(--line-soft);
+  flex:1 1 0;min-width:106px;display:flex;flex-direction:column;gap:8px;align-items:center;
+  padding:10px 6px;background:var(--panel-2);border:1px solid var(--line-soft);
 }
 .strip.fx{background:var(--slot)}
 .strip .no{
@@ -205,16 +235,16 @@ input[type=range].h::-moz-range-thumb{width:12px;height:12px;background:var(--re
   text-transform:uppercase;text-align:center;line-height:1.15;min-height:2.3em;
 }
 .strip.fx .nm{color:var(--cyan)}
-.knobs{display:flex;gap:6px}
+.knobs{display:flex;gap:5px}
 .knob{display:flex;flex-direction:column;align-items:center;gap:3px}
 .knob .kl{font-family:"Barlow Condensed",sans-serif;font-size:10px;letter-spacing:.12em;color:var(--ink-3)}
 .dial{
-  width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
+  width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--panel);
   cursor:ns-resize;position:relative;touch-action:none;
 }
 .dial::after{
   content:"";position:absolute;left:50%;top:3px;width:2px;height:10px;background:var(--red);
-  transform-origin:50% 12px;transform:translateX(-50%) rotate(var(--a,-135deg));
+  transform-origin:50% 11px;transform:translateX(-50%) rotate(var(--a,-135deg));
 }
 .dial:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
 
@@ -246,7 +276,7 @@ input[type=range].v::-moz-range-thumb{width:26px;height:13px;background:var(--re
   font-family:"Barlow Condensed",sans-serif;font-weight:600;font-size:12px;letter-spacing:.2em;
   text-transform:uppercase;color:var(--red);margin:0 0 10px;
 }
-.intros{display:flex;flex-direction:column;gap:5px}
+.intros{display:flex;flex-direction:column;gap:5px;padding:14px 18px}
 .intro{
   display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:10px;align-items:center;
   border:1px solid var(--line-soft);background:var(--panel-2);padding:7px 9px;cursor:pointer;
@@ -264,18 +294,13 @@ input[type=range].v::-moz-range-thumb{width:26px;height:13px;background:var(--re
 .rules b{color:var(--ink);font-weight:600}
 
 /* kit trim */
-.kitmix{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:10px 12px 12px}
-.kitmix-head{display:flex;align-items:baseline;gap:10px;margin-bottom:8px}
-.kitmix-head .no{font-family:"DM Mono",monospace;font-size:10px;color:var(--red);letter-spacing:.12em}
-.kitmix-head .nm{font-family:"Barlow Condensed",sans-serif;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
-.kitmix-head .key{font-family:"DM Mono",monospace;font-size:10px;color:var(--ink-3)}
-.kitmix-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px 14px}
-.kitmix-grid label{display:flex;flex-direction:column;gap:2px}
-.kitmix-grid label span{display:flex;justify-content:space-between;font-family:"DM Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3)}
-.kitmix-grid label span b{color:var(--ink);font-weight:500}
 /* pattern readout */
-.pat{display:grid;grid-template-columns:94px repeat(16,minmax(0,1fr));gap:2px;margin-top:10px;min-width:520px}
-.pat .pl{font-family:"Barlow Condensed",sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center}
+.pat{display:grid;grid-template-columns:172px repeat(16,minmax(0,1fr));gap:2px;min-width:600px}
+.pat .pl{font-family:"Barlow Condensed",sans-serif;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:flex;align-items:center;gap:8px;padding-right:8px}
+.pat .pl span{flex:1 1 auto;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pat .pl input.h{flex:0 0 52px;width:52px;height:12px}
+.pat .pl input.h::-webkit-slider-thumb{width:9px;height:9px;margin-top:-3.5px}
+.pat .pl input.h::-moz-range-thumb{width:9px;height:9px}
 .pat .pc{height:15px;background:var(--slot);border:1px solid var(--line-soft)}
 .pat .pc.on{background:var(--cyan);border-color:var(--cyan)}
 .pat .pc.acc{background:var(--red);border-color:var(--red)}
@@ -285,6 +310,7 @@ input[type=range].v::-moz-range-thumb{width:26px;height:13px;background:var(--re
 .pat .pc.p.acc{background:var(--amber);border-color:var(--amber)}
 .pat .pl.perc{color:var(--green)}
 .pat .pc.now{box-shadow:inset 0 0 0 2px var(--amber)}
+.pat .pc.t{display:flex;align-items:center;justify-content:center;font-family:"DM Mono",monospace;font-size:9px;line-height:1;letter-spacing:0;color:#fff;overflow:hidden;white-space:nowrap}
 .pat .pc.t.on{background:var(--violet);border-color:var(--violet)}
 .pat .pc.t.acc{background:var(--violet-2);border-color:var(--violet-2)}
 .pat .pl.t{color:var(--violet-2)}
@@ -302,7 +328,7 @@ footer a{color:var(--cyan)}
 
 @media (max-width:880px){
   .cols{grid-template-columns:1fr}
-  .desk{padding:10px}
+  .desk{padding:10px 12px}
   .strip{min-width:104px}
 }
 </style>
@@ -326,53 +352,71 @@ footer a{color:var(--cyan)}
       <h1>Version<br><span>Excursion</span></h1>
       <p class="sub">A dub desk, not a step grid. The riddim is already programmed — the version gets made here, at the board, by muting things. Built from Messian Dread's <a href="https://www.dubroom.org/studio/tutorials-computerdub.htm">Making Dub With Computers</a>.</p>
     </div>
-    <div class="transport">
+  </header>
+
+  <section class="deck" aria-label="Riddims and transport">
+    <nav class="riddims" id="riddims" aria-label="Riddims"></nav>
+    <div class="console" role="group" aria-label="Transport">
       <button class="btn big" id="play" aria-pressed="false">▶ Play</button>
       <div class="field">
         <span class="legend">Tempo <b><span id="bpmv">140</span></b></span>
         <input class="h" type="range" id="bpm" min="110" max="190" step="1" value="140">
       </div>
       <button class="btn" id="feel" aria-pressed="false">Straight</button>
+      <span class="ctl"><span class="legend">Kit</span><span class="grp" id="kits"></span></span>
+      <span class="ctl"><span class="legend">Key</span><select class="key" id="key" aria-label="Key"></select></span>
       <button class="btn hot" id="space" aria-pressed="false">All → Space</button>
-      <button class="btn" id="perc" aria-pressed="false" title="Kete, shaker, woodblock, cowbell and tambourine — chapter 21">Perc</button>
-      <button class="btn" id="oneJingle" title="“Use one shot instruments like the jingle bells and Vibraslap just once or twice, or mix them really soft.”">Bells</button>
-      <button class="btn" id="oneSlap" title="“Use one shot instruments like the jingle bells and Vibraslap just once or twice, or mix them really soft.”">Vibraslap</button>
       <div class="bars" id="bars" aria-label="Bar"></div>
     </div>
-  </header>
+  </section>
 
-  <div>
-    <div class="riddims" id="riddims"></div>
-    <p class="rq" id="rq"></p>
-    <div class="subrow">
-      <span class="legend">Kit</span><span class="grp" id="kits"></span>
-      <span class="legend">Fills — ch.18</span><span class="grp" id="fills"></span>
-      <span class="legend">Key</span><select class="key" id="key" aria-label="Key"></select>
-      <span class="legend">Show</span><span class="grp" id="showgrp">
+  <section class="stage" aria-label="Pattern readout">
+    <div class="stagehead">
+      <div>
+        <h2 id="rname"></h2>
+        <p class="rq" id="rq"></p>
+      </div>
+      <div class="meta"><b id="bpmMeta">140</b><span>Am → Em · 2 bars each</span></div>
+    </div>
+    <div class="filters">
+      <span class="ctl"><span class="legend">Show</span><span class="grp" id="showgrp">
         <button class="btn sm" type="button" data-show="bass" aria-pressed="false" title="Bass line in the pattern readout">Bass</button>
         <button class="btn sm" type="button" data-show="skank" aria-pressed="false" title="Skank and organ bubble">Skank</button>
         <button class="btn sm" type="button" data-show="horns" aria-pressed="false" title="Horn figure (bars 2 and 6) and chord stabs (bars 3 and 7)">Horns</button>
         <button class="btn sm" type="button" data-show="gtr" aria-pressed="false" title="Muted 16ths off the chord, accented where the skank lands">Gtr</button>
-      </span>
+      </span></span>
+      <span class="ctl"><span class="legend">Perc</span><span class="grp">
+        <button class="btn sm" id="perc" aria-pressed="false" title="Kete, shaker, woodblock, cowbell and tambourine — chapter 21">Perc</button>
+        <button class="btn sm" id="oneJingle" title="“Use one shot instruments like the jingle bells and Vibraslap just once or twice, or mix them really soft.”">Bells</button>
+        <button class="btn sm" id="oneSlap" title="“Use one shot instruments like the jingle bells and Vibraslap just once or twice, or mix them really soft.”">Vibraslap</button>
+      </span></span>
+      <span class="ctl"><span class="legend">Fills — ch.18</span><span class="grp" id="fills"></span></span>
     </div>
-    <p class="kitnote" id="kitnote"></p>
-    <p class="rq2" id="rq2">Percussion off. <b>Perc</b> adds the chapter 21 rack: kete on 16ths over two bars, a four-bar shaker/woodblock/cowbell rhythm — the woodblock “at two places in a bar, repeated every two bars” — and a tambourine that isn't written out at all, because he says it's there to “enhance the Hi Hat pattern”, so it's taken from the hats. Bells and vibraslap stay on buttons: “just once or twice.”</p>
     <div class="patwrap"><div class="pat" id="pat"></div></div>
-  </div>
+    <div class="annot">
+      <p class="kitnote" id="kitnote"></p>
+      <p class="rq2" id="rq2">Percussion off. <b>Perc</b> adds the chapter 21 rack: kete on 16ths over two bars, a four-bar shaker/woodblock/cowbell rhythm — the woodblock “at two places in a bar, repeated every two bars” — and a tambourine that isn't written out at all, because he says it's there to “enhance the Hi Hat pattern”, so it's taken from the hats. Bells and vibraslap stay on buttons: “just once or twice.” Each row has a level fader next to its name.</p>
+    </div>
+  </section>
 
-  <section class="desk" id="desk" aria-label="Mixing desk"></section>
+  <section class="stage" aria-label="Mixing desk">
+    <div class="stagehead">
+      <div><h2>Desk</h2><p class="rq">Nine channels — five instruments, four effect returns. Keys <span class="num">1</span>–<span class="num">5</span> mute.</p></div>
+      <div class="meta"><b>Aux 1–4</b><span>chapters 24–26</span></div>
+    </div>
+    <div class="desk" id="desk"></div>
+  </section>
 
-  <section class="kitmix" aria-label="Kit trim">
-    <div class="kitmix-head"><span class="no">TRIM</span><span class="nm">Kit trim</span><span class="key">per-voice gain into channel 1 · pre-shape</span></div>
-    <div class="kitmix-grid" id="kitmix"></div>
+  <section class="stage" aria-label="Intros">
+    <div class="stagehead">
+      <div><h2>Intros</h2><p class="rq">Five ways to start a dub — chapter 31. Each one restarts the riddim and performs its own mute sequence over the first bars. Take the desk back any time — your moves override it.</p></div>
+    </div>
+    <div class="intros" id="intros"></div>
   </section>
 
   <div class="cols">
     <div class="card">
-      <h2>Five ways to start a dub — chapter 31</h2>
-      <div class="intros" id="intros"></div>
-      <p style="margin:11px 0 0;font-size:13px;color:var(--ink-3)">Each one restarts the riddim and performs its own mute sequence over the first bars. Take the desk back any time — your moves override it.</p>
-      <h2 style="margin-top:18px">And breaks — chapter 18</h2>
+      <h2>And breaks — chapter 18</h2>
       <p style="margin:0;font-size:13.5px;color:var(--ink-2)">“A break should signify an important part like the end of a chorus or verse, or it should just do what the word says: give the riddim a break.” His own riddim rolls at bar 8, breaks at 16, crashes at 40, moves the snare at 64, pulls the hats at 79 and marks the last section at 113 — the <b>Fills</b> row up top fires each one on the next bar. He caps it at five breaks in a track, says never reuse the same crash cymbal, and insists a hi-hat never runs through a break: “End it with an open HiHat hit that sounds during the break.”</p>
     </div>
     <div class="card">
@@ -478,11 +522,11 @@ var KITS=[
   snBP:2700,snQ:1.5,snDec:.11,snToneF:340,snToneAmt:.1,
   hhHP:10500,hhDec:.026,ohDec:.16,rimF:940,rimDec:.032,
   tomF0:310,tomF1:155,tomDec:.15,sat:.22,lp:16000,gain:1.05},
- {id:"tape",name:"Tape",note:"Darker, rounder, driven — a kit that has been through a desk and a tape machine.",
-  kickF0:118,kickF1:37,kickDec:.56,
-  snBP:1280,snQ:.5,snDec:.27,snToneF:148,snToneAmt:.3,
-  hhHP:6200,hhDec:.075,ohDec:.42,rimF:430,rimDec:.085,
-  tomF0:176,tomF1:82,tomDec:.4,sat:.55,lp:6800,gain:1.1}
+ {id:"techno",name:"Techno",note:"Dub techno — a 909 heard through a fog: deep soft kick, hats rolled off, everything dark and filtered.",
+  kickF0:108,kickF1:42,kickDec:.58,
+  snBP:1500,snQ:.8,snDec:.16,snToneF:170,snToneAmt:.12,
+  hhHP:7000,hhDec:.03,ohDec:.2,rimF:720,rimDec:.05,
+  tomF0:170,tomF1:78,tomDec:.34,sat:.12,lp:5200,gain:1}
 ];
 var kit=0;
 function K(){ return KITS[kit]; }
@@ -1037,18 +1081,24 @@ FX.forEach(function(x,idx){
 
 // riddim buttons
 var rr=document.getElementById("riddims");
+var RDESC={steppers:"four to the floor",onedrop:"kick on three",twodrop:"kick on 1 + 3",halfdrop:"two drop, no 3",rubadub:"note for note",nyabinghi:"grounded on"};
 RIDDIMS.forEach(function(r,i){
   var b=document.createElement("button"); b.className="btn"; b.type="button";
-  b.setAttribute("aria-pressed",i===0?"true":"false"); b.textContent=r.name;
+  b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.innerHTML='<span class="cname"></span><span class="cdesc"></span>';
+  b.querySelector(".cname").textContent=r.name;
+  b.querySelector(".cdesc").textContent=RDESC[r.id]||"";
   b.addEventListener("click",function(){
     riddim=i; lastBar=-1;
     rr.querySelectorAll(".btn").forEach(function(x,j){x.setAttribute("aria-pressed",String(j===i));});
     document.getElementById("rq").textContent=r.q;
+    document.getElementById("rname").textContent=r.name;
     renderPat();
   });
   rr.appendChild(b);
 });
 document.getElementById("rq").textContent=RIDDIMS[0].q;
+document.getElementById("rname").textContent=RIDDIMS[0].name;
 
 // kit selector
 var kitsEl=document.getElementById("kits");
@@ -1101,32 +1151,30 @@ for(var i=0;i<BARS;i++){
   d.title="Bar "+(i+1); barsEl.appendChild(d); barLeds.push(d);
 }
 
-// kit trim
-(function(){
-  var box=document.getElementById("kitmix"); if(!box) return;
-  VOICES.forEach(function(v){
-    var l=document.createElement("label");
-    var sp=document.createElement("span"); sp.innerHTML='<i></i><b></b>'; sp.querySelector("i").textContent=v[1]; sp.querySelector("i").style.fontStyle="normal";
-    var b=sp.querySelector("b"); b.textContent="100";
-    var r=document.createElement("input"); r.type="range"; r.className="h"; r.min=0; r.max=150; r.step=1; r.value=100;
-    r.setAttribute("aria-label", v[1]+" level");
-    r.addEventListener("input",function(e){ var val=+e.target.value; b.textContent=val; if(!ac) init(); setVoiceGain(v[0], val/100); });
-    l.appendChild(sp); l.appendChild(r); box.appendChild(l);
-  });
-})();
 // pattern readout
 var patEl=document.getElementById("pat");
 function renderPat(){
+  var ae=document.activeElement;
+  if(ae&&ae.type==="range"&&patEl.contains(ae)&&ae.matches(":active")) return;
   patEl.innerHTML=""; patCells=[];
   var b=Math.max(0,lastBar);
-  function addRow(label,arr,cls,titles){
+  function addRow(label,arr,cls,titles,voice,texts){
     var l=document.createElement("div"); l.className="pl"+(cls?" "+cls:"");
-    l.textContent=label; patEl.appendChild(l);
+    var ln=document.createElement("span"); ln.textContent=label; l.appendChild(ln);
+    if(voice){
+      var f=document.createElement("input"); f.type="range"; f.className="h"; f.min=0; f.max=150; f.step=1;
+      f.value=Math.round((vgain[voice]===undefined?1:vgain[voice])*100);
+      f.setAttribute("aria-label",label+" level"); f.title=label+" level: "+f.value+" %";
+      f.addEventListener("input",function(e){ var val=+e.target.value; f.title=label+" level: "+val+" %"; if(!ac) init(); setVoiceGain(voice,val/100); });
+      l.appendChild(f);
+    }
+    patEl.appendChild(l);
     var cells=[];
     for(var k=0;k<16;k++){
       var c=document.createElement("div");
       c.className="pc"+(arr[k]===2?" acc":(arr[k]===3?" opn":(arr[k]===1?" on":"")))+(cls?" "+cls:"");
       if(titles&&titles[k]) c.title=titles[k];
+      if(texts&&texts[k]) c.textContent=texts[k];
       patEl.appendChild(c); cells.push(c);
     }
     patCells.push(cells);
@@ -1135,37 +1183,39 @@ function renderPat(){
     var arr=rowAt(b,row);
     if(arr.every(function(v){return !v;})) return;
     var perc=PERCROWS.indexOf(row)>=0||row==="tamb";
-    addRow(ROWNAME[row],arr,perc?"p":"",null);
+    addRow(ROWNAME[row],arr,perc?"p":"",null,row);
   });
   if(anyShown()){
-    var bb=b%8, ch=chordFor(bb), k, arr, tit;
-    function blank(){ arr=[]; tit=[]; for(var j=0;j<16;j++){arr.push(0);tit.push("");} }
+    var bb=b%8, ch=chordFor(bb), k, arr, tit, txt;
+    var chordName=noteName(T(ch[0])).replace(/-?\d+$/,"")+"m";
+    function blank(){ arr=[]; tit=[]; txt=[]; for(var j=0;j<16;j++){arr.push(0);tit.push("");txt.push("");} }
     if(show.bass){
       blank();
-      BASS[bb].forEach(function(n){ arr[n[0]]=(n[0]===4||n[0]===12)?2:1; tit[n[0]]=noteName(T(n[1])); });
-      addRow("Bass",arr,"t",tit);
+      BASS[bb].forEach(function(n){ arr[n[0]]=(n[0]===4||n[0]===12)?2:1; tit[n[0]]=txt[n[0]]=noteName(T(n[1])); });
+      addRow("Bass",arr,"t",tit,null,txt);
     }
     if(show.skank){
       blank();
       for(k=0;k<16;k++){
         var v=(k===4||k===12)?2:((k===2||k===6||k===10||k===14)?1:0);
-        arr[k]=v; tit[k]=v===2?"Skank + organ":(v?"Organ bubble":"");
+        var before=(k===2||k===10);
+        arr[k]=v; tit[k]=v===2?"Skank + organ: "+chordName:(v?"Organ bubble: "+chordName+(before?", octave down":""):"");
+        txt[k]=v===2?chordName:(v?chordName+(before?"↓":""):"");
       }
-      addRow("Skank",arr,"t",tit);
+      addRow("Skank",arr,"t",tit,null,txt);
     }
     if(show.horns){
       blank();
       var hf=HORN_FIG[bb];
-      if(hf) hf.forEach(function(n){ arr[n[0]]=1; tit[n[0]]=noteName(T(n[1])); });
-      if(HORN_STAB[bb]){ arr[4]=2; arr[12]=2; tit[4]=tit[12]="Chord stab: "+ch.map(function(n){return noteName(T(n+12));}).join(" "); }
-      addRow("Horns",arr,"t",tit);
+      if(hf) hf.forEach(function(n){ arr[n[0]]=1; tit[n[0]]=txt[n[0]]=noteName(T(n[1])); });
+      if(HORN_STAB[bb]){ arr[4]=2; arr[12]=2; tit[4]=tit[12]="Chord stab: "+ch.map(function(n){return noteName(T(n+12));}).join(" "); txt[4]=txt[12]=chordName; }
+      addRow("Horns",arr,"t",tit,null,txt);
     }
     if(show.gtr){
       blank();
-      for(k=0;k<16;k+=2){ arr[k]=(k===4||k===12)?2:1; tit[k]=noteName(T(ch[(k/2)%3]+12)); }
-      addRow("Gtr + clav",arr,"t",tit);
+      for(k=0;k<16;k+=2){ arr[k]=(k===4||k===12)?2:1; tit[k]=txt[k]=noteName(T(ch[(k/2)%3]+12)); }
+      addRow("Gtr + clav",arr,"t",tit,null,txt);
     }
-    var chordName=noteName(T(ch[0])).replace(/-?\d+$/,"")+"m";
     var note=document.createElement("div"); note.className="chordnote";
     note.textContent="Bar "+(bb+1)+" · chord "+chordName+" · key "+keyName()+" minor"+
       (show.bass?" · bass "+BASS[bb].map(function(n){return noteName(T(n[1]));}).join(" "):"")+
@@ -1173,7 +1223,7 @@ function renderPat(){
       ". Hover a cell for its note.";
     patEl.appendChild(note);
   }
-  patEl.style.gridTemplateColumns="94px repeat(16,minmax(0,1fr))";
+  patEl.style.gridTemplateColumns="172px repeat(16,minmax(0,1fr))";
 }
 renderPat();
 
@@ -1192,7 +1242,7 @@ INTROS.forEach(function(x,i){
 /* ---------------- transport wiring ---------------- */
 document.getElementById("play").addEventListener("click",function(){ playing?stopSeq():startSeq(); });
 document.getElementById("bpm").addEventListener("input",function(e){
-  bpm=+e.target.value; document.getElementById("bpmv").textContent=bpm; setTimes();
+  bpm=+e.target.value; document.getElementById("bpmv").textContent=bpm; document.getElementById("bpmMeta").textContent=bpm; setTimes();
 });
 document.getElementById("feel").addEventListener("click",function(e){
   swingOn=!swingOn; e.currentTarget.setAttribute("aria-pressed",String(swingOn));

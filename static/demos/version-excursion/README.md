@@ -20,7 +20,7 @@ versionen vid mixerbordet. Därför blev det här ett bord och inget rutnät.
 
 - **Sex riddims** ur kapitel 5 och 15: Steppers, One Drop, Two Drop, Half Drop,
   Rub a Dub och en nyabinghi-grundad rytm
-- **Tre trumkit**: Acoustic, Digital, Tape
+- **Tre trumkit**: Acoustic, Digital, Techno
 - **Percussion** ur kapitel 21: kete, shaker, träblock, cowbell, tamburin, plus
   bjällror och vibraslap som engångsknappar
 - **Fem fills** ur kapitel 18, som avfyras på nästa takt
@@ -112,7 +112,7 @@ bussen och varje rösts frekvenser och avklingningstider.
 |---|---|
 | Acoustic | Spelat kit, GM-uppsättningen tutorialen förutsätter på kanal 10 |
 | Digital | Kort, stämt och tunt — dancehallboxen som kom med Sleng Teng |
-| Tape | Mörkare, rundare, mättat: waveshaper på 0,55 och lågpass vid 6,8 kHz |
+| Techno | Dub techno – en 909 genom dimma: djup, mjuk kick, hattar avrullade, waveshaper på 0,12 och lågpass vid 5,2 kHz |
 
 ## Så byggdes filen
 
@@ -155,7 +155,7 @@ går att redigera direkt.
 ## Webbläsarstöd
 
 Web Audio API, inklusive `ConvolverNode` (reverben) och `WaveShaperNode`
-(bandmättnaden i Tape-kitet). Chrome, Safari 16.4+, Firefox, Edge.
+(mättnaden i Techno-kitet). Chrome, Safari 16.4+, Firefox, Edge.
 
 ## Vad som inte gick att hämta
 
@@ -172,10 +172,23 @@ En sak till, värd att veta: **kapitel 15 motsäger sig själv.** Det utskrivna
 rutnätet visar en bastrumma på trean, brödtexten bredvid nämner den inte. Sidan
 följer rutnätet.
 
-## Kit trim
+## Nivå per ljud
 
-Under bordet finns en trim-panel med en gain-fader (0–150 %) per trumröst — kick,
-snare, rim, hattar, tom, kete, funde, kete 2, shaker, wood, cowbell, tamb. Varje
-röst har en egen GainNode som matar drum-bussen **före** kitets waveshaper och
-lågpass, så trimmen påverkar hur hårt Tape-kitet drivs; kanal 1:s fader och
-sändningar ligger efter som förut.
+Varje rad i mönstervyn har en nivåfader (0–150 %) bredvid namnet – kick, snare,
+rim, hattar, tom, kete, funde, kete 2, shaker, wood, cowbell, tamb. Varje röst har
+en egen GainNode som matar drum-bussen **före** kitets waveshaper och lågpass, så
+nivån påverkar hur hårt Techno-kitet drivs; kanal 1:s fader och sändningar ligger
+efter som förut. (Ersätter den tidigare trim-panelen under bordet.)
+
+## Layout
+
+Sidan följer samma anatomi som House Machine och One Drop Machine:
+
+1. **Masthead** – rubrik och ingress.
+2. **Deck** – de sex riddimen som chips, därunder konsolen: play, tempo,
+   straight/swing, kit, tonart, All → Space och taktlysdioderna.
+3. **Mönster** – valt riddim som rubrik med citatet, filterraden (Show, Perc,
+   Fills) och rutnätet med nivåfader per rad.
+4. **Bordet** – de nio kanalerna.
+5. **Intros** – de fem starterna ur kapitel 31.
+6. Anteckningar och regler.
