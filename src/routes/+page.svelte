@@ -2,7 +2,7 @@
 	import { demos, demoHref, demoImage } from '$lib/demos';
 	import Logo from '$lib/components/Logo.svelte';
 
-	const sorted = [...demos].sort((a, b) => (b.date ?? '').localeCompare(a.date ?? ''));
+	const sorted = [...demos].sort((a, b) => b.no - a.no);
 	const pad = (n: number) => String(n).padStart(2, '0');
 </script>
 
@@ -38,10 +38,10 @@
 			<p class="py-16 text-sm text-muted-foreground">inga demos ännu.</p>
 		{:else}
 			<section class="grid gap-x-8 gap-y-14 py-14 sm:grid-cols-2 lg:grid-cols-3">
-				{#each sorted as demo, i (demo.slug)}
+				{#each sorted as demo (demo.slug)}
 					<a
 						href={demoHref(demo)}
-						class="group block outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
+						class="group flex h-full flex-col outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
 					>
 						<div class="aspect-video w-full overflow-hidden border border-border bg-muted">
 							<img
@@ -53,14 +53,14 @@
 						</div>
 						<div class="mt-4 flex items-baseline justify-between gap-4 text-sm">
 							<span class="flex items-baseline gap-3">
-								<span class="text-muted-foreground">{pad(i + 1)}</span>
+								<span class="text-muted-foreground">{pad(demo.no)}</span>
 								<span class="text-foreground underline decoration-transparent underline-offset-4 transition group-hover:decoration-foreground">{demo.title}</span>
 							</span>
 							{#if demo.date}
 								<time datetime={demo.date} class="shrink-0 text-muted-foreground">{demo.date}</time>
 							{/if}
 						</div>
-						<p class="mt-2 max-w-prose text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
+						<p class="mt-2 max-w-prose flex-grow text-sm leading-relaxed text-muted-foreground">{demo.description}</p>
 						{#if demo.tags?.length}
 							<p class="mt-3 text-xs text-muted-foreground">
 								{#each demo.tags as tag, j (tag)}<span>{tag}</span>{#if j < demo.tags.length - 1}<span class="mx-2 opacity-50">/</span>{/if}{/each}
