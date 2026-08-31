@@ -359,8 +359,8 @@ footer a{color:var(--cyan)}
     <div class="console" role="group" aria-label="Transport">
       <button class="btn big" id="play" aria-pressed="false">▶ Play</button>
       <div class="field">
-        <span class="legend">Tempo <b><span id="bpmv">140</span></b></span>
-        <input class="h" type="range" id="bpm" min="110" max="190" step="1" value="140">
+        <span class="legend">Tempo <b><span id="bpmv">100</span></b></span>
+        <input class="h" type="range" id="bpm" min="60" max="190" step="1" value="100">
       </div>
       <button class="btn" id="feel" aria-pressed="false">Straight</button>
       <span class="ctl"><span class="legend">Kit</span><span class="grp" id="kits"></span></span>
@@ -376,7 +376,7 @@ footer a{color:var(--cyan)}
         <h2 id="rname"></h2>
         <p class="rq" id="rq"></p>
       </div>
-      <div class="meta"><b id="bpmMeta">140</b><span>Am → Em · 2 bars each</span></div>
+      <div class="meta"><b id="bpmMeta">100</b><span>Am → Em · 2 bars each</span></div>
     </div>
     <div class="filters">
       <span class="ctl"><span class="legend">Show</span><span class="grp" id="showgrp">
@@ -532,7 +532,7 @@ var kit=0;
 function K(){ return KITS[kit]; }
 
 /* ---------------- state ---------------- */
-var riddim=0, bpm=140, swingOn=false, playing=false, allSpace=false;
+var riddim=0, bpm=100, swingOn=false, playing=false, allSpace=false;
 var CH=[
  {id:1,name:"Drums<br>kete · perc",key:"1",vol:1,mute:false,echo:.06,verb:.05,space:0},
  {id:2,name:"Bass",key:"2",vol:1,mute:false,echo:.02,verb:.02,space:0},
