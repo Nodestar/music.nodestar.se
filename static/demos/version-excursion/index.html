@@ -319,6 +319,34 @@ input[type=range].v::-moz-range-thumb{width:26px;height:13px;background:var(--re
 .pat .pc.t.acc{background:var(--violet-2);border-color:var(--violet-2)}
 .pat .pl.t{color:var(--violet-2)}
 .pat .chordnote{grid-column:1/-1;font-family:"DM Mono",monospace;font-size:11.5px;color:var(--ink-3);padding:3px 0 0}
+
+/* swing shows in the grid: the slot stays where the 16th is, the block
+   inside it slides right by the swing offset — same arithmetic as offs() */
+.pat .pc{position:relative;overflow:visible}
+.pat .pc.t{overflow:visible}
+.pat .pc.on,.pat .pc.acc,.pat .pc.opn,.pat .pc.p.on,.pat .pc.p.acc,.pat .pc.t.on,.pat .pc.t.acc{
+  background:var(--slot);border-color:var(--line-soft);
+}
+.pat .pc .blk{
+  position:absolute;inset:-1px;z-index:2;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .14s ease-out;
+}
+.pat .pc.on .blk{background:var(--cyan)}
+.pat .pc.acc .blk{background:var(--red)}
+.pat .pc.opn .blk{background:var(--amber)}
+.pat .pc.p.on .blk{background:var(--green)}
+.pat .pc.p.acc .blk{background:var(--amber)}
+.pat .pc.t.on .blk{background:var(--violet)}
+.pat .pc.t.acc .blk{background:var(--violet-2)}
+.pat.swung .pc .blk{transform:translateX(calc(var(--f,0) * 100%))}
+.pat .pc .lead{
+  position:absolute;left:0;top:calc(50% - 0.5px);height:1px;z-index:1;display:none;
+  width:calc(var(--f,0) * 100%);background:var(--ink-3);opacity:.6;pointer-events:none;
+}
+.pat.swung .pc .lead{display:block}
+.pat .pc.now{box-shadow:none;outline:2px solid var(--amber);outline-offset:-2px}
+@media (prefers-reduced-motion:reduce){ .pat .pc .blk{transition:none} }
 select.key{
   appearance:none;-webkit-appearance:none;cursor:pointer;padding:6px 26px 6px 10px;border:1px solid var(--line);
   background:var(--panel) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23888'/%3E%3C/svg%3E") no-repeat right 9px center;
@@ -344,7 +372,7 @@ footer a{color:var(--cyan)}
       <span class="beta" aria-label="beta">beta</span>
     </a>
     <div class="topbar-tools">
-      <a class="backlink" href="/">← Tillbaka</a>
+      <a class="backlink" href="/">← Back</a>
       <button id="themeBtn" class="themebtn" type="button">Theme: System</button>
     </div>
   </nav>
@@ -698,7 +726,7 @@ function drum(kind,t,v,id){
   }else if(kind==="hh"||kind==="oh"){
     var op=kind==="oh";s=nz();f=ac.createBiquadFilter();f.type="highpass";
     f.frequency.value=op?kk.hhHP*.82:kk.hhHP;
-    g=ac.createGain();env(g,t,(op?.20:.15)*v,op?kk.ohDec:kk.hhDec,.001);
+    g=ac.createGain();env(g,t,(op?.28:.21)*v,op?kk.ohDec:kk.hhDec,.001);
     s.connect(f);f.connect(g);toDrum(g);s.start(t);s.stop(t+(op?kk.ohDec+.2:.14));
   }else if(kind==="tom"){
     o=ac.createOscillator();o.type="sine";
@@ -1161,6 +1189,7 @@ function renderPat(){
   var ae=document.activeElement;
   if(ae&&ae.type==="range"&&patEl.contains(ae)&&ae.matches(":active")) return;
   patEl.innerHTML=""; patCells=[];
+  patEl.classList.toggle("swung",swingOn);
   var b=Math.max(0,lastBar);
   function addRow(label,arr,cls,titles,voice,texts){
     var l=document.createElement("div"); l.className="pl"+(cls?" "+cls:"");
@@ -1178,7 +1207,14 @@ function renderPat(){
       var c=document.createElement("div");
       c.className="pc"+(arr[k]===2?" acc":(arr[k]===3?" opn":(arr[k]===1?" on":"")))+(cls?" "+cls:"");
       if(titles&&titles[k]) c.title=titles[k];
-      if(texts&&texts[k]) c.textContent=texts[k];
+      var f=k%4===2?0.30:(k%2===1?0.15:0);
+      c.style.setProperty("--f",f);
+      if(arr[k]){
+        if(f>0){ var ld=document.createElement("span"); ld.className="lead"; c.appendChild(ld); }
+        var bk=document.createElement("span"); bk.className="blk";
+        if(texts&&texts[k]) bk.textContent=texts[k];
+        c.appendChild(bk);
+      } else if(texts&&texts[k]) c.textContent=texts[k];
       patEl.appendChild(c); cells.push(c);
     }
     patCells.push(cells);
@@ -1251,6 +1287,7 @@ document.getElementById("bpm").addEventListener("input",function(e){
 document.getElementById("feel").addEventListener("click",function(e){
   swingOn=!swingOn; e.currentTarget.setAttribute("aria-pressed",String(swingOn));
   e.currentTarget.textContent=swingOn?"Swing":"Straight";
+  patEl.classList.toggle("swung",swingOn);
 });
 document.getElementById("space").addEventListener("click",function(e){
   init(); allSpace=!allSpace; e.currentTarget.setAttribute("aria-pressed",String(allSpace)); applyAll();

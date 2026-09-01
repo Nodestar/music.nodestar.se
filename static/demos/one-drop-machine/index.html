@@ -310,6 +310,41 @@ input[type=range]:focus-visible{outline:2px solid var(--brass);outline-offset:3p
 .row-muted .cell[data-v="1"],.row-muted .cell[data-v="2"]{opacity:.28}
 .grid.playing .cell.now{box-shadow:inset 0 0 0 1px var(--brass)}
 .cell.flash{transform:translateY(-2px)}
+
+/* ---------- notes move inside their own cells ----------
+   The slot stays where the 16th is; the block inside it slides right by
+   the swing offset, so the grid shows what is actually played rather than
+   a quantised idea of it. A leader line runs from the block back to the
+   16th it belongs to. Same arithmetic as stepOffset().                   */
+.cell{background:transparent;overflow:visible}
+.cell::before{content:"";position:absolute;inset:0;border-radius:2px;background:var(--cell-off)}
+.cell.dsep{box-shadow:none}
+.cell.dsep::before{box-shadow:inset 2px 0 0 var(--line)}
+.cell[data-v="1"],.cell[data-v="2"]{background:transparent}
+.cell .hit{
+  position:absolute;top:0;left:0;width:100%;height:100%;border-radius:2px;z-index:2;
+  background:var(--rc);pointer-events:none;
+  transform:translateX(calc(var(--f,0) * 100%));
+  transition:transform .14s ease-out;
+}
+.cell[data-v="0"] .hit{display:none}
+.cell[data-v="1"] .hit{background:color-mix(in srgb,var(--rc) 52%,var(--cell-off))}
+.cell .lead{
+  position:absolute;left:0;top:calc(50% - 0.5px);height:1px;z-index:1;display:none;
+  width:calc(var(--f,0) * 100%);background:var(--rc);opacity:.5;pointer-events:none;
+}
+.cell .lead::before{
+  content:"";position:absolute;left:0;top:-2.5px;width:0;height:0;
+  border-top:3px solid transparent;border-bottom:3px solid transparent;
+  border-right:4px solid var(--rc);
+}
+.cell.moved .lead{display:block}
+.grid{padding-right:22px}
+.grid.playing .cell.now{box-shadow:none;outline:1px solid var(--brass);outline-offset:-1px}
+.cell:hover{transform:none}
+.cell.flash{transform:none}
+.cell:hover .hit{transform:translateX(calc(var(--f,0) * 100%)) translateY(-1px)}
+.cell.flash .hit{transform:translateX(calc(var(--f,0) * 100%)) translateY(-2px)}
 .playhead{
   height:4px;border-radius:2px;background:var(--line-soft);
 }
@@ -364,6 +399,7 @@ footer{
 @media (prefers-reduced-motion:reduce){
   .cell{transition:none}
   .cell:hover,.cell.flash{transform:none}
+  .cell .hit{transition:none}
 }
 </style>
 
@@ -374,7 +410,7 @@ footer{
       <span class="beta" aria-label="beta">beta</span>
     </a>
     <div class="topbar-tools">
-      <a class="backlink" href="/">← Tillbaka</a>
+      <a class="backlink" href="/">← Back</a>
       <button id="themeBtn" class="themebtn" type="button">Theme: System</button>
     </div>
   </nav>
@@ -664,11 +700,14 @@ function buildGrid(){
         b.type="button"; b.className="cell" + (step%4===0 ? " dsep":"");
         b.style.setProperty("--rc","var("+row.c+")");
         b.dataset.v = "0";
+        var lead = document.createElement("span"); lead.className="lead"; b.appendChild(lead);
+        var hit = document.createElement("span"); hit.className="hit"; b.appendChild(hit);
         b.setAttribute("aria-label", row.name + " step " + (step+1));
         b.addEventListener("click", function(){
           var v = (live[row.id][step] + 1) % 3;
           live[row.id][step] = v;
           b.dataset.v = v;
+          updateOffsets();
           if(v>0){ initAudio(); trigger(row.id, audio.currentTime, v===2?1:.72); }
         });
         grid.appendChild(b);
@@ -683,11 +722,25 @@ function buildGrid(){
   }
 }
 
+/* Where each note actually lands: --f is the swing offset as a fraction of
+   a step — same arithmetic as stepOffset(), so the grid and the audio agree. */
+function updateOffsets(){
+  ROWS.forEach(function(row){
+    var cells = cellEls[row.id];
+    for(var i=0;i<cells.length;i++){
+      var f = i%4===2 ? swing : (i%2===1 ? swing*0.5 : 0);
+      cells[i].style.setProperty("--f", f);
+      cells[i].classList.toggle("moved", f > 0.05 && live[row.id][i] > 0);
+    }
+  });
+}
+
 function renderCells(){
   ROWS.forEach(function(row){
     var arr = live[row.id];
     for(var i=0;i<16;i++) cellEls[row.id][i].dataset.v = arr[i];
   });
+  updateOffsets();
   var d = PATTERNS[current].drop;
   markerEls.forEach(function(m,i){
     m.className = "marker" + (d!==null && i===d ? " on" : "");
@@ -807,7 +860,7 @@ function trigger(id, t, vel){
   } else if(id==="hh" || id==="oh"){
     var open = id==="oh";
     s = noiseSrc(); f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value = open?6800:8200;
-    g = audio.createGain(); env(g, t, (open?0.22:0.16)*vel, open?0.3:0.045, 0.001);
+    g = audio.createGain(); env(g, t, (open?0.3:0.22)*vel, open?0.3:0.045, 0.001);
     s.connect(f); f.connect(g); out(g, t); s.start(t); s.stop(t + (open?0.5:0.12));
   } else if(id==="ride"){
     var ratios=[2,3,4.16,5.43,6.79,8.21], mix = audio.createGain();
@@ -833,7 +886,7 @@ function trigger(id, t, vel){
    The same Cm chop on the offbeat, four ways. Guitar is the default — the
    tutorial-era skank is a muted electric through a small amp. */
 var SKANKS = [
-  {id:"gtr",  name:"Guitar", nt:"gtr",  label:"Muted electric: four detuned saws, bandpass, fast pluck."},
+  {id:"gtr",  name:"Guitar", nt:"gtr",  label:"Muted electric: four detuned saws, swept lowpass, fast pluck."},
   {id:"pno",  name:"Piano",  nt:"pno",  label:"Piano bang: two partials per note, quick lowpass, longer ring."},
   {id:"org",  name:"Organ",  nt:"org",  label:"Organ bubble: sines with a 2nd/3rd drawbar, flat envelope, no attack."},
   {id:"clav", name:"Clav",   nt:"clav", label:"Clavinet: narrow pulse through a highpass, dry and percussive."}
@@ -849,9 +902,11 @@ function skankVoice(t, vel){
       o.frequency.value = SKANK_FREQS[i] * (1 + (i%2? 0.0025 : -0.0025));
       o.connect(mix); o.start(t); o.stop(t+0.2);
     }
-    f = audio.createBiquadFilter(); f.type="bandpass"; f.frequency.value=1450; f.Q.value=1.1;
-    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=520;
-    g = audio.createGain(); env(g, t, 0.5*vel, 0.12, 0.004);
+    f = audio.createBiquadFilter(); f.type="lowpass"; f.Q.value=1.2;
+    f.frequency.setValueAtTime(4800, t);
+    f.frequency.exponentialRampToValueAtTime(1100, t+0.09);
+    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=420;
+    g = audio.createGain(); env(g, t, 0.5*vel, 0.11, 0.003);
     mix.connect(f); f.connect(hp); hp.connect(g); out(g, t, 0, true);
   } else if(skank.id==="pno"){
     mix.gain.value=0.09;
@@ -888,9 +943,9 @@ function skankVoice(t, vel){
       o = audio.createOscillator(); o.setPeriodicWave(wave); o.frequency.value = SKANK_FREQS[i]*0.5;
       o.connect(mix); o.start(t); o.stop(t+0.16);
     }
-    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=900; hp.Q.value=1.4;
+    hp = audio.createBiquadFilter(); hp.type="highpass"; hp.frequency.value=320; hp.Q.value=0.9;
     f = audio.createBiquadFilter(); f.type="peaking"; f.frequency.value=2600; f.gain.value=6;
-    g = audio.createGain(); env(g, t, 0.6*vel, 0.09, 0.001);
+    g = audio.createGain(); env(g, t, 0.6*vel, 0.11, 0.001);
     mix.connect(hp); hp.connect(f); f.connect(g); out(g, t, 0, true);
   }
 }
@@ -980,7 +1035,7 @@ document.getElementById("tempo").addEventListener("input", function(e){
   bpm = +e.target.value; syncTransportLabels(); updateDelayTime();
 });
 document.getElementById("swing").addEventListener("input", function(e){
-  swing = (+e.target.value)/100; syncTransportLabels();
+  swing = (+e.target.value)/100; syncTransportLabels(); updateOffsets();
 });
 function setEcho(v){
   echo = v;
