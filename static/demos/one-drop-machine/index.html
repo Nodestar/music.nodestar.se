@@ -56,8 +56,8 @@
 
 :root{
   --ground:#DCDFD4;
-  --panel:#EFF1E9;
-  --panel-2:#E4E7DB;
+  --panel:#FBFCF9;
+  --panel-2:#F0F2E9;
   --ink:#14180E;
   --ink-2:#4E5445;
   --ink-3:#787E6C;
@@ -75,7 +75,7 @@
   --c-tom:#3F529B;
   --c-skank:#5B6152;
 
-  --cell-off:#D7DBCB;
+  --cell-off:#E5E8DC;
   --shadow:0 1px 0 rgba(20,24,14,.06);
   --radius:3px;
 }
@@ -158,6 +158,10 @@ h1{
 }
 h1 em{font-style:normal;color:var(--brass);}
 .lede{margin:14px 0 0;max-width:46ch;color:var(--ink-2);font-size:15px}
+@media (min-width:981px){
+  .masthead{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+  .lede{margin-top:0;max-width:54ch;padding-bottom:4px}
+}
 
 /* ---------- transport ---------- */
 .deck{
@@ -380,9 +384,8 @@ footer{
     <div class="brand">
       <span class="eyebrow">Riddim programming reference</span>
       <h1>One Drop<br><em>Machine</em></h1>
-      <p class="lede">Eight foundation reggae drum patterns on a 16-step grid — what each one puts on which beat, why it feels the way it does, and the MIDI notes to program it with. Click any cell to change it.</p>
     </div>
-
+    <p class="lede">Eight foundation reggae drum patterns on a 16-step grid — what each one puts on which beat, why it feels the way it does, and the MIDI notes to program it with. Click any cell to change it.</p>
   </header>
 
   <section class="deck" aria-label="Patterns and transport">

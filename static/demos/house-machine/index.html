@@ -56,8 +56,8 @@
 
 :root{
   --ground:#E4E1DA;
-  --panel:#F2F0EB;
-  --panel-2:#E9E6DF;
+  --panel:#FCFBF7;
+  --panel-2:#F5F2EB;
   --ink:#17161A;
   --ink-2:#4F4D55;
   --ink-3:#7E7B84;
@@ -78,7 +78,7 @@
   --c-htom:#5A7BCB;
   --c-ride:#8A6A12;
 
-  --cell-off:#DBD8D0;
+  --cell-off:#E9E6DE;
   --shadow:0 1px 0 rgba(23,22,26,.06);
   --radius:3px;
 }
@@ -168,6 +168,10 @@ h1{
 h1 em{font-style:normal;color:var(--acc);}
 .lede{margin:14px 0 0;max-width:46ch;color:var(--ink-2);font-size:15px}
 .lede a{color:inherit;text-decoration-color:var(--acc)}
+@media (min-width:981px){
+  .masthead{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+  .lede{margin-top:0;max-width:54ch;padding-bottom:4px}
+}
 
 /* ---------- transport ---------- */
 .deck{
@@ -385,9 +389,8 @@ footer a{color:inherit}
     <div class="brand">
       <span class="eyebrow">Four-on-the-floor programming reference</span>
       <h1>House<br><em>Machine</em></h1>
-      <p class="lede">Five house drum patterns from <a href="https://www.studiobrootle.com/house-drum-patterns/" target="_blank" rel="noreferrer">Studio Brootle</a>, read straight out of their MIDI files and laid on a 16-step grid — 707, 909, 606, a live-kit jazz loop and one weird one. All at 126 BPM. Click any cell to change it.</p>
     </div>
-
+    <p class="lede">Five house drum patterns from <a href="https://www.studiobrootle.com/house-drum-patterns/" target="_blank" rel="noreferrer">Studio Brootle</a>, read straight out of their MIDI files and laid on a 16-step grid — 707, 909, 606, a live-kit jazz loop and one weird one. All at 126 BPM. Click any cell to change it.</p>
   </header>
 
   <section class="deck" aria-label="Patterns and transport">

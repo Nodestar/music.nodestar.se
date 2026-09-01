@@ -59,9 +59,9 @@
 :root{
   --violet:#6E4FD6;--violet-2:#9B7BF5;
   --ground:#C6CBCB;
-  --panel:#DCE0DF;
-  --panel-2:#CDD2D2;
-  --slot:#B4BABA;
+  --panel:#EFF2F1;
+  --panel-2:#E0E4E3;
+  --slot:#CFD5D4;
   --ink:#12181A;
   --ink-2:#465052;
   --ink-3:#6E7879;
@@ -118,7 +118,7 @@ body{
 
 /* nameplate */
 .plate{
-  display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;
+  display:grid;grid-template-columns:minmax(0,1fr);gap:28px;align-items:end;
   border-bottom:2px solid var(--ink);padding-bottom:22px;
 }
 .eyebrow{
@@ -133,6 +133,10 @@ h1{
 h1 span{color:var(--red)}
 .sub{margin:8px 0 0;color:var(--ink-2);font-size:14.5px;max-width:56ch}
 .sub a{color:var(--cyan)}
+@media (min-width:981px){
+  .plate{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:36px}
+  .sub{margin-top:0;max-width:54ch;padding-bottom:4px}
+}
 
 /* transport */
 .deck{
@@ -350,8 +354,8 @@ footer a{color:var(--cyan)}
     <div>
       <span class="eyebrow">Dub mixing desk reference</span>
       <h1>Version<br><span>Excursion</span></h1>
-      <p class="sub">A dub desk, not a step grid. The riddim is already programmed — the version gets made here, at the board, by muting things. Built from Messian Dread's <a href="https://www.dubroom.org/studio/tutorials-computerdub.htm">Making Dub With Computers</a>.</p>
     </div>
+    <p class="sub">A dub desk, not a step grid. The riddim is already programmed — the version gets made here, at the board, by muting things. Built from Messian Dread's <a href="https://www.dubroom.org/studio/tutorials-computerdub.htm">Making Dub With Computers</a>.</p>
   </header>
 
   <section class="deck" aria-label="Riddims and transport">
