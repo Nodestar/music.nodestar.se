@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Instant Haus</title>
+<title>Instant Haus Web</title>
 <meta name="description" content="A web rebuild of Alexkid's Instant Haus Max for Live device: 96 house and breaks drum patterns across four tracks, with swing, shift, velocity ranges, randomisation and MIDI out.">
 <meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#E4E1DA" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#121114" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#E3E6EA" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1B1D21" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Instant Haus">
+<meta property="og:title" content="Instant Haus Web">
 <meta property="og:description" content="A web rebuild of Alexkid's Instant Haus Max for Live device: 96 house and breaks drum patterns across four tracks, with swing, shift, velocity ranges, randomisation and MIDI out.">
 <meta name="twitter:card" content="summary">
 <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Ccircle%20cx='32'%20cy='32'%20r='29'%20fill='#FFE81A'%20stroke='#111'%20stroke-width='4'/%3E%3Cellipse%20cx='23'%20cy='24'%20rx='3.2'%20ry='7.5'%20fill='#111'/%3E%3Cellipse%20cx='41'%20cy='24'%20rx='3.2'%20ry='7.5'%20fill='#111'/%3E%3Cpath%20d='M17%2037q15%2017%2030%200'%20fill='none'%20stroke='#111'%20stroke-width='3.5'%20stroke-linecap='round'/%3E%3Cpath%20d='M15%2035.5l4%201.5M49%2035.5l-4%201.5'%20fill='none'%20stroke='#111'%20stroke-width='3'%20stroke-linecap='round'/%3E%3C/svg%3E">
@@ -35,7 +35,7 @@
 .sitelogo .wm span{color:var(--ink-3)}
 .sitelogo .beta{
   font-family:"IBM Plex Mono",monospace;font-size:9px;line-height:1;letter-spacing:.18em;text-transform:uppercase;
-  color:#D2461B;border:1px solid #D2461B;border-radius:2px;padding:2px 4px 1px;font-size:8px;letter-spacing:.16em;
+  color:var(--acc);border:1px solid var(--acc);border-radius:2px;padding:2px 4px 1px;font-size:8px;letter-spacing:.16em;
   transform:rotate(-6deg);user-select:none;
 }
 .sitelogo:focus-visible{outline:2px solid var(--ink);outline-offset:4px;border-radius:2px}
@@ -55,87 +55,90 @@
 }
 
 :root{
-  --ground:#E4E1DA;
-  --panel:#F2F0EB;
-  --panel-2:#E9E6DF;
-  --ink:#17161A;
-  --ink-2:#4F4D55;
-  --ink-3:#7E7B84;
-  --line:#C9C5BC;
-  --line-soft:#D8D4CC;
-  --acc:#D2461B;
-  --acc-soft:#E37A58;
+  --ground:#E3E6EA;
+  --panel:#F1F3F5;
+  --panel-2:#DCE0E6;
+  --ink:#181E23;
+  --ink-2:#4C5766;
+  --ink-3:#808C9B;
+  --line:#C0C8D6;
+  --line-soft:#D6DCE4;
+  --acc:#0B7BA8;
+  --acc-soft:#47D6FF;
+  --on-acc:#FFFFFF;
 
-  --c-kick:#C13A16;
-  --c-snare:#B0285C;
+  --c-kick:#C2410C;
+  --c-snare:#B32D63;
   --c-clap:#D4610E;
   --c-rim:#6F4A9B;
-  --c-ch:#1A6C72;
+  --c-ch:#0B7BA8;
   --c-ph:#3F7C5A;
-  --c-oh:#2D8A46;
+  --c-oh:#1E8A55;
   --c-ltom:#2E4FA5;
   --c-mtom:#3D63B8;
   --c-htom:#5A7BCB;
   --c-ride:#8A6A12;
 
-  --cell-off:#DBD8D0;
-  --shadow:0 1px 0 rgba(23,22,26,.06);
+  --cell-off:#D3D8DE;
+  --shadow:0 1px 0 rgba(24,30,35,.06);
   --radius:3px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --ground:#121114;
-    --panel:#1A191D;
-    --panel-2:#212024;
-    --ink:#ECEAE5;
-    --ink-2:#A8A5AD;
-    --ink-3:#7E7B84;
-    --line:#302E35;
-    --line-soft:#28272C;
-    --acc:#FF6A3D;
-    --acc-soft:#C4562F;
+    --ground:#1B1D21;
+    --panel:#232529;
+    --panel-2:#181E23;
+    --ink:#ECF1F5;
+    --ink-2:#A8B0BA;
+    --ink-3:#6E7681;
+    --line:#464B4F;
+    --line-soft:#34383D;
+    --acc:#47D6FF;
+    --acc-soft:#7FE3FF;
+    --on-acc:#181E23;
 
-    --c-kick:#FF7A52;
-    --c-snare:#F06A9C;
+    --c-kick:#FF9E64;
+    --c-snare:#FF6E9C;
     --c-clap:#F5A257;
     --c-rim:#B892E6;
-    --c-ch:#4FC8CF;
+    --c-ch:#47D6FF;
     --c-ph:#6FC79A;
-    --c-oh:#6BD48A;
+    --c-oh:#6BE3A0;
     --c-ltom:#7B95EC;
     --c-mtom:#8FA8F0;
     --c-htom:#A9BDF5;
     --c-ride:#E4B647;
 
-    --cell-off:#26252A;
+    --cell-off:#2A2D33;
     --shadow:none;
   }
 }
 :root[data-theme="dark"]{
-  --ground:#121114;
-  --panel:#1A191D;
-  --panel-2:#212024;
-  --ink:#ECEAE5;
-  --ink-2:#A8A5AD;
-  --ink-3:#7E7B84;
-  --line:#302E35;
-  --line-soft:#28272C;
-  --acc:#FF6A3D;
-  --acc-soft:#C4562F;
+  --ground:#1B1D21;
+  --panel:#232529;
+  --panel-2:#181E23;
+  --ink:#ECF1F5;
+  --ink-2:#A8B0BA;
+  --ink-3:#6E7681;
+  --line:#464B4F;
+  --line-soft:#34383D;
+  --acc:#47D6FF;
+  --acc-soft:#7FE3FF;
+  --on-acc:#181E23;
 
-  --c-kick:#FF7A52;
-  --c-snare:#F06A9C;
+  --c-kick:#FF9E64;
+  --c-snare:#FF6E9C;
   --c-clap:#F5A257;
   --c-rim:#B892E6;
-  --c-ch:#4FC8CF;
+  --c-ch:#47D6FF;
   --c-ph:#6FC79A;
-  --c-oh:#6BD48A;
+  --c-oh:#6BE3A0;
   --c-ltom:#7B95EC;
   --c-mtom:#8FA8F0;
   --c-htom:#A9BDF5;
   --c-ride:#E4B647;
 
-  --cell-off:#26252A;
+  --cell-off:#2A2D33;
   --shadow:none;
 }
 
@@ -184,7 +187,7 @@ h1 em{font-style:normal;color:var(--acc);}
   text-transform:uppercase;padding:11px 18px;border-radius:var(--radius);cursor:pointer;
   display:inline-flex;align-items:center;gap:9px;min-width:118px;justify-content:center;
 }
-.play:hover,.play[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#15120F}
+.play:hover,.play[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
 .play .glyph{font-size:10px;line-height:1}
 
 .knob{display:flex;flex-direction:column;gap:3px;min-width:126px;flex:1 1 126px}
@@ -206,7 +209,7 @@ input[type=range]:focus-visible{outline:2px solid var(--acc);outline-offset:3px;
   text-transform:uppercase;padding:9px 12px;border-radius:var(--radius);cursor:pointer;
 }
 .toggle:hover{border-color:var(--acc);color:var(--ink)}
-.toggle[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#15120F}
+.toggle[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
 .seg{display:inline-flex;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .seg button{
   appearance:none;border:0;border-left:1px solid var(--line);background:var(--panel-2);color:var(--ink-2);
@@ -368,9 +371,9 @@ footer a{color:inherit}
 }
 
 /* ---------- Instant Haus additions ---------- */
-:root{ --c-perc:#6F4A9B; --c-oh:#2D8A46; }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --c-perc:#B892E6; --c-oh:#6BD48A; } }
-:root[data-theme="dark"]{ --c-perc:#B892E6; --c-oh:#6BD48A; }
+:root{ --c-perc:#6247AA; --c-oh:#1E8A55; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --c-perc:#B79BFF; --c-oh:#6BE3A0; } }
+:root[data-theme="dark"]{ --c-perc:#B79BFF; --c-oh:#6BE3A0; }
 
 .tracks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 .mod{
@@ -437,7 +440,7 @@ footer a{color:inherit}
   text-transform:uppercase;padding:6px 9px;border-radius:12px;
 }
 .mini:hover{border-color:var(--acc);color:var(--ink)}
-.mini:active{background:var(--acc);border-color:var(--acc);color:#15120F}
+.mini:active{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
 .mini.sq{border-radius:2px}
 .mini:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .midi{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-left:auto}
@@ -448,7 +451,7 @@ footer a{color:inherit}
 .midi .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:0 0 7px}
 .midi .dot.on{background:var(--acc)}
 .midi .mlab{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
-.grid{grid-template-columns:150px repeat(var(--steps,16),minmax(26px,1fr));min-width:calc(150px + var(--steps,16) * 29px)}
+.grid{grid-template-columns:196px repeat(var(--steps,16),minmax(26px,1fr));min-width:calc(196px + var(--steps,16) * 29px)}
 .badge{
   font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
   border:1px solid var(--line);border-radius:2px;padding:1px 5px;color:var(--ink-3);
@@ -497,12 +500,29 @@ h1{font-size:clamp(28px,4.8vw,46px)}
 }
 .cell.moved .lead{display:block}
 /* room on the right for a note pushed off the last 16th */
-.grid{padding-right:30px;min-width:calc(180px + var(--steps,16) * 29px)}
+.grid{padding-right:30px;min-width:calc(226px + var(--steps,16) * 29px)}
 .cell:hover{transform:none}
 .cell.flash{transform:none}
 .cell:hover .hit{transform:translateX(calc(var(--f,0) * 100%)) translateY(-1px)}
 .cell.flash .hit{transform:translateX(calc(var(--f,0) * 100%)) translateY(-2px)}
 @media (prefers-reduced-motion:reduce){ .cell .hit{transition:none} }
+
+/* ---------- presets ---------- */
+.pslots{display:flex;gap:4px;flex-wrap:wrap}
+.pslot{
+  appearance:none;cursor:pointer;width:24px;height:24px;padding:0;border-radius:2px;
+  border:1px solid var(--line);background:var(--panel-2);color:var(--ink-3);
+  font-family:"IBM Plex Mono",monospace;font-size:9.5px;font-variant-numeric:tabular-nums;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.pslot:hover{border-color:var(--acc);color:var(--ink)}
+.pslot[data-full="1"]{background:var(--acc);border-color:var(--acc);color:var(--on-acc);font-weight:600}
+.pslot[data-cur="1"]{box-shadow:0 0 0 2px var(--ground),0 0 0 3px var(--acc)}
+.pslot:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.phint{
+  font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-3);margin-left:auto;
+}
 @media (max-width:980px){ .tracks{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:560px){ .tracks{grid-template-columns:1fr} }
 </style>
@@ -523,7 +543,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
   <header class="masthead">
     <div class="brand">
       <span class="eyebrow">Pattern generator · after Alexkid, 2011</span>
-      <h1>Instant<br><em>Haus</em></h1>
+      <h1>Instant<br><em>Haus</em> Web</h1>
     </div>
     <p class="lede">A web rebuild of <a href="https://www.ableton.com/en/packs/instant-haus/" target="_blank" rel="noreferrer">Alexkid's Max for Live device</a>: four tracks, two banks, <b>96 patterns</b> read straight out of the <code>.amxd</code>. Dial a number per track and it plays. Swing, shift and velocity range are per track, exactly as in the original — plus a kit, a tempo and MIDI out, which the original got from Live.</p>
   </header>
@@ -553,6 +573,11 @@ h1{font-size:clamp(28px,4.8vw,46px)}
       <button class="mini" id="rVel">Vel</button>
       <button class="mini" id="rShift">Shift</button>
       <button class="mini sq" id="rInit">Init</button>
+      <span class="rlab" style="margin-left:10px">Notes</span>
+      <div class="seg" role="group" aria-label="Note map" id="noteSeg">
+        <button type="button" data-map="gm" aria-pressed="false">GM</button>
+        <button type="button" data-map="opxy" aria-pressed="true">OP-XY</button>
+      </div>
       <span class="rlab" style="margin-left:10px">Tracks</span>
       <button class="mini sq" id="allOn">All On</button>
       <button class="mini sq" id="allOff">All Off</button>
@@ -563,6 +588,11 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <select id="midiPort" aria-label="MIDI output port" disabled><option>—</option></select>
         <select id="midiChan" aria-label="MIDI channel" disabled></select>
       </div>
+    </div>
+    <div class="console rnd" role="group" aria-label="Presets">
+      <span class="rlab">Presets</span>
+      <div class="pslots" id="pslots"></div>
+      <span class="phint">Click recall &#183; Shift-click store &#183; Alt-click clear</span>
     </div>
   </section>
 
@@ -606,12 +636,12 @@ h1{font-size:clamp(28px,4.8vw,46px)}
 
   <section class="map">
     <div>
-      <h3>Note map (device defaults)</h3>
+      <h3 id="mapTitle">Note map (OP-XY drum kit)</h3>
       <table class="maptable">
-        <thead><tr><th>Voice</th><th>Note</th><th>GM name</th></tr></thead>
+        <thead><tr><th>Voice</th><th>Note</th><th>Name</th><th>In the device</th></tr></thead>
         <tbody id="mapBody"></tbody>
       </table>
-      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and both the grid label and the MIDI output follow. These are the values the device ships with — a General MIDI drum map, which is also where an Ableton drum rack starts.</p>
+      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and the grid label, this table and the MIDI output all follow.</p><p><b>Notes: GM / OP-XY</b> in the console switches the whole set at once. <b>GM</b> is the General MIDI percussion map the device itself ships — 36 kick, 38 snare, 42 and 46 hats — which is also where an Ableton drum rack starts. <b>OP-XY</b> is what a Teenage Engineering drum kit answers to: F for the kick, G for the snare, C and C# for the two hats. Picking one loads its notes straight away, and it is what <b>Init</b> restores and the span <b>Randomize &#8250; Note</b> rolls within — 35&#8211;59 for GM, 53&#8211;68 for OP-XY, so a roll lands on another drum in the same kit rather than off it. The last column is always the device&#39;s own value, for comparison.</p>
     </div>
     <div>
       <h3>Reading the grid</h3>
@@ -629,7 +659,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
       <p><b>707</b> — Roland TR-707, 1985. PCM samples rather than analogue circuits: short, crisp, a little grainy. Cheap second-hand by the late eighties, which is why it is all over early Chicago house.</p>
       <p><b>808</b> — Roland TR-808, 1980. A sine kick that rings for most of a second, a tonal snare, hats built from six square waves. In house it usually turns up as the kick under a 909 top.</p>
       <p><b>909</b> — Roland TR-909, 1983. Analogue kick, snare and toms, sampled hats and cymbals. The default house and techno kit, and the one Alexkid's patterns assume.</p>
-      <p><b>Simmons</b> — SDS-V, 1981: not a drum machine but an electronic kit, hexagonal pads driving analogue modules. Deep pitch bends on the toms, a snare made mostly of noise. House patterns almost never get played on it, which is exactly why it is here.</p>
+      <p><b>LinnDrum</b> — Roger Linn&#39;s LM-2, 1982. Not synthesis at all: real drums recorded and played back as 8-bit samples, which is why the kick barely bends and the hats are dark and gritty. Its snare is one of the most recognisable sounds of the decade, and house producers sampled the machine long before they could afford one — so it belongs here more than it first looks.</p>
     </div>
     <div>
       <h3>What is not the same</h3>
@@ -641,7 +671,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
   </section>
 
   <footer>
-    <span>Instant Haus — 96 patterns, 4 tracks, 4 kits, Web Audio + Web MIDI</span>
+    <span>Instant Haus Web — 96 patterns, 4 tracks, 4 kits, Web Audio + Web MIDI</span>
     <span class="tools">Original device © <a href="https://www.ableton.com/en/packs/instant-haus/" target="_blank" rel="noreferrer">Alexkid</a> 2011, <a href="https://creativecommons.org/licenses/by-nc/3.0/" target="_blank" rel="noreferrer">CC BY-NC 3.0</a> · adapted for the web · click a cell: off → ghost → accent</span>
   </footer>
 </div>
@@ -801,30 +831,48 @@ var BANKS = {
 
 var MODULES = [
   {id:"kick",  label:"Kick",   key:"kick",  max:11, c:"--c-kick",
-   voices:[{id:"kick",  name:"Kick",  note:36, gm:"Bass Drum 1",   c:"--c-kick"}]},
+   voices:[{id:"kick",  name:"Kick",  note:53, c:"--c-kick"}]},
   {id:"snare", label:"Snare",  key:"snare", max:11, c:"--c-snare",
-   voices:[{id:"snare", name:"Snare", note:38, gm:"Acoustic Snare",c:"--c-snare"}]},
+   voices:[{id:"snare", name:"Snare", note:55, c:"--c-snare"}]},
   {id:"hh",    label:"HiHats", key:"hh",    max:23, c:"--c-ch",
-   voices:[{id:"ch", name:"CH", note:42, gm:"Closed Hi-Hat", c:"--c-ch"},
-           {id:"oh", name:"OH", note:46, gm:"Open Hi-Hat",   c:"--c-oh"}]},
+   voices:[{id:"ch", name:"CH", note:60, c:"--c-ch"},
+           {id:"oh", name:"OH", note:61, c:"--c-oh"}]},
   {id:"perc",  label:"Perc",   key:"perc",  max:11, c:"--c-perc",
-   voices:[{id:"perc",  name:"Perc",  note:50, gm:"High Tom",  c:"--c-perc"}]}
+   voices:[{id:"perc",  name:"Perc",  note:67, c:"--c-perc"}]}
 ];
 var VOICES = [];
 MODULES.forEach(function(m){ m.voices.forEach(function(v){ v.mod = m; VOICES.push(v); }); });
 var STEPS = 16;
 
 /* shipped defaults, straight off the device's parameter_initial values */
+/* Notes are the one place this page does not ship the device's defaults.
+   Two maps, switchable: GM is what Alexkid's device sends (and what an
+   Ableton drum rack expects), OP-XY is what a Teenage Engineering drum kit
+   answers to. The choice drives the note fields, what Init restores, and the
+   span Randomize > Note rolls within. */
+var NOTE_MAPS = {
+  gm:   {label:"General MIDI", lo:35, hi:59,
+         n:{kick:36, snare:38, ch:42, oh:46, perc:50}},
+  opxy: {label:"OP-XY drum kit", lo:53, hi:68,
+         n:{kick:53, snare:55, ch:60, oh:61, perc:67}}
+};
+var noteMap = "opxy";
+try{ var _nm = localStorage.getItem("ihw-notemap"); if(_nm && NOTE_MAPS[_nm]) noteMap = _nm; }catch(e){}
+
+/* Everything except the notes: those come from NOTE_MAPS via applyNoteMap(). */
 var DEFAULTS = {
-  kick:{patt:1, swing:50, shift:0, on:true, v:{kick:{note:36,hi:100,lo:20}}},
-  snare:{patt:1, swing:50, shift:0, on:true, v:{snare:{note:38,hi:100,lo:20}}},
-  hh:{patt:1, swing:50, shift:0, on:true, v:{ch:{note:42,hi:100,lo:20}, oh:{note:46,hi:100,lo:20}}},
-  perc:{patt:0, swing:50, shift:0, on:true, v:{perc:{note:50,hi:100,lo:20}}}
+  kick:{patt:1, swing:50, shift:0, on:true, v:{kick:{note:53,hi:100,lo:20}}},
+  snare:{patt:1, swing:50, shift:0, on:true, v:{snare:{note:55,hi:100,lo:20}}},
+  hh:{patt:1, swing:50, shift:0, on:true, v:{ch:{note:60,hi:100,lo:20}, oh:{note:61,hi:100,lo:20}}},
+  perc:{patt:0, swing:50, shift:0, on:true, v:{perc:{note:67,hi:100,lo:20}}}
 };
 
 var bank = "house";
 var bpm = 124, drive = 0, playing = false;
 var state = {};
+
+var PITCH = ["C","C#","D","D#","E","F","F#","G","G#","A","A#","B"];
+function noteName(n){ return PITCH[((n % 12) + 12) % 12] + (Math.floor(n/12) - 2); }
 
 function decode(s){
   var a=[],i;
@@ -840,6 +888,7 @@ function initState(){
     });
     applyPattern(m);
   });
+  applyNoteMap();
 }
 function applyPattern(m){
   var st = state[m.id], raw = BANKS[bank][m.key][st.patt];
@@ -994,8 +1043,17 @@ function buildGrid(){
       if(b) b.setAttribute("aria-pressed", st.on ? "true":"false");
       paintMuting();
     });
+    var fader = document.createElement("input");
+    fader.type = "range"; fader.className = "fader";
+    fader.min = 0; fader.max = 150; fader.step = 1;
+    fader.value = Math.round((gains[v.id] === undefined ? 1 : gains[v.id]) * 100);
+    fader.style.setProperty("--rc","var("+v.c+")");
+    fader.setAttribute("aria-label", v.name + " level");
+    fader.title = v.name + " level";
+    fader.addEventListener("input", function(e){ initAudio(); setGain(v.id, (+e.target.value)/100); });
+    els["fad_"+v.id] = fader;
     var nt = document.createElement("span"); nt.className="nt"; nt.textContent = state[v.mod.id].v[v.id].note;
-    head.appendChild(lab); head.appendChild(nt);
+    head.appendChild(lab); head.appendChild(fader); head.appendChild(nt);
     grid.appendChild(head);
     rowHeadEls[v.id] = {lab:lab, nt:nt};
 
@@ -1081,9 +1139,12 @@ function renderMap(){
     var sw = document.createElement("span"); sw.className="swatch"; sw.style.background="var("+v.c+")";
     td1.appendChild(sw);
     td1.appendChild(document.createTextNode(v.mod.voices.length>1 ? v.mod.label+" "+v.name : v.name));
-    var td2 = document.createElement("td"); td2.className="num"; td2.textContent = state[v.mod.id].v[v.id].note;
-    var td3 = document.createElement("td"); td3.textContent = v.gm;
-    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3);
+    var n = state[v.mod.id].v[v.id].note;
+    var td2 = document.createElement("td"); td2.className="num"; td2.textContent = n;
+    var td3 = document.createElement("td"); td3.textContent = noteName(n);
+    var td4 = document.createElement("td"); var dv = NOTE_MAPS.gm.n[v.id];
+    td4.textContent = dv + " (" + noteName(dv) + ")";
+    tr.appendChild(td1); tr.appendChild(td2); tr.appendChild(td3); tr.appendChild(td4);
     tb.appendChild(tr);
   });
 }
@@ -1116,33 +1177,43 @@ var KITS = {
   "707": { name:"707", label:"Roland TR-707 — 1985, PCM samples: short, crisp, slightly lo-fi.",
     kick:{f0:150,f1:58,sw:0.05,dec:0.22,click:0.3,wave:"sine"},
     snare:{nf:2600,nq:0.8,ndec:0.13,tones:[[210,0.22,0.07],[400,0.1,0.05]]},
-    hat:{mode:"noise",hp:8500,ch:0.04,oh:0.22,amp:0.26},
+    hat:{mode:"noise",hp:8500,ch:0.04,oh:0.22,amp:0.30},
     tom:{wave:"sine",ratio:[1,0.55],dec:0.2,base:260,noise:0.12}
   },
   "808": { name:"808", label:"Roland TR-808 — 1980, analogue: long boomy kick, tonal snare, metallic hats.",
     kick:{f0:110,f1:46,sw:0.03,dec:0.75,click:0.08,wave:"sine"},
     snare:{nf:1800,nq:0.5,ndec:0.18,tones:[[176,0.28,0.16],[238,0.18,0.12]]},
-    hat:{mode:"metal",hp:7000,ch:0.06,oh:0.42,amp:0.24,base:205},
+    hat:{mode:"metal",hp:1400,ch:0.06,oh:0.42,amp:0.34,base:205},
     tom:{wave:"sine",ratio:[1,0.62],dec:0.34,base:180,noise:0.05}
   },
   "909": { name:"909", label:"Roland TR-909 — 1983, analogue kick and snare with sampled cymbals: the house kit.",
     kick:{f0:170,f1:48,sw:0.09,dec:0.36,click:0.22,wave:"sine"},
     snare:{nf:2200,nq:0.6,ndec:0.19,tones:[[185,0.2,0.1],[330,0.12,0.1]]},
-    hat:{mode:"mix",hp:7500,ch:0.05,oh:0.32,amp:0.28,base:220},
+    hat:{mode:"mix",hp:7500,ch:0.05,oh:0.32,amp:0.39,base:220},
     tom:{wave:"sine",ratio:[1,0.5],dec:0.26,base:300,noise:0.08}
   },
-  "sds": { name:"Simmons", label:"Simmons SDS-V — 1981, an electronic kit rather than a drum machine: pitch-swept toms, a noise snare, a clicky kick.",
-    kick:{f0:260,f1:40,sw:0.14,dec:0.32,click:0.4,wave:"triangle"},
-    snare:{nf:1400,nq:0.4,ndec:0.26,tones:[[240,0.3,0.14],[120,0.2,0.2]],sweep:1},
-    hat:{mode:"noise",hp:5500,ch:0.05,oh:0.36,amp:0.3},
-    tom:{wave:"triangle",ratio:[2.6,0.55],dec:0.48,base:230,noise:0.2}
+  "linn": { name:"LinnDrum", label:"LinnDrum — 1982, Roger Linn\u2019s LM-2: real drums sampled at 8 bits. Tight kick, a huge bright snare, dark gritty hats.",
+    /* Samples, not circuits: the kick barely bends, the snare is mostly noise
+       with a short body, and the hats are dark because 8 bits at 28 kHz are. */
+    kick:{f0:96,f1:52,sw:0.02,dec:0.30,click:0.30,wave:"sine"},
+    snare:{nf:2000,nq:0.5,ndec:0.24,tones:[[188,0.24,0.09],[330,0.10,0.06]]},
+    hat:{mode:"noise",hp:6200,ch:0.045,oh:0.30,amp:0.28},
+    tom:{wave:"sine",ratio:[1.08,0.86],dec:0.30,base:250,noise:0.16}
   }
 };
-var KIT_ORDER = ["707","808","909","sds"];
+var KIT_ORDER = ["707","808","909","linn"];
 var kit = KITS["909"];
 
 var audio=null, master=null, shaper=null, dryGain=null, wetGain=null, noise=null;
 var bus = {}, curBus = null, perfOffset = 0;
+var gains = {};
+
+/* Per-voice output level, 0-150 %. Audio only — the MIDI velocity a track
+   sends is Vel Hi / Vel Lo, and the fader must not quietly rewrite it. */
+function setGain(id, v){
+  gains[id] = v;
+  if(audio && bus[id]) bus[id].gain.setTargetAtTime(v, audio.currentTime, 0.02);
+}
 
 function makeCurve(k){
   var n=1024, c=new Float32Array(n), i, x;
@@ -1171,7 +1242,9 @@ function initAudio(){
   for(var i=0;i<len;i++) d[i] = Math.random()*2-1;
   noise = buf;
   VOICES.forEach(function(v){
-    var g = audio.createGain(); g.gain.value = 1; g.connect(master); bus[v.id] = g;
+    var g = audio.createGain();
+    g.gain.value = gains[v.id] === undefined ? 1 : gains[v.id];
+    g.connect(master); bus[v.id] = g;
   });
   setDrive(drive);
 }
@@ -1187,15 +1260,19 @@ function out(node){ node.connect(curBus || master); }
 function hatVoice(t, vel, dec, amp){
   var k = kit.hat, mix = audio.createGain(), i, o;
   var ratios=[2,3,4.16,5.43,6.79,8.21];
+  /* The six squares need taming (they sum to +/-6); the noise does not.
+     Scaling them on their own bus rather than on the shared one — which is
+     what made the 909's and 808's noise layer inaudible. */
   if(k.mode!=="noise"){
-    mix.gain.value = 0.05;
+    var ob = audio.createGain(); ob.gain.value = k.mode === "metal" ? 0.16 : 0.09;
     for(i=0;i<ratios.length;i++){
       o = audio.createOscillator(); o.type="square"; o.frequency.value = k.base*ratios[i];
-      o.connect(mix); o.start(t); o.stop(t+dec+0.05);
+      o.connect(ob); o.start(t); o.stop(t+dec+0.05);
     }
+    ob.connect(mix);
   }
   if(k.mode!=="metal"){
-    var s = noiseSrc(), ng = audio.createGain(); ng.gain.value = k.mode==="noise" ? 0.9 : 0.5;
+    var s = noiseSrc(), ng = audio.createGain(); ng.gain.value = k.mode==="noise" ? 0.9 : 0.55;
     s.connect(ng); ng.connect(mix); s.start(t); s.stop(t+dec+0.05);
   }
   var f = audio.createBiquadFilter(); f.type="highpass"; f.frequency.value=k.hp;
@@ -1279,6 +1356,156 @@ function fire(v, t, vel){
   if(vel <= 0) return;
   synth(v.id, t, Math.max(0.06, vel/110));
   midiSend(state[v.mod.id].v[v.id].note, vel, t);
+}
+
+
+/* ---------------- presets ----------------
+   The original stores sixteen snapshots in the device, saved with the Live
+   set: click a slot to recall, shift-click to store. Same gesture here, with
+   alt-click to clear (the Max preset object has no way to empty a slot, and a
+   web page needs one). Slots live in localStorage under the page's own origin,
+   so they survive a reload but never leave the browser; if storage is refused
+   they still work for the session.                                          */
+var PRESET_SLOTS = 16, PRESET_KEY = "ihw-presets";
+var presets = new Array(PRESET_SLOTS), curPreset = -1, pslotEls = [];
+
+(function(){
+  try{
+    var raw = localStorage.getItem(PRESET_KEY);
+    if(raw){
+      var a = JSON.parse(raw);
+      if(Object.prototype.toString.call(a) === "[object Array]"){
+        for(var i=0;i<PRESET_SLOTS;i++) presets[i] = a[i] || null;
+      }
+    }
+  }catch(e){}
+})();
+function persistPresets(){
+  try{ localStorage.setItem(PRESET_KEY, JSON.stringify(presets)); }catch(e){}
+}
+
+function kitId(){
+  for(var i=0;i<KIT_ORDER.length;i++) if(KITS[KIT_ORDER[i]] === kit) return KIT_ORDER[i];
+  return "909";
+}
+function snapshot(){
+  var snap = {bank:bank, bpm:bpm, drive:drive, kit:kitId(), nmap:noteMap, mods:{}, gains:{}};
+  MODULES.forEach(function(m){
+    var st = state[m.id];
+    var mo = {patt:st.patt, swing:st.swing, shift:st.shift, on:st.on, edited:st.edited, v:{}};
+    m.voices.forEach(function(v){
+      var sv = st.v[v.id];
+      mo.v[v.id] = {note:sv.note, hi:sv.hi, lo:sv.lo, g:sv.g.slice()};
+    });
+    snap.mods[m.id] = mo;
+  });
+  VOICES.forEach(function(v){ snap.gains[v.id] = gains[v.id] === undefined ? 1 : gains[v.id]; });
+  return snap;
+}
+function restore(snap){
+  if(!snap) return;
+  bank = snap.bank === "breaks" ? "breaks" : "house";
+  if(snap.nmap && NOTE_MAPS[snap.nmap]) setNoteMap(snap.nmap, false);
+  Array.prototype.forEach.call(document.getElementById("bankSeg").children, function(b){
+    b.setAttribute("aria-pressed", b.dataset.bank === bank ? "true" : "false");
+  });
+
+  if(snap.kit && KITS[snap.kit]){
+    kit = KITS[snap.kit];
+    var seg = document.getElementById("kitSeg");
+    for(var i=0;i<seg.children.length;i++){
+      seg.children[i].setAttribute("aria-pressed", KIT_ORDER[i] === snap.kit ? "true":"false");
+    }
+    var kn = document.getElementById("kitNote"); if(kn) kn.textContent = KITS[snap.kit].label;
+  }
+  if(typeof snap.bpm === "number"){
+    bpm = snap.bpm;
+    document.getElementById("tempo").value = bpm;
+    document.getElementById("tempoVal").textContent = bpm;
+  }
+  if(typeof snap.drive === "number"){
+    document.getElementById("drive").value = Math.round(snap.drive*100);
+    initAudio(); setDrive(snap.drive);
+  }
+
+  MODULES.forEach(function(m){
+    var mo = snap.mods && snap.mods[m.id]; if(!mo) return;
+    var st = state[m.id];
+    st.patt = clampPatt(m, mo.patt|0);
+    st.swing = mo.swing; st.shift = mo.shift;
+    st.on = mo.on !== false; st.edited = !!mo.edited;
+    m.voices.forEach(function(v){
+      var sv = mo.v && mo.v[v.id]; if(!sv) return;
+      st.v[v.id].note = sv.note; st.v[v.id].hi = sv.hi; st.v[v.id].lo = sv.lo;
+      if(sv.g && sv.g.length === STEPS) st.v[v.id].g = sv.g.slice();
+    });
+  });
+  VOICES.forEach(function(v){
+    var g = snap.gains && snap.gains[v.id];
+    if(typeof g === "number"){
+      setGain(v.id, g);
+      if(els["fad_"+v.id]) els["fad_"+v.id].value = Math.round(g*100);
+    }
+  });
+
+  document.querySelectorAll(".mname").forEach(function(b, i){
+    b.setAttribute("aria-pressed", state[MODULES[i].id].on ? "true":"false");
+  });
+  syncFields(); renderCells(); renderRowHeads(); renderMap(); paintMuting(); renderAnnot();
+}
+
+function applyNoteMap(){
+  var n = NOTE_MAPS[noteMap].n;
+  VOICES.forEach(function(v){ state[v.mod.id].v[v.id].note = n[v.id]; });
+}
+function paintNoteMap(){
+  var seg = document.getElementById("noteSeg");
+  if(seg) Array.prototype.forEach.call(seg.children, function(b){
+    b.setAttribute("aria-pressed", b.dataset.map === noteMap ? "true" : "false");
+  });
+  var h = document.getElementById("mapTitle");
+  if(h) h.textContent = "Note map (" + NOTE_MAPS[noteMap].label + ")";
+}
+function setNoteMap(id, apply){
+  if(!NOTE_MAPS[id]) return;
+  noteMap = id;
+  try{ localStorage.setItem("ihw-notemap", id); }catch(e){}
+  if(apply){ applyNoteMap(); syncFields(); renderRowHeads(); }
+  paintNoteMap(); renderMap();
+}
+
+function paintPresets(){
+  pslotEls.forEach(function(b, i){
+    var full = !!presets[i];
+    b.dataset.full = full ? "1" : "0";
+    b.dataset.cur = (curPreset === i && full) ? "1" : "0";
+    b.title = "Preset " + (i+1) + (full ? " — click to recall, alt-click to clear"
+                                        : " — empty, shift-click to store");
+  });
+}
+function buildPresets(){
+  var host = document.getElementById("pslots");
+  host.innerHTML = ""; pslotEls = [];
+  for(var i=0;i<PRESET_SLOTS;i++){
+    (function(n){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "pslot"; b.textContent = n+1;
+      b.addEventListener("click", function(e){
+        if(e.shiftKey){
+          presets[n] = snapshot(); curPreset = n; persistPresets();
+        } else if(e.altKey){
+          presets[n] = null; if(curPreset === n) curPreset = -1; persistPresets();
+        } else if(presets[n]){
+          restore(presets[n]); curPreset = n;
+        } else {
+          return;                      /* clicking an empty slot does nothing */
+        }
+        paintPresets();
+      });
+      host.appendChild(b); pslotEls.push(b);
+    })(i);
+  }
+  paintPresets();
 }
 
 /* ---------------- scheduler ---------------- */
@@ -1402,7 +1629,8 @@ document.getElementById("rPatt").addEventListener("click", function(){
   syncFields(); renderCells(); renderAnnot();
 });
 document.getElementById("rNote").addEventListener("click", function(){
-  VOICES.forEach(function(v){ state[v.mod.id].v[v.id].note = 35 + ri(25); });
+  var M = NOTE_MAPS[noteMap];
+  VOICES.forEach(function(v){ state[v.mod.id].v[v.id].note = M.lo + ri(M.hi - M.lo + 1); });
   syncFields(); renderRowHeads(); renderMap();
 });
 document.getElementById("rSwing").addEventListener("click", function(){
@@ -1422,15 +1650,25 @@ document.getElementById("rVel").addEventListener("click", function(){
   syncFields();
 });
 document.getElementById("rInit").addEventListener("click", function(){
+  curPreset = -1; if(pslotEls.length) paintPresets();
+  bank = "house";
+  Array.prototype.forEach.call(document.getElementById("bankSeg").children, function(b){
+    b.setAttribute("aria-pressed", b.dataset.bank === "house" ? "true" : "false");
+  });
   MODULES.forEach(function(m){
     var d = DEFAULTS[m.id], st = state[m.id];
     st.patt = d.patt; st.swing = d.swing; st.shift = d.shift; st.on = d.on;
     m.voices.forEach(function(v){
-      st.v[v.id].note = d.v[v.id].note; st.v[v.id].hi = d.v[v.id].hi; st.v[v.id].lo = d.v[v.id].lo;
+      st.v[v.id].note = NOTE_MAPS[noteMap].n[v.id];
+      st.v[v.id].hi = d.v[v.id].hi; st.v[v.id].lo = d.v[v.id].lo;
     });
     applyPattern(m);
   });
   document.querySelectorAll(".mname").forEach(function(b){ b.setAttribute("aria-pressed","true"); });
+  VOICES.forEach(function(v){
+    setGain(v.id, 1);
+    if(els["fad_"+v.id]) els["fad_"+v.id].value = 100;
+  });
   syncFields(); renderCells(); renderRowHeads(); renderMap(); paintMuting(); renderAnnot();
 });
 function setAll(on){
@@ -1493,10 +1731,19 @@ document.getElementById("allOff").addEventListener("click", function(){ setAll(f
   chanSel.addEventListener("change", function(){ midiPanic(); midiChan = +chanSel.value; });
 })();
 
+(function(){
+  var seg = document.getElementById("noteSeg");
+  Array.prototype.forEach.call(seg.children, function(b){
+    b.addEventListener("click", function(){ setNoteMap(b.dataset.map, true); });
+  });
+})();
+
 /* ---------------- boot ---------------- */
 initState();
 buildModules();
 buildGrid();
+buildPresets();
+paintNoteMap();
 renderCells();
 renderRowHeads();
 renderMap();

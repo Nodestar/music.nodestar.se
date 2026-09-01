@@ -1,11 +1,11 @@
-# Instant Haus
+# Instant Haus Web
 
 Webbversion av Alexkids Max for Live-enhet *Instant Haus* (2011): fyra spår,
 två banker, 96 fasta 16-stegsmönster, per spår swing, shift och
 velocity-intervall. Samma motor och formspråk som House Machine och One Drop
 Machine, plus fyra kit och MIDI-ut.
 
-Publicerad på `/demos/instant-haus/`.
+Publicerad på `/demos/instant-haus-web/`.
 
 ## Källan
 
@@ -41,6 +41,31 @@ originalet.
 | Vel Lo | 0–127 | 20 |
 | Swing | 50–100 % | 50 |
 | Shift | 0–25 ms | 0 |
+
+### Noter — GM eller OP-XY
+
+Två notkartor, växlade med **Notes: GM / OP-XY** i konsolen bredvid Init:
+
+| Röst | GM | | OP-XY | |
+|---|---|---|---|---|
+| Kick | 36 | C1 | 53 | F2 |
+| Snare | 38 | D1 | 55 | G2 |
+| HiHats CH | 42 | F#1 | 60 | C3 |
+| HiHats OH | 46 | A#1 | 61 | C#3 |
+| Perc | 50 | D2 | 67 | G3 |
+
+**GM** är General MIDI-percussionkartan, vilket är exakt vad enheten själv
+skickar och var ett Ableton drum rack börjar. **OP-XY** är vad en Teenage
+Engineering-trumkit svarar på — F kick, G snare, C och C# hattar. Tonhöjderna
+stämmer med hur OP-XY:s layout beskrivs i communityn; pad-numreringen är inte
+dokumenterad ens i manualen, så sidan påstår ingenting om den.
+
+Valet gör tre saker: laddar noterna direkt, bestämmer vad **Init** lägger
+tillbaka, och sätter omfånget som **Randomize › Note** rullar inom — 35–59 för
+GM, 53–68 för OP-XY, så en slumpning landar på en annan trumma i samma kit i
+stället för utanför det. Sidan startar på OP-XY; valet sparas i `localStorage`.
+En preset lagrar sina egna noter *och* vilken karta som var vald, så en
+återhämtning ställer tillbaka båda.
 
 Randomize-knapparna använder enhetens egna intervall, lästa ur
 `p randomvel`, `p randomshift`, `p randomswing` och `p midi_pattern_selec`:
@@ -85,6 +110,70 @@ Raden under rutnätet skriver ut resultatet i millisekunder vid aktuellt tempo.
 `updateOffsets()` använder exakt samma aritmetik som `scheduleStep()`, så
 rutnätet och ljudet är alltid överens.
 
+## Paletten
+
+Färgerna är lästa ur samma `.amxd` som mönstren — `bgcolor`, `textcolor`,
+`activedialcolor` och deras släktingar i patcher-JSON:en — inte ögonmätta från
+en skärmdump.
+
+| Roll | Värde | Var i enheten |
+|---|---|---|
+| Signalfärg | `#47D6FF` | rattbåge, aktiv flik, LED, sifferfält |
+| Panel | `#232529` | modulpanelerna |
+| Djup panel | `#181E23` | Randomize-blocket, text på cyan |
+| Linje | `#464B4F` | avdelarna mellan modulerna |
+| Dämpad text | `#4C5766` | inaktiva etiketter |
+| Sval ljusgrå | `#C0C8D6` | aktiv flikbakgrund |
+
+Sidan kör Lives **ljusa skin** i ljust läge — sval grå (`#E3E6EA` /`#F1F3F5`)
+i stället för sajtens varma betong, med enhetens `#181E23` och `#4C5766` som
+ink och dämpad text — och enhetens **mörka chrome** i mörkt läge (`#1B1D21` /
+`#232529` / `#181E23`, cyan `#47D6FF`).
+
+En avvikelse: `#47D6FF` bär inte text mot ljus botten (3,4:1). Ljusa lägets
+`--acc` är därför `#0B7BA8`, två steg mörkare, vilket ger 4,3:1 — något bättre
+än sajtens egna `#D2461B` på `#F2F0EB` (4,0:1). Den elektriska cyanen ligger
+kvar som `--acc-soft` och är accentfärgen rakt av i mörkt läge. Knapptext på
+accent styrs av `--on-acc`: vitt i ljust läge, enhetens `#181E23` i mörkt.
+
+## Presets
+
+Sexton platser, samma gester som originalets `preset`-objekt: **klick = hämta**,
+**shift-klick = spara**. Alt-klick tömmer en plats — Max preset-objekt har
+ingen väg att göra det, men en webbsida behöver en.
+
+En preset fångar hela tillståndet: bank, mönster per spår (även egenredigerade
+rutnät), noter, Vel Hi/Lo, swing, shift, mute, radnivåer, kit, tempo och drive.
+Fyllda platser är accentfärgade, den senast hämtade har en ring.
+
+Originalet sparar sina presets i enheten och därmed i Live-setet. Här ligger de
+i `localStorage` under sidans egen origin — de överlever en omladdning men
+lämnar aldrig webbläsaren. Om lagringen nekas fungerar de ändå, fast bara för
+sessionen.
+
+## Radnivåer
+
+Varje röst går genom en egen `GainNode` före mastern, med en fader i
+radetiketten (0–150 %, samma som House Machine). Den påverkar **bara ljudet** —
+MIDI-velocityn som spåret skickar är fortfarande Vel Hi/Vel Lo. Init nollställer
+fadrarna till 100.
+
+## Hattarnas nivå
+
+Två fel i den ärvda syntesen gjorde hattarna nästan ohörbara, båda hittade genom
+att mäta utsignalen med en `AnalyserNode` i headless Chromium:
+
+1. **909 och 808 fick sitt brus nedskalat med oscillatorbankens gain.** De sex
+   fyrkantsvågorna delade bussgain `0.05` med bruset, så bruslagret låg 26 dB
+   under vad det skulle. Banken har nu en egen gain och bruset går rakt in.
+2. **808:ans högpass låg över hela dess oscillatorstack.** Bankens sex
+   frekvenser ligger på 410–1683 Hz, filtret på 7000 Hz — rösten filtrerades
+   i praktiken bort. Nu 1400 Hz.
+
+Före: hattarna låg 22–35 dB under kicken i toppnivå beroende på kit. Efter:
+7–13 dB, jämnt över alla fyra kit. Samma två fel finns i House Machine-demons
+kit-tabell, som den ärvdes från.
+
 ## Skillnader mot originalet
 
 - **Ingen Live.** Originalet ärver tempo och transport från värden; sidan har
@@ -94,6 +183,8 @@ rutnätet och ljudet är alltid överens.
 - **Ett slag per cell.** Några källmönster sätter både accent- och ghostraden på
   samma steg, vilket i Max ger två noter. Rutnätet har en cell per steg, så de
   kollapsar till en accent.
+- **Init nollställer även banken** till House, eftersom `genre` bär
+  `parameter_initial: 0` i enheten.
 - **Inget MIDI learn, ingen Assign Rack.** Originalets *MIDI to*-meny och
   *Rack*-knapp mappar inkommande noter till egna parametrar respektive till ett
   drum racks pads. Ingendera har något att peka på i en webbläsare.
@@ -102,8 +193,13 @@ rutnätet och ljudet är alltid överens.
 ## Kit
 
 Fyra kit, samma `KITS`-tabell som House Machine men trimmad till de fem röster
-enheten driver (kick, snare, CH, OH, perc → tom). 707, 808, 909 och Simmons
-SDS-V. **Drive** är samma parallella softclip på mastern.
+enheten driver (kick, snare, CH, OH, perc → tom). 707, 808, 909 och LinnDrum.
+**Drive** är samma parallella softclip på mastern.
+
+LinnDrum (Roger Linns LM-2, 1982) är inte syntes utan samplade riktiga trummor
+i 8 bitar, vilket parametrarna speglar: kicken böjer knappt tonhöjd (96 → 52 Hz
+på 20 ms), snaren är mest brus med kort kropp, och hattarna är mörkare än
+909:ans eftersom 8 bitar i 28 kHz är det.
 
 ## MIDI-ut
 

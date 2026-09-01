@@ -50,9 +50,9 @@ export const demos: Demo[] = [
 		date: '2026-08-27'
 	},
 	{
-		slug: 'instant-haus',
+		slug: 'instant-haus-web',
 		no: 4,
-		title: 'Instant Haus',
+		title: 'Instant Haus Web',
 		description:
 			'Alexkids Max for Live-enhet återskapad i webbläsaren: 96 mönster lästa rakt ur .amxd-filen, fyra spår med egen swing, shift och velocity — plus MIDI-ut.',
 		tags: ['webaudio', 'webmidi', 'house', 'maxforlive', 'sequencer'],
