@@ -7,8 +7,8 @@
 </script>
 
 <svelte:head>
-	<title>music.nodestar.se – musikvisualiseringar</title>
-	<meta name="description" content="Demos av musikvisualiseringar." />
+	<title>music.nodestar.se – music visualizations</title>
+	<meta name="description" content="Demos of music visualizations." />
 </svelte:head>
 
 <div class="min-h-svh bg-background font-mono text-foreground lowercase antialiased">
@@ -28,14 +28,14 @@
 
 	<main class="mx-auto max-w-6xl px-6 pb-24">
 		<section class="grid gap-6 border-b border-border py-16 md:grid-cols-[1fr_2fr]">
-			<h1 class="text-sm text-muted-foreground">musikvisualiseringar</h1>
+			<h1 class="text-sm text-muted-foreground">music visualizations</h1>
 			<p class="max-w-2xl text-xl leading-snug tracking-tight sm:text-2xl">
-				experiment med ljud, rytm och grafik. klicka på en demo för att öppna den.
+				experiments with sound, rhythm and graphics. click a demo to open it.
 			</p>
 		</section>
 
 		{#if sorted.length === 0}
-			<p class="py-16 text-sm text-muted-foreground">inga demos ännu.</p>
+			<p class="py-16 text-sm text-muted-foreground">no demos yet.</p>
 		{:else}
 			<section class="grid gap-x-8 gap-y-14 py-14 sm:grid-cols-2 lg:grid-cols-3">
 				{#each sorted as demo (demo.slug)}
@@ -46,7 +46,7 @@
 						<div class="aspect-video w-full overflow-hidden border border-border bg-muted">
 							<img
 								src={demoImage(demo)}
-								alt="skärmdump av {demo.title}"
+								alt="screenshot of {demo.title}"
 								loading="lazy"
 								class="h-full w-full object-cover grayscale-[.25] transition duration-300 group-hover:grayscale-0"
 							/>
