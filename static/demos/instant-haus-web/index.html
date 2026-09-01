@@ -523,6 +523,18 @@ h1{font-size:clamp(28px,4.8vw,46px)}
   font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink-3);margin-left:auto;
 }
+
+/* ---------- field steppers ---------- */
+.fldwrap{display:flex;flex-direction:column;gap:2px;min-width:0}
+.spin{display:grid;grid-template-columns:1fr 1fr;gap:2px}
+.spin button{
+  appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);
+  color:var(--ink-3);font-family:"IBM Plex Mono",monospace;font-size:10px;line-height:1;
+  padding:3px 0 4px;border-radius:2px;touch-action:none;user-select:none;
+}
+.spin button:hover{border-color:var(--acc);color:var(--ink)}
+.spin button:active{background:var(--acc);border-color:var(--acc);color:var(--on-acc)}
+.spin button:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
 @media (max-width:980px){ .tracks{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media (max-width:560px){ .tracks{grid-template-columns:1fr} }
 </style>
@@ -986,7 +998,46 @@ function numField(label, min, max, val, cb, key, isNote){
   });
   w.appendChild(s); w.appendChild(i);
   els["in_"+key] = i;
-  return w;
+
+  /* Typing is fine for a jump; these are for nudging. Hold to repeat, since
+     a velocity has 128 steps and nobody should click that many times. */
+  function apply(d){
+    var cur = Math.round(+i.value); if(isNaN(cur)) cur = min;
+    var n = Math.max(min, Math.min(max, cur + d));
+    if(n === cur) return;
+    i.value = n; cb(n);
+  }
+  function stepper(txt, dir){
+    var b = document.createElement("button");
+    b.type = "button"; b.textContent = txt;
+    b.setAttribute("aria-label", (dir < 0 ? "Decrease " : "Increase ") + label);
+    b.title = label + ": " + (dir < 0 ? "\u2212" : "+") + "1, shift for 10, hold to repeat";
+    var slow = null, fast = null;
+    function stop(){ clearTimeout(slow); clearInterval(fast); slow = fast = null; }
+    b.addEventListener("pointerdown", function(e){
+      if(e.button) return;
+      e.preventDefault();
+      var step = e.shiftKey ? 10 : 1;
+      apply(dir * step);
+      slow = setTimeout(function(){
+        fast = setInterval(function(){ apply(dir * step); }, 55);
+      }, 380);
+    });
+    ["pointerup","pointerleave","pointercancel","blur"].forEach(function(ev){
+      b.addEventListener(ev, stop);
+    });
+    b.addEventListener("keydown", function(e){
+      if(e.key === "Enter" || e.key === " "){ e.preventDefault(); apply(dir * (e.shiftKey ? 10 : 1)); }
+    });
+    return b;
+  }
+  var spin = document.createElement("div"); spin.className = "spin";
+  spin.appendChild(stepper("\u2212", -1));
+  spin.appendChild(stepper("+", 1));
+
+  var wrap = document.createElement("div"); wrap.className = "fldwrap";
+  wrap.appendChild(w); wrap.appendChild(spin);
+  return wrap;
 }
 function setPatt(m, n){
   var st = state[m.id];

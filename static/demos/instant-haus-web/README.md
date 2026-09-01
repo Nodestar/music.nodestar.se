@@ -42,6 +42,11 @@ originalet.
 | Swing | 50–100 % | 50 |
 | Shift | 0–25 ms | 0 |
 
+Varje fält har ett par små **− / +** under sig, utöver att gå att skriva i:
+ett steg per klick, tio med shift, och håll inne för repetition — en velocity
+har 128 steg och ingen ska behöva klicka så många gånger. Mönsterrattens
+stegknappar sitter kvar där de satt.
+
 ### Noter — GM eller OP-XY
 
 Två notkartor, växlade med **Notes: GM / OP-XY** i konsolen bredvid Init:
