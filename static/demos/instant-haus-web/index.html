@@ -678,6 +678,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
     <div>
       <h3>What is not the same</h3>
       <p><b>No Live.</b> The original slaves to Live's transport and inherits its tempo; this page has its own clock and a tempo slider. Its swing was scaled against the host tempo in a way that left a little shuffle in even at 50 %; here 50 % is genuinely straight.</p>
+      <p><b>The hats choke.</b> Closed and open hat are one voice, as they are on all four machines: a closed or pedal hit cuts an open hat that is still ringing, whichever track fired it. The device itself cannot do this — it only sends notes — but the drum rack downstream would.</p>
       <p><b>One hit per cell.</b> A handful of the source patterns set the accent and ghost row on the same step, which in Max fires the voice twice. The grid shows one cell per step, so those collapse to an accent.</p>
       <p><b>No MIDI learn, no Assign Rack.</b> The original's <em>MIDI to</em> menu and <em>Rack</em> button map incoming notes to its own parameters and to a drum rack's pads. Neither has anywhere to point on a web page.</p>
       <p class="licence"><b>Licence.</b> The device is distributed under <a href="https://creativecommons.org/licenses/by-nc/3.0/" target="_blank" rel="noreferrer">CC Attribution-NonCommercial 3.0</a>, which permits adaptations. This page is an adaptation: the pattern data, note defaults and parameter ranges are Alexkid's; the interface, the sequencer and the synthesis are not. Non-commercial, as the licence requires.</p>
@@ -1408,7 +1409,21 @@ function noiseHit(t, vel, type, freq, q, peak, dec, att){
   s.connect(f); f.connect(g); out(g); s.start(t); s.stop(t+dec+0.1);
 }
 
-function hatVoice(t, vel, dec, amp){
+/* The hats are one voice, as on every one of these machines: a closed or
+   pedal hit chokes an open hat that is still ringing, and a new open hat
+   cuts off the last one. Whichever track fired it. */
+var openHat = null;
+function chokeHat(t){
+  if(!openHat) return;
+  var g = openHat.g.gain;
+  if(openHat.end > t){
+    if(g.cancelAndHoldAtTime) g.cancelAndHoldAtTime(t);
+    else g.cancelScheduledValues(t);
+    g.setTargetAtTime(0.0001, t, 0.004);
+  }
+  openHat = null;
+}
+function hatVoice(t, vel, dec, amp, open){
   var k = kit.hat, mix = audio.createGain(), i, o;
   var ratios=[2,3,4.16,5.43,6.79,8.21];
   /* The six squares need taming (they sum to +/-6); the noise does not.
@@ -1430,6 +1445,8 @@ function hatVoice(t, vel, dec, amp){
   var bp = audio.createBiquadFilter(); bp.type="peaking"; bp.frequency.value=9000; bp.gain.value=4;
   var g = audio.createGain(); env(g, t, amp*vel, dec, 0.001);
   mix.connect(f); f.connect(bp); bp.connect(g); out(g);
+  chokeHat(t);
+  if(open) openHat = {g:g, end:t+dec+0.05};
 }
 function tomVoice(t, vel, idx){
   var k = kit.tom, base = k.base[idx], dec = k.dec[idx];
@@ -1521,7 +1538,7 @@ function synth(track, note, t, vel){
   } else if(id==="ph"){
     hatVoice(t, vel, kit.hat.ph, kit.hat.amp*0.8);
   } else if(id==="oh"){
-    hatVoice(t, vel, kit.hat.oh, kit.hat.amp*1.05);
+    hatVoice(t, vel, kit.hat.oh, kit.hat.amp*1.05, true);
   } else if(id==="ltom"){
     tomVoice(t, vel, 0);
   } else if(id==="mtom"){

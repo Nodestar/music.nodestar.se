@@ -218,6 +218,14 @@ och spåret är en clap; 56 är en cowbell; 49 en crash.
 Pedalhatten är en kortare closed hat i alla fyra — ingen av maskinerna har
 ett eget sample för den, men ett drum rack brukar ha padden.
 
+**Hattarna chokar.** Closed, pedal och open hat är en enda röst, som på alla
+fyra maskinerna: ett closed- eller pedalslag klipper en open hat som
+fortfarande ringer, och en ny open hat klipper den förra. Det gäller oavsett
+vilket spår som avfyrade hatten. Choken görs med `cancelAndHoldAtTime` på
+open-hattens gain (fallback `cancelScheduledValues`) följt av en 4 ms
+`setTargetAtTime` mot noll, på exakt den schemalagda tiden för det chokande
+slaget, så den ligger i fas med swing och shift.
+
 En not som kitet inte har någon trumma för är en **tom pad**: tyst, som i ett
 drum rack. Noten skickas fortfarande på MIDI. Rutnätets notchip visas
 genomstruket, och notkartans tabell skriver *no cowbell* i Sound-kolumnen.
