@@ -60,16 +60,54 @@ formar arkitekturen mer än något annat:
 | Kan man kopiera in `.mid`? | **Nej, inte dokumenterat.** MTP överför samples, presets och projekt — inga MIDI-filer. Mac kräver dessutom fieldkit-appen | Ett av de tre utdata funkar inte som tänkt (se nedan) |
 | Trumlayout | F = kick, G = snare, C# = hi-hat enligt communityn. Dina arbetsnoter: 53 F2, 55 G2, 60 C3, 61 C#3, 67 G3 | Behöver en GM → OP-XY-översättning |
 
-### Den öppna frågan som måste testas på hårdvara
+### Går det att byta aktivt spår via CC? Nej — och förmodligen behövs det inte
 
-Tråden om extern inspelning visar **ett** spår inspelat, styrt av `active track
-ch.`. Om enheten spelar in alla åtta kanaler samtidigt eller bara det aktiva
-spåret är avgörande för hela live-läget, och det står ingenstans.
+Den officiella CC-tabellen har inget för spårval. Den täcker:
 
-**Test innan något byggs:** skicka noter på två kanaler samtidigt från valfri
-DAW, armera inspelning, och se om båda spåren fylls. Faller det ut som ett spår
-i taget blir live-läget "ett spår åt gången med spårväljare" i stället för
-"hela låten på en gång" — fullt användbart, men en annan design.
+| CC | Parameter | Kanal |
+|---|---|---|
+| 7 | spårvolym | 1–16 |
+| 9 | spår mute | 1–16 |
+| 10 | spår pan | 1–16 |
+| 46 | spårparametrar | 1–16 |
+| 80 | tempo | valfri |
+| 81 | groove | valfri |
+| 82 / 85 | scen (fördröjt / direkt) | valfri |
+| 83 / 84 | föregående / nästa scen | valfri |
+| 86 | projekt | valfri |
+| 90 | EQ | 1–4 |
+
+Scener och projekt går att byta utifrån. Spårval gör det inte. Guiden skriver
+själv att enheten har "almost all of its controls pre-mapped as midi CCs" —
+vilket är ett sätt att säga att några inte är det.
+
+**Men två saker i dokumentationen pekar mot att frågan är fel ställd.**
+Spår-CC:na ovan adresseras med **kanal 1–16**, alltså träffar de ett spår utan
+att det är valt. Och projektinställningarna sätter en egen MIDI-kanal per spår.
+`active track ch.` beskrivs som "the active track is the one currently
+selected" — det låter som en bekvämlighetskanal som följer markeringen, för att
+spela ett externt klaviatur in i det man råkar ha framme, inte som den enda
+vägen in.
+
+Om den läsningen stämmer skickar sidan helt enkelt varje del på **målspårets
+egen kanal** och allt landar parallellt. Inget spårbyte behövs.
+
+### Hårdvarutestet — nu tre frågor
+
+Innan live-läget byggs, på din egen enhet:
+
+1. Skickar man noter på **två spårs egna kanaler** samtidigt med inspelning
+   armerad — fylls båda spåren, eller bara det valda?
+2. Om bara det valda: spelar `active track ch.` in det valda spåret oavsett
+   vilken kanal noterna kommer på?
+3. Byter CC 82/85 scen som dokumenterat? Det är i så fall en väg att lägga
+   olika delar av låten i olika scener.
+
+Faller (1) ut som "båda spåren" är live-läget rakt fram: hela låten på en gång.
+Faller den ut som "bara det valda" finns **ingen CC att automatisera bytet
+med**, och läget blir manuellt — armera ett spår, sidan skickar den delen,
+välj nästa — med en "skicka det här spåret"-knapp per del i stället för en
+enda uppspelning.
 
 ---
 
