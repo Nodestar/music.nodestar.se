@@ -66,11 +66,10 @@ stämmer med hur OP-XY:s layout beskrivs i communityn; pad-numreringen är inte
 dokumenterad ens i manualen, så sidan påstår ingenting om den.
 
 Valet gör tre saker: laddar noterna direkt, bestämmer vad **Init** lägger
-tillbaka, och sätter omfånget som **Randomize › Note** rullar inom — 35–59 för
-GM, 53–68 för OP-XY, så en slumpning landar på en annan trumma i samma kit i
-stället för utanför det. Sidan startar på OP-XY; valet sparas i `localStorage`.
-En preset lagrar sina egna noter *och* vilken karta som var vald, så en
-återhämtning ställer tillbaka båda.
+tillbaka, och bestämmer vilken trumma varje not *är* (se Kit nedan), vilket
+i sin tur styr vad **Randomize › Note** rullar bland. Sidan startar på OP-XY;
+valet sparas i `localStorage`. En preset lagrar sina egna noter *och* vilken
+karta som var vald, så en återhämtning ställer tillbaka båda.
 
 Randomize-knapparna använder enhetens egna intervall, lästa ur
 `p randomvel`, `p randomshift`, `p randomswing` och `p midi_pattern_selec`:
@@ -80,6 +79,9 @@ Randomize-knapparna använder enhetens egna intervall, lästa ur
 - **Shift** — `random 26` på snare, hihats och perc; **kicken lämnas i fred**
 - **Vel** — kick/snare/perc: Hi = `random 27 + 100`, Lo = `random 100`.
   CH och OH: `random 127` på både Hi och Lo — därför blir hattarna vildare
+- **Note** — ingen motsvarighet i enheten. Rullar bland de noter som har en
+  trumma i det valda kitet under den valda kartan (11 på 909:an, 16 på
+  808:an), så en slumpning aldrig landar på en tom pad
 - **Init** — tillbaka till `parameter_initial`-värdena ovan
 
 ## Swing och shift i rutnätet
@@ -197,9 +199,44 @@ kit-tabell, som den ärvdes från.
 
 ## Kit
 
-Fyra kit, samma `KITS`-tabell som House Machine men trimmad till de fem röster
-enheten driver (kick, snare, CH, OH, perc → tom). 707, 808, 909 och LinnDrum.
-**Drive** är samma parallella softclip på mastern.
+Fyra kit — 707, 808, 909 och LinnDrum — med samma syntesrecept som House
+Machine, men här har varje kit **alla trummor som originalmaskinen hade**, och
+**noten väljer ljudet**. Spåren är bara bussar: Note-fältet skickas ut på MIDI
+som förut, men slås också upp i den valda notkartan (`NOTE_MAPS[...].slots`)
+till en generisk trumma — kick, snare, rimshot, clap, tre toms, tre hattar
+(closed/pedal/open), crash, ride, cowbell, tamburin, claves, maracas, cabasa,
+två congas — och den trumman spelas ur kitets tabell. Skriv 39 i Perc under GM
+och spåret är en clap; 56 är en cowbell; 49 en crash.
+
+| Kit | Trummor | Saknar |
+|---|---|---|
+| 707 | kick, snare, 3 toms, rim, clap, tamburin, cowbell, CH/PH/OH, crash, ride | congas, claves, maracas, cabasa |
+| 808 | kick, snare, 3 toms, 2 congas, rim, clap, cowbell, claves, maracas, CH/PH/OH, en cymbal | tamburin, cabasa, separat ride — cymbalen svarar på både crash- och ridenoten (`ride:"crash"`) |
+| 909 | kick, snare, 3 toms, rim, clap, CH/PH/OH, crash, ride | allt småslagverk |
+| LinnDrum | kick, snare, sidestick, clap, 3 toms, 2 congas, cabasa, tamburin, cowbell, CH/PH/OH, crash, ride | claves, maracas |
+
+Pedalhatten är en kortare closed hat i alla fyra — ingen av maskinerna har
+ett eget sample för den, men ett drum rack brukar ha padden.
+
+En not som kitet inte har någon trumma för är en **tom pad**: tyst, som i ett
+drum rack. Noten skickas fortfarande på MIDI. Rutnätets notchip visas
+genomstruket, och notkartans tabell skriver *no cowbell* i Sound-kolumnen.
+
+**GM-kartan** (35–77) viker GM:s slagverkskarta ner på vad en trummaskin har:
+sex toms blir tre, alla cymbaler är crash eller ride, bongos är congas,
+agogo är cowbell. Vibraslap, timbales, visslor, guiro och cuica har ingen
+motsvarighet på något av kiten och är tomma. **OP-XY-kartan** (53–73) följer
+hur en TE-trumkit ligger över två oktaver från F: kick och snare med en
+alternativ pad var, sedan rim, clap, tamburin, hattarna, shaker, cowbell,
+toms, cymbaler, claves och congas. Padnumreringen är fortfarande inte
+dokumenterad, så layouten ovanför C#3 är sidans egen.
+
+Nya recept utöver House Machines: cymbaler är en oharmonisk bank fyrkantsvågor
+plus en brussvans för crashen; cowbell är två fyrkantsvågor på 587 och 845 Hz
+genom ett bandpass (808:ans recept); claves en 2,5 kHz-sinus på 35 ms;
+tamburin, maracas och cabasa är tre bruskorn i rad genom ett högpass, där
+avståndet mellan kornen är det som skiljer dem åt; congas är toms med mindre
+böj. **Drive** är samma parallella softclip på mastern.
 
 LinnDrum (Roger Linns LM-2, 1982) är inte syntes utan samplade riktiga trummor
 i 8 bitar, vilket parametrarna speglar: kicken böjer knappt tonhöjd (96 → 52 Hz
@@ -239,7 +276,10 @@ Renderad headless i Chromium (Playwright) från `file://` utan konsolfel.
 Testkörning med uppspelning igång: alla fem Randomize-knappar, Init, All
 On/Off, bankbyte, kitbyte, cellredigering, tempoändring och swing/shift — inga
 fel, och förskjutningarna i rutnätet stämmer mot schemaläggarens egen
-uträkning. `screenshot.png` är
+uträkning. Not→ljud: varje not 33–80 i båda kartorna på alla fyra kit avfyrad
+utan konsolfel, och Randomize › Note 40 gånger per kit och karta landar bara
+på noter som låter. Nivåer mätta med en `AnalyserNode` på destinationen:
+kick −2, snare −8, hattar −9, cymbaler och clap inom ett tiotal dB därunder. `screenshot.png` är
 den renderingen i 1600×900. Typsnitten (Archivo Black, Anton, IBM Plex Sans,
 IBM Plex Mono) ligger som base64 i toppen av `<style>`, kopierade från House
 Machine.
