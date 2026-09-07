@@ -55,13 +55,13 @@ Två notkartor, växlade med **Notes: GM / OP-XY** i konsolen bredvid Init:
 |---|---|---|---|---|
 | Kick | 36 | C1 | 53 | F2 |
 | Snare | 38 | D1 | 55 | G2 |
-| HiHats CH | 42 | F#1 | 60 | C3 |
-| HiHats OH | 46 | A#1 | 61 | C#3 |
-| Perc | 50 | D2 | 67 | G3 |
+| HiHats CH | 42 | F#1 | 62 | D3 |
+| HiHats OH | 46 | A#1 | 63 | D#3 |
+| Perc | 50 | D2 | 69 | A3 |
 
 **GM** är General MIDI-percussionkartan, vilket är exakt vad enheten själv
 skickar och var ett Ableton drum rack börjar. **OP-XY** är vad en Teenage
-Engineering-trumkit svarar på — F kick, G snare, C och C# hattar. Tonhöjderna
+Engineering-trumkit svarar på — F kick, G snare, D och D# hattar. Tonhöjderna
 stämmer med hur OP-XY:s layout beskrivs i communityn; pad-numreringen är inte
 dokumenterad ens i manualen, så sidan påstår ingenting om den.
 

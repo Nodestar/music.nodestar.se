@@ -655,7 +655,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <thead><tr><th>Voice</th><th>Note</th><th>Name</th><th>Sound</th><th>In the device</th></tr></thead>
         <tbody id="mapBody"></tbody>
       </table>
-      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and the grid label, this table and the MIDI output all follow. It also picks the <b>sound</b>, the way a pad on a drum rack would: under GM, 37 is a rimshot, 39 a clap, 56 a cowbell, 49 a crash; under OP-XY the same drums sit on A, A#, E and G# an octave up. Every kit carries all the drums the real machine had, so the Perc track can be a conga on the 808 and a cabasa on the LinnDrum. A note the kit has no drum for is an empty pad — silent, and struck through in the grid label.</p><p><b>Notes: GM / OP-XY</b> in the console switches the whole set at once. <b>GM</b> is the General MIDI percussion map the device itself ships — 36 kick, 38 snare, 42 and 46 hats — which is also where an Ableton drum rack starts. <b>OP-XY</b> is what a Teenage Engineering drum kit answers to: F for the kick, G for the snare, C and C# for the two hats. Picking one loads its notes straight away, and it is what <b>Init</b> restores. <b>Randomize &#8250; Note</b> rolls only among the notes that have a drum on the current kit — eleven of them on the 909, sixteen on the 808 — so a roll always lands on a sound rather than an empty pad. The last column is always the device&#39;s own value, for comparison.</p>
+      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and the grid label, this table and the MIDI output all follow. It also picks the <b>sound</b>, the way a pad on a drum rack would: under GM, 37 is a rimshot, 39 a clap, 56 a cowbell, 49 a crash; under OP-XY the same drums sit on A, A#, G# and G an octave up. Every kit carries all the drums the real machine had, so the Perc track can be a conga on the 808 and a cabasa on the LinnDrum. A note the kit has no drum for is an empty pad — silent, and struck through in the grid label.</p><p><b>Notes: GM / OP-XY</b> in the console switches the whole set at once. <b>GM</b> is the General MIDI percussion map the device itself ships — 36 kick, 38 snare, 42 and 46 hats — which is also where an Ableton drum rack starts. <b>OP-XY</b> is what a Teenage Engineering drum kit answers to: F for the kick, G for the snare, D and D# for the two hats. Picking one loads its notes straight away, and it is what <b>Init</b> restores. <b>Randomize &#8250; Note</b> rolls only among the notes that have a drum on the current kit — eleven of them on the 909, sixteen on the 808 — so a roll always lands on a sound rather than an empty pad. The last column is always the device&#39;s own value, for comparison.</p>
     </div>
     <div>
       <h3>Reading the grid</h3>
@@ -880,14 +880,17 @@ var NOTE_MAPS = {
                 67:"cowbell",68:"cowbell",69:"cabasa",70:"maracas",
                 75:"clave",76:"clave",77:"clave"}},
   opxy: {label:"OP-XY drum kit", lo:53, hi:76,
-         n:{kick:53, snare:55, ch:60, oh:61, perc:67},
+         n:{kick:53, snare:55, ch:62, oh:63, perc:69},
          /* Two octaves from F, the way a TE drum kit is laid out: kick and
             snare with an alternate each, then the small percussion, the hats,
-            the toms and the cymbals up the keyboard. */
+            the toms and the cymbals up the keyboard. Measured on the device:
+            the hats are at 62 and 63, not 60 and 61, and the ride is at 69.
+            60 and 61 are left unnamed rather than guessed — they show as an
+            empty slot until someone sweeps the pads and says what is there. */
          slots:{53:"kick",54:"kick",55:"snare",56:"snare",57:"rim",58:"clap",
-                59:"tamb",60:"ch",61:"oh",62:"ph",63:"maracas",64:"cowbell",
+                59:"tamb",62:"ch",63:"oh",64:"ph",
                 65:"ltom",66:"mtom",67:"htom",68:"crash",69:"ride",70:"clave",
-                71:"conga_lo",72:"conga_hi",73:"cabasa"}}
+                71:"conga_lo",72:"conga_hi",73:"cabasa",74:"cowbell",75:"maracas"}}
 };
 var SOUND_NAMES = {
   kick:"Kick", snare:"Snare", rim:"Rimshot", clap:"Clap",
