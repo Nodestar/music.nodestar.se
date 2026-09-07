@@ -57,6 +57,15 @@ export const demos: Demo[] = [
 			"Alexkid's Max for Live device rebuilt in the browser: 96 patterns read straight out of the .amxd file, four tracks with per-track swing, shift and velocity — plus MIDI out.",
 		tags: ['webaudio', 'webmidi', 'house', 'maxforlive', 'sequencer'],
 		date: '2026-09-01'
+	},
+	{
+		slug: 'op-xy-song-loader',
+		no: 5,
+		title: 'OP-XY Song Loader',
+		description:
+			'Släpp en MIDI-fil: den delas upp i trummor, ackord, bas och melodi, mappas mot OP-XY:s åtta spår och 24 trumplatser, och spelas, skickas live över USB eller sparas ut som .mid per spår.',
+		tags: ['webmidi', 'webaudio', 'midi', 'op-xy', 'tool'],
+		date: '2026-09-02'
 	}
 ];
 
