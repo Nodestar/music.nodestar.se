@@ -24,3 +24,6 @@ vite.config.ts.timestamp-*
 
 # Deploy
 !.env.deploy.example
+
+# Python
+__pycache__/

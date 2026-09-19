@@ -20,6 +20,17 @@ Resultatet hamnar i `build/` – ren HTML/CSS/JS. Kopiera mappen till valfri web
 ## Lägga till en demo
 
 1. Lägg demon som fristående statiska filer i `static/demos/<slug>/` (med en `index.html`).
+   Kod som flera demos delar ligger i `static/demos/_lib/` och laddas med en vanlig
+   `<script src="../_lib/…">`:
+
+   - `drum-kits.js` – de fyra trummaskinerna (707, 808, 909, LinnDrum) som
+     Instant Haus Web och OP-XY Song Loader spelar med.
+   - `riddims.js` + `riddims/` – åtta reggaeriddims i c-moll som MIDI-filer,
+     registrerade på `window.MidiLibraries`. En sida som vill erbjuda dem
+     bygger en väljare av den arrayen och hämtar vald fil med `fetch`.
+     Fler bibliotek läggs till genom att pusha på samma array.
+
+   Mappar med `_` först är inte demos och registreras inte.
 2. Lägg en skärmdump i `static/demos/<slug>/screenshot.png` (16:9, t.ex. 1600×900).
 3. Registrera demon i `src/lib/demos.ts`:
 

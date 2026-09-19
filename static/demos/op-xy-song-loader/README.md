@@ -21,6 +21,14 @@ webbläsaren — allt görs i JavaScript, ingen uppladdning, ingen server.
   igenom mitt under uppspelning. Filer av olika längd loopar var för sig och
   fasar mot varandra. Trumpanelen och exporten följer den fil som klickades
   senast. En trasig fil i högen rapporteras med namn utan att de andra kastas.
+- **Riddimbibliotek i en väljare.** Under släppytan ligger en rullgardin med
+  det som `static/demos/_lib/riddims.js` registrerat: åtta reggaeriddims i
+  c-moll, två takter var, och hela setet ihopkedjat. Varje fil har trummor på
+  kanal 10, offbeat-skank på kanal 1 och en dubbaslinje på kanal 2, alltså en
+  av varje sort åt gissningen. *Load* hämtar den valda, *Load the set* hämtar
+  alla åtta (kedjan hoppas över, den är de andra åtta). En riddim som redan
+  ligger i högen växlas fram i stället för att laddas två gånger. Hämtningen
+  går genom `fetch` och sedan samma väg in som en släppt fil.
 - **Parser.** SMF format 0/1, ticks per fjärdedel, running status. Format 0
   delas per kanal före analysen. SMPTE-division avvisas med besked i stället för
   att tolkas fel.
@@ -32,7 +40,17 @@ webbläsaren — allt görs i JavaScript, ingen uppladdning, ingen server.
 - **Trumplatser.** 24 platser, 53–76, med konventionen som utgångsläge och en
   väljare per trumma i filen. Sparas i localStorage. Trummor utan plats räknas
   och sägs ut i klartext i stället för att tyst försvinna.
-- **Förhandslyssning** i Web Audio, egna röster per roll.
+- **Förhandslyssning** i Web Audio. Trummorna spelas med samma fyra kit som
+  Instant Haus Web — 707, 808, 909, LinnDrum, ur det delade
+  `static/demos/_lib/drum-kits.js` — valbara i transporten, och varje trumma
+  låter som den plats den mappats till; bas, ackord och melodi har egna röster.
+- **Slumpad ackordgång.** Tonarten läses ur de tonande spåren
+  (Krumhansl-profiler), varje takt får grundton och kvalitet ur basen och
+  ackordtonerna, och en slumpad diatonisk gång i tonarten dras ur en pool av
+  vanliga fyrtaktsmönster. Ackord- och basdelen flyttas takt för takt med
+  närmsta intervall, tersen böjs mellan dur och moll — stämföring, rytm och
+  register står kvar, bara harmoniken byts. Melodin rörs inte. Original tar
+  tillbaka, och export och sändning följer det som hörs.
 - **Web MIDI ut** — alla spår samtidigt, var och en på sin kanal, med klocka.
 - **Export** av `.mid` per spår, redan ommappat.
 
@@ -62,19 +80,31 @@ har rätt till, vad som helst — och det stannar i din webbläsare.
 Bara fria verk, och en fallgrop värd att känna till: **själva
 MIDI-transkriptionen kan bära egen upphovsrätt som arrangemang**, även när
 verket är fritt. Att ladda ner någons Bach-MIDI och bunta den löser alltså
-ingenting. Exempelfilerna måste sekvenseras från grunden här.
+ingenting. Exempelfiler måste sekvenseras från grunden här.
 
-En spänning att lösa: fritt material är i praktiken före ~1930, och där finns
-inga trumspår. Förslag — 2–3 fria stycken plus 1–2 egna:
+Sidan skeppar därför **ett** exempel, skrivet för sidan: *Loader Demo*,
+16 takter i 124 BPM — fyra OP-XY-patterns — i A-moll. Trummor på kanal 10
+med kick, virvel och clap, tre hattar, toms, crash, ride, rimshot-spökslag och
+ett fill, en rullande bas, ackordstabbar med liggande grund från takt 9, och
+en lead som kommer in i takt 9 och går upp en oktav i takt 13. Varje spår är
+byggt så att gissningen träffar rätt roll utan hjälp. Låten genereras av
+`scripts/op-xy-demo-song.py`, som skriver base64-strängen som klistras in i
+sidan; ändra låten där, inte i strängen.
 
-| Exempel | Verk | Visar |
-|---|---|---|
-| Joplin, *The Entertainer* (d. 1917) | fritt | melodi + stride-vänsterhand som ackord |
-| Bach, tvåstämmig invention (d. 1750) | fritt | två melodistämmor, ingen ackordklump |
-| Traditionell dansmelodi | fritt | melodi + enkel komp |
-| Egen exempelgroove | skriven för sidan | trummor + bas + ackord, det enda som visar trumdelen |
+Två traditionella melodier (Greensleeves, Frère Jacques) fanns med tidigare men
+visade inget som demot inte visar bättre, så de togs bort.
 
-Egna exempel märks tydligt som skrivna för sidan, inte som "kända låtar".
+Vid sidan av exempellåten ligger **riddimbiblioteket** i väljaren: traditionella
+reggaemönster, samma sorts fria material som One Drop Machine, sekvenserade här.
+Filerna ligger som `.mid` i `static/demos/_lib/riddims/` och metadatan – namn,
+tempo, swing, en rad om vad linjen gör – i `static/demos/_lib/riddims.js`.
+Biblioteket är avsiktligt inte inbakat i sidan: det registrerar sig på
+`window.MidiLibraries`, och väljaren byggs av vad som råkar finnas där, en
+optgroup per bibliotek. Att lägga till ett till bibliotek är ett skript till i
+`_lib/` och ett `<script>`-taggen på sidan – ingen ändring i väljarkoden.
+
+En riddim till: lägg `.mid`-filen i `_lib/riddims/` och en rad i `ITEMS` överst i
+`riddims.js`.
 
 ---
 

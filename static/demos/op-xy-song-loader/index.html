@@ -556,6 +556,17 @@ h1{font-size:clamp(28px,4.8vw,46px)}
 .exbtn:hover{border-color:var(--acc)}
 .exbtn b{font-family:Anton,"Arial Narrow",sans-serif;font-weight:400;font-size:14px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink)}
 .exbtn span{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.08em;color:var(--ink-3)}
+.drop .lib{display:flex;gap:8px;align-items:center;justify-content:center;flex-wrap:wrap;margin-top:14px}
+.drop .lib .liblab{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.drop .lib select{
+  appearance:none;cursor:pointer;border:1px solid var(--line);background:var(--panel-2);color:var(--ink);
+  font-family:"IBM Plex Mono",monospace;font-size:10px;padding:7px 9px;border-radius:2px;max-width:290px;
+}
+.drop .lib select:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.drop .libnote{
+  margin:8px 0 0;font-family:"IBM Plex Mono",monospace;font-size:10px;line-height:1.5;
+  color:var(--ink-3);min-height:15px;
+}
 
 .parts{width:100%;border-collapse:collapse;font-size:13px}
 .parts th{
@@ -595,6 +606,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
 .slot .nm{font-family:"IBM Plex Mono",monospace;font-size:8px;letter-spacing:.04em;color:var(--ink-3);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .slot.used .nm{color:var(--acc)}
+.slot.mute .n{text-decoration:line-through;color:var(--ink-3)}   /* no drum on this kit: an empty pad */
 .maprow{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--line-soft)}
 .maprow .gm{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink);min-width:190px}
 .maprow .cnt{font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--ink-3);margin-left:auto}
@@ -649,6 +661,13 @@ h1{font-size:clamp(28px,4.8vw,46px)}
     <h3>Drop .mid files here</h3>
     <p>one or several — or <button class="toggle" id="pick" style="vertical-align:baseline">choose files</button> — nothing is uploaded</p>
     <div class="ex" id="examples"></div>
+    <div class="lib" id="libRow" hidden>
+      <span class="liblab">Library</span>
+      <select id="libSel" aria-label="Pick from a bundled MIDI library"></select>
+      <button class="mini sq" id="libLoad">Load</button>
+      <button class="mini sq" id="libAll">Load the set</button>
+    </div>
+    <p class="libnote" id="libNote"></p>
   </section>
 
   <section class="deck" aria-label="Transport" id="deckSec" hidden>
@@ -662,6 +681,7 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <button type="button" data-loop="1" aria-pressed="true">Loop</button>
         <button type="button" data-loop="0" aria-pressed="false">Once</button>
       </div>
+      <div class="seg" role="group" aria-label="Preview kit" id="kitSeg" title="Which drum machine the preview stands in with"></div>
       <div class="midi">
         <span class="dot" id="midiDot"></span>
         <span class="mlab">MIDI out</span>
@@ -678,6 +698,12 @@ h1{font-size:clamp(28px,4.8vw,46px)}
       <button class="mini sq" id="addMore" style="margin-left:auto">Add files</button>
       <button class="mini sq" id="exportBtn">Export .mid per track</button>
     </div>
+    <div class="console rnd" id="harmRow">
+      <span class="rlab">Chords</span>
+      <span class="stat" id="harmStat"></span>
+      <button class="mini sq" id="harmRnd" style="margin-left:auto" title="A new diatonic progression in the song's key; the chords and bass parts follow it, bar by bar">Randomize progression</button>
+      <button class="mini sq" id="harmReset" disabled>Original</button>
+    </div>
     <p class="hint" id="midiNote" hidden></p>
   </section>
 
@@ -690,6 +716,9 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <p class="tagline">An OP-XY kit is 24 chromatic one-shot slots, notes 53–76, and what sits on each
         is whatever kit you loaded — there is no fixed layout to map onto. So: pick where each drum in the
         file should land. The defaults are the convention that works on the factory kits.</p>
+        <p class="tagline">The preview plays each slot with the same drum synths as <a href="../instant-haus-web/">Instant
+        Haus Web</a>: pick a kit in the transport — <span id="kitNote"></span> Every drum sounds on the slot the file
+        maps it to, so moving a drum in the map changes what you hear; a slot the kit has no drum for is silent.</p>
       </div>
     </div>
     <div class="scroller" style="padding:14px 18px 8px">
@@ -759,24 +788,24 @@ h1{font-size:clamp(28px,4.8vw,46px)}
   </footer>
 </div>
 
+<script src="../_lib/drum-kits.js"></script>
+<script src="../_lib/riddims.js"></script>
 <script>
 (function(){
 "use strict";
 
 /* ------------------------------------------------------------------
-   Bundled songs. Two traditional, sequenced from scratch for this page,
-   and one written here to exercise every part of the loader at once.
-   They go through the same parser as a dropped file — no shortcut.
+   The bundled song: written for this page to exercise every part of the
+   loader at once — 16 bars, four OP-XY patterns, drums on channel 10 with
+   toms, cymbals and a fill, a rolling bass, chord stabs and a lead. It is
+   generated by scripts/op-xy-demo-song.py and goes through the same parser
+   as a dropped file — no shortcut.
    ------------------------------------------------------------------ */
 var EXAMPLES = [
-  {id:"groove", name:"Loader Demo", note:"written for this page · drums, bass, chords, melody"},
-  {id:"greensleeves", name:"Greensleeves", note:"traditional · melody and chords"},
-  {id:"frere", name:"Frère Jacques", note:"traditional · a two-voice round"}
+  {id:"groove", name:"Loader Demo", note:"written for this page · 16 bars · drums, bass, chords, lead"}
 ];
 var EX_DATA = {};
-EX_DATA.groove = "TVRoZAAAAAYAAQAFAeBNVHJrAAAAIgD/AwtMb2FkZXIgRGVtbwD/UQMILKIA/1gEBAIYCAD/LwBNVHJrAAACKQD/AwVEcnVtcwCZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZKk5uiSYAAIkqAIECmSRYAJkqQG6JJAAAiSoAgQKZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZJ1wAmSpObokmAACJJwAAiSoAgQKZJFgAmSpAAJkuVG6JJAAAiSoAbokuABSZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZKk5uiSYAAIkqAIECmSRYAJkqQG6JJAAAiSoAgQKZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZJ1wAmSpObokmAACJJwAAiSoAgQKZJFgAmSpAAJkuVG6JJAAAiSoAbokuABSZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZKk5uiSYAAIkqAIECmSRYAJkqQG6JJAAAiSoAgQKZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZJ1wAmSpObokmAACJJwAAiSoAgQKZJFgAmSpAAJkuVG6JJAAAiSoAbokuABSZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZKk5uiSYAAIkqAIECmSRYAJkqQG6JJAAAiSoAgQKZJGgAmSpObokkAACJKgCBApkqQG6JKgCBApkmZACZJ1wAmSpObokmAACJJwAAiSoAgQKZJFgAmSpAAJkuVG6JJAAAiSoAbokuAAD/LwBNVHJrAAAA9wD/AwRCYXNzAMAhAJAwYIFcgDAAgQyQJGCBXIAkAIEMkCRggVyAJAAUkDBggVyAMACBDJAkYIFcgCQAgQyQJGCBXIAkABSQLGCBXIAsAIEMkCBggVyAIACBDJAgYIFcgCAAFJAsYIFcgCwAgQyQIGCBXIAgAIEMkCBggVyAIAAUkDNggVyAMwCBDJAnYIFcgCcAgQyQJ2CBXIAnABSQM2CBXIAzAIEMkCdggVyAJwCBDJAnYIFcgCcAFJAuYIFcgC4AgQyQImCBXIAiAIEMkCJggVyAIgAUkC5ggVyALgCBDJAiYIFcgCIAgQyQImCBXIAiAAD/LwBNVHJrAAAAeAD/AwZDaG9yZHMAwQQAkTxIAJE/SACRQ0iNZoE8AACBPwAAgUMAgRqROEgAkTxIAJE/SI1mgTgAAIE8AACBPwCBGpE/SACRQ0gAkUZIjWaBPwAAgUMAAIFGAIEakTpIAJE+SACRQUiNZoE6AACBPgAAgUEAAP8vAE1UcmsAAADXAP8DBk1lbG9keQDCUACSS1yBXIJLABSST1yBXIJPABSSUlyDOYJSACeST1yBXIJPABSSS1yBXIJLABSSSFyDOYJIACeSSFyBXIJIABSSS1yBXIJLABSST1yDOYJPACeSS1yBXIJLABSSSFyBXIJIABSSRFyDOYJEACeST1yBXIJPABSSUlyBXIJSABSSVlyDOYJWACeSUlyBXIJSABSST1yBXIJPABSSS1yDOYJLACeSTVyBXIJNABSSSlyBXIJKABSSRlyGc4JGAE2SRlyDOYJGAAD/LwA=";
-EX_DATA.greensleeves = "TVRoZAAAAAYAAQADAeBNVHJrAAAAIwD/AwxHcmVlbnNsZWV2ZXMA/1EDCuYtAP9YBAMCGAgA/y8ATVRyawAAALwA/wMGTWVsb2R5AMBJAJA5YIM5gDkAJ5A8YIZzgDwATZA+YIM5gD4AJ5BAYIUWgEAAOpBBYIFcgEEAFJBAYIM5gEAAJ5A+YIZzgD4ATZA7YIM5gDsAJ5A3YIUWgDcAOpA5YIFcgDkAFJA7YIM5gDsAJ5A8YIZzgDwATZA5YIM5gDkAJ5A5YIUWgDkAOpA4YIFcgDgAFJA5YIM5gDkAJ5A7YIZzgDsATZA4YIM5gDgAJ5A5YIosgDkAAP8vAE1UcmsAAADaAP8DBkNob3JkcwDBMINgkS1EAJEwRACRNESKLIEtAACBMAAAgTQAdJErRACRL0QAkTJEiiyBKwAAgS8AAIEyAHSRLUQAkTBEAJE0RIosgS0AAIEwAACBNAB0kShEAJEsRACRL0SKLIEoAACBLAAAgS8AdJEwRACRNEQAkTdEiiyBMAAAgTQAAIE3AHSRK0QAkS9EAJEyRIosgSsAAIEvAACBMgB0kS1EAJEwRACRNESKLIEtAACBMAAAgTQAdJEtRACRMEQAkTREiiyBLQAAgTAAAIE0AAD/LwA=";
-EX_DATA.frere = "TVRoZAAAAAYAAQADAeBNVHJrAAAAJAD/Aw1GcmVyZSBKYWNxdWVzAP9RAwknwAD/WAQEAhgIAP8vAE1UcmsAAAEyAP8DB1ZvaWNlIDEAwEkAkDxegzmAPAAnkD5egzmAPgAnkEBegzmAQAAnkDxegzmAPAAnkDxegzmAPAAnkD5egzmAPgAnkEBegzmAQAAnkDxegzmAPAAnkEBegzmAQAAnkEFegzmAQQAnkENehnOAQwBNkEBegzmAQAAnkEFegzmAQQAnkENehnOAQwBNkENegVyAQwAUkEVegVyARQAUkENegVyAQwAUkEFegVyAQQAUkEBegzmAQAAnkDxegzmAPAAnkENegVyAQwAUkEVegVyARQAUkENegVyAQwAUkEFegVyAQQAUkEBegzmAQAAnkDxegzmAPAAnkDxegzmAPAAnkDdegzmANwAnkDxehnOAPABNkDxegzmAPAAnkDdegzmANwAnkDxehnOAPAAA/y8ATVRyawAAATMA/wMHVm9pY2UgMgDBR54AkTBQgzmBMAAnkTJQgzmBMgAnkTRQgzmBNAAnkTBQgzmBMAAnkTBQgzmBMAAnkTJQgzmBMgAnkTRQgzmBNAAnkTBQgzmBMAAnkTRQgzmBNAAnkTVQgzmBNQAnkTdQhnOBNwBNkTRQgzmBNAAnkTVQgzmBNQAnkTdQhnOBNwBNkTdQgVyBNwAUkTlQgVyBOQAUkTdQgVyBNwAUkTVQgVyBNQAUkTRQgzmBNAAnkTBQgzmBMAAnkTdQgVyBNwAUkTlQgVyBOQAUkTdQgVyBNwAUkTVQgVyBNQAUkTRQgzmBNAAnkTBQgzmBMAAnkTBQgzmBMAAnkStQgzmBKwAnkTBQhnOBMABNkTBQgzmBMAAnkStQgzmBKwAnkTBQhnOBMAAA/y8A";
+EX_DATA.groove = "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cACZJlQAmSpGAJkzQHiJKgAAmSoueIkkAACJJwAAiSYAAIkqAACJMwAAmS5cAJkzMHiZKj54iS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJkqLniJJAAAiSoAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZKi54iSQAAIknAACJJgAAiSoAAIkzAACZLlwAmTMweJkqPniJLgAAiSoAAIkzAACZJHYAmSpGAJkzQHiJKgAAmSoueIkkAACJKgAAiTMAAJkuUACZMzB4mSo+eIkuAACJKgAAiTMAAJkkbgCZJ3AAmSZUAJkqRgCZM0B4iSoAAJkqLniJJAAAiScAAIkmAACJKgAAiTMAAJkuXACZMzB4mSU0AJkqPniJJQAAiS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJkqLniJJAAAiSoAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZKi54iSQAAIknAACJJgAAiSoAAIkzAACZLlwAmTMweJklOgCZKj54iSUAAIkuAACJKgAAiTMAAJkkdgCZKkYAmTNAeIkqAACZKi54iSQAAIkqAACJMwAAmS5QAJkzMHiZKj54iS4AAIkqAACJMwAAmSRuAJkncACZJlQAmSpGAJkzQHiJKgAAmSoueIkkAACJJwAAiSYAAIkqAACJMwAAmS5cAJkzMHiZKj54iS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJkqLniJJAAAiSoAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZKi54iSQAAIknAACJJgAAiSoAAIkzAACZLlwAmTMweJkqPniJLgAAiSoAAIkzAACZJHYAmSpGAJkzQHiJKgAAmSoueIkkAACJKgAAiTMAAJkuUACZMzB4mSo+eIkuAACJKgAAiTMAAJkkbgCZJ3AAmSZUAJkqRgCZM0B4iSoAAJkqLniJJAAAiScAAIkmAACJKgAAiTMAAJkuXACZMzB4mSU0AJkqPniJJQAAiS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJkqLniJJAAAiSoAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZKi54iSQAAIknAACJJgAAiSoAAIkzAACZJGAAmS5cAJkzMHiJJAAAmSU6AJkqPniJJQAAiS4AAIkqAACJMwAAmSR2AJkqRgCZM0AAmTFseIkqAACZLC54iSQAAIksAACJMwAAmS5QAJkzMHiZKj54iS4AAIkqAACJMwAAiTEAAJkkbgCZJ3AAmSZUAJkqRgCZM0B4iSoAAJksLniJJAAAiScAAIkmAACJLAAAiTMAAJkuXACZMzB4mSo+eIkuAACJKgAAiTMAAJkkdgCZKkYAmTNAeIkqAACZLC54iSQAAIksAACJMwAAmS5QAJkzMHiZKj54iS4AAIkqAACJMwAAmSRuAJkncACZJlQAmSpGAJkzQHiJKgAAmSwueIkkAACJJwAAiSYAAIksAACJMwAAmSRgAJkuXACZMzB4iSQAAJkqPniJLgAAiSoAAIkzAACZJHYAmSpGAJkzQHiJKgAAmSwueIkkAACJLAAAiTMAAJkuUACZMzB4mSo+eIkuAACJKgAAiTMAAJkkbgCZJ3AAmSZUAJkqRgCZM0B4iSoAAJksLniJJAAAiScAAIkmAACJLAAAiTMAAJkuXACZMzB4mSU0AJkqPniJJQAAiS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJksLniJJAAAiSwAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZLC54iSQAAIknAACJJgAAiSwAAIkzAACZJGAAmS5cAJkzMHiJJAAAmSU6AJkqPniJJQAAiS4AAIkqAACJMwAAmSR2AJkqRgCZM0B4iSoAAJksLniJJAAAiSwAAIkzAACZLlAAmTMweJkqPniJLgAAiSoAAIkzAACZJG4AmSdwAJkmVACZKkYAmTNAeIkqAACZLC54iSQAAIknAACJJgAAiSwAAIkzAACZLlwAmTMweJkqPniJLgAAiSoAAIkzAACZJHYAmSpGAJkzQHiJKgAAmSwueIkkAACJLAAAiTMAAJkuUACZMzB4mSo+eIkuAACJKgAAiTMAAJkkbgCZJ3AAmSZUAJkqRgCZM0B4iSoAAJksLniJJAAAiScAAIkmAACJLAAAiTMAAJkkYACZLlwAmTMweIkk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";
 
 function b64bytes(s){
   var bin = atob(s), a = new Uint8Array(bin.length);
@@ -1058,21 +1087,24 @@ function loadBytes(bytes, label){
   if(i >= 0) settle(i, wasEmpty);
 }
 function fileTitle(f){ return f.parsed.name || f.label || "Untitled"; }
+/* an OP-XY pattern holds at most four bars, so a file this long fills this many patterns */
+function fileBars(f){ return Math.max(1, Math.ceil(songEnd(f.parts) / (f.parsed.division * 4))); }
+function filePatterns(f){ return Math.ceil(fileBars(f) / 4); }
 function activate(i){
   if(i < 0 || i >= files.length) return;
   stop();
   cur = i;
   var f = files[i], parsed = f.parsed;
   song = parsed; parts = f.parts;
-  var bars = Math.max(1, Math.ceil(songEnd() / (parsed.division * 4)));
   $("fileStat").innerHTML =
       "<span><b></b></span>" +
       "<span>Parts <b>" + parts.length + "</b></span>" +
       "<span>Notes <b>" + parts.reduce(function(s,p){return s+p.a.count;},0) + "</b></span>" +
-      "<span>Bars <b>" + bars + "</b></span>" +
+      "<span>Bars <b>" + fileBars(f) + "</b></span>" +
+      "<span>Patterns <b>" + filePatterns(f) + "</b></span>" +
       "<span>Tempo <b>" + parsed.bpm + "</b></span>";
   $("fileStat").querySelector("b").textContent = fileTitle(f);
-  renderPlayStat();
+  renderPlayStat(); renderHarmony();
   $("deckSec").hidden = false; $("drumSec").hidden = false;
   files.forEach(function(g, k){
     if(!g.el) return;
@@ -1115,8 +1147,11 @@ function renderSongs(){
     var meta = document.createElement("div"); meta.className = "meta";
     var mb = document.createElement("b"); mb.textContent = f.parsed.bpm;
     var ms = document.createElement("span");
-    ms.textContent = "format " + f.parsed.format + " · " +
+    var np = filePatterns(f), nb = fileBars(f);
+    ms.textContent = np + (np === 1 ? " pattern · " : " patterns · ") + nb + (nb === 1 ? " bar · " : " bars · ") +
+        "format " + f.parsed.format + " · " +
         f.parsed.timeSig[0] + "/" + f.parsed.timeSig[1] + " · " + f.parsed.division + " ppq";
+    ms.title = "An OP-XY pattern holds at most four bars";
     meta.appendChild(mb); meta.appendChild(ms);
     var ctl = document.createElement("div"); ctl.className = "ctl";
     /* in or out of the preview mix — takes effect while playing, no restart */
@@ -1228,7 +1263,11 @@ function renderParts(f){
       if(r === p.role) o.selected = true; sel.appendChild(o);
     });
     sel.addEventListener("change", function(){
+      /* a role change redraws the harmony picture: put any moved notes back first */
+      if(f.harm && f.harm.cur) applyProgression(f, null);
+      f.harm = null;
       p.role = sel.value; autoAssign(f.parts); renderParts(f); drums(); renderNote(f);
+      if(files[cur] === f) renderHarmony();
     });
     tdRole.appendChild(sel);
 
@@ -1277,6 +1316,159 @@ function renderNote(f){
     (clash ? " — two parts share a track, which will merge them on the device." : ".") ;
 }
 
+/* ---------------- harmony ----------------
+   The chords and bass parts can be made to follow a new progression: the
+   song's key is read off the pitched parts (Krumhansl profiles), each bar
+   gets a root and a quality from the bass and the chord notes, and a random
+   diatonic progression in that key is drawn. Every chord and bass note is
+   then moved by the nearest interval from its bar's old root to the new one,
+   with the third bent between major and minor where the quality changes —
+   so voicings, rhythm and register stay, only the harmony moves. Original
+   pitches are kept on the part, so it can be put back or re-rolled.
+   ------------------------------------------ */
+var MAJ_PROFILE = [6.35,2.23,3.48,2.33,4.38,4.09,2.52,5.19,2.39,3.66,2.29,2.88];
+var MIN_PROFILE = [6.33,2.68,3.52,5.38,2.60,3.53,2.54,4.75,3.98,2.69,3.34,3.17];
+var PC_NAMES = ["C","Db","D","Eb","E","F","Gb","G","Ab","A","Bb","B"];
+/* diatonic chords per mode: degree -> [semitones above the tonic, minor?] */
+var DEGREES = {
+  major:{"I":[0,0],"ii":[2,1],"iii":[4,1],"IV":[5,0],"V":[7,0],"vi":[9,1]},
+  minor:{"i":[0,1],"III":[3,0],"iv":[5,1],"v":[7,1],"V":[7,0],"VI":[8,0],"VII":[10,0]}
+};
+var POOLS = {
+  major:[["I","V","vi","IV"],["I","vi","IV","V"],["vi","IV","I","V"],["I","IV","vi","V"],
+         ["ii","V","I","vi"],["I","iii","IV","V"],["IV","I","V","vi"],["I","IV","I","V"]],
+  minor:[["i","VI","III","VII"],["i","VII","VI","VII"],["i","iv","VI","V"],["i","VI","iv","V"],
+         ["i","III","VII","VI"],["i","iv","v","i"],["VI","VII","i","i"],["i","VII","iv","VI"],["i","III","iv","V"]]
+};
+function pearson(a, b){
+  var n = a.length, ma = 0, mb = 0, i;
+  for(i=0;i<n;i++){ ma += a[i]; mb += b[i]; } ma /= n; mb /= n;
+  var num = 0, da = 0, db = 0;
+  for(i=0;i<n;i++){ num += (a[i]-ma)*(b[i]-mb); da += (a[i]-ma)*(a[i]-ma); db += (b[i]-mb)*(b[i]-mb); }
+  return (da && db) ? num / Math.sqrt(da*db) : 0;
+}
+function harmParts(f){
+  return {chords:f.parts.filter(function(p){ return p.role === "chords"; }),
+          bass:f.parts.filter(function(p){ return p.role === "bass"; })};
+}
+/* key, and the root + quality of every bar, read from the file as loaded */
+function analyseHarmony(f){
+  var hp = harmParts(f), div = f.parsed.division, seg = div * 4;
+  var pitched = f.parts.filter(function(p){ return p.role !== "drums"; });
+  var hist = [0,0,0,0,0,0,0,0,0,0,0,0];
+  pitched.forEach(function(p){ p.a.notes.forEach(function(n){ hist[n.n % 12] += n.d; }); });
+  var best = null;
+  for(var t=0;t<12;t++){
+    var rot = hist.slice(t).concat(hist.slice(0, t));
+    var cm = pearson(rot, MAJ_PROFILE), cn = pearson(rot, MIN_PROFILE);
+    if(!best || cm > best.r) best = {tonic:t, mode:"major", r:cm};
+    if(cn > best.r) best = {tonic:t, mode:"minor", r:cn};
+  }
+  var nseg = Math.max(1, Math.ceil(songEnd(f.parts) / seg)), bars = [];
+  for(var b=0;b<nseg;b++){
+    var t0 = b*seg, t1 = t0 + seg, w = [0,0,0,0,0,0,0,0,0,0,0,0], any = false;
+    /* the root: the bass's weightiest pitch class in the bar, else the
+       lowest chord note at each onset */
+    var src = hp.bass.length ? hp.bass : hp.chords;
+    src.forEach(function(p){ p.a.notes.forEach(function(n){
+      if(n.t < t0 || n.t >= t1) return;
+      any = true; w[n.n % 12] += n.d * (hp.bass.length ? 1 : (60 - Math.min(59, n.n)) / 60 + 0.2);
+    }); });
+    if(!any){ bars.push(null); continue; }
+    var root = 0; for(var k=1;k<12;k++) if(w[k] > w[root]) root = k;
+    /* the quality: the third the chord notes carry, else the diatonic one */
+    var m3 = 0, M3 = 0;
+    hp.chords.forEach(function(p){ p.a.notes.forEach(function(n){
+      if(n.t < t0 || n.t >= t1) return;
+      var iv = ((n.n - root) % 12 + 12) % 12;
+      if(iv === 3) m3 += n.d; else if(iv === 4) M3 += n.d;
+    }); });
+    var minor;
+    if(m3 || M3) minor = m3 > M3;
+    else { var deg = ((root - best.tonic) % 12 + 12) % 12;
+           minor = best.mode === "major" ? (deg === 2 || deg === 4 || deg === 9) : (deg === 0 || deg === 5 || deg === 7); }
+    bars.push({root:root, minor:minor});
+  }
+  return {tonic:best.tonic, mode:best.mode, seg:seg, orig:bars, cur:null};
+}
+function chordName(c){ return c ? PC_NAMES[c.root] + (c.minor ? "m" : "") : "·"; }
+/* a progression as text: one cycle, and how many times it goes round */
+function progText(bars){
+  var live = bars.filter(function(c){ return c; });
+  if(!live.length) return "—";
+  var n = live.length, per = n;
+  for(var p=1;p<n;p++){
+    if(n % p) continue;
+    var ok = true;
+    for(var i=p;i<n && ok;i++) ok = chordName(live[i]) === chordName(live[i-p]);
+    if(ok){ per = p; break; }
+  }
+  var names = live.slice(0, per).map(chordName).join(" ");
+  return per < n ? names + " ×" + (n/per) : names;
+}
+function renderHarmony(){
+  var f = files[cur], row = $("harmRow");
+  if(!f){ row.hidden = true; return; }
+  row.hidden = false;
+  if(!f.harm) f.harm = analyseHarmony(f);
+  var h = f.harm, hp = harmParts(f), can = !!(hp.chords.length || hp.bass.length);
+  var live = h.cur || h.orig;
+  $("harmStat").innerHTML =
+      "<span>Key <b></b></span><span>" + (h.cur ? "Now" : "Original") + " <b></b></span>";
+  var bs = $("harmStat").querySelectorAll("b");
+  bs[0].textContent = PC_NAMES[h.tonic] + " " + h.mode;
+  bs[1].textContent = can ? progText(live) : "no chords or bass part to move";
+  $("harmStat").title = can ? live.map(chordName).join(" · ") : "";
+  $("harmRnd").disabled = !can;
+  $("harmReset").disabled = !h.cur;
+}
+/* draw a progression: one pool pattern round and round, and for songs of
+   eight bars or more, sometimes a second pattern in the back half of each eight */
+function drawProgression(h){
+  var pool = POOLS[h.mode], degs = DEGREES[h.mode];
+  var A = pool[Math.floor(Math.random()*pool.length)], B = A;
+  if(h.orig.length >= 8 && Math.random() < 0.5){
+    do{ B = pool[Math.floor(Math.random()*pool.length)]; } while(B === A);
+  }
+  return h.orig.map(function(c, i){
+    if(!c) return null;
+    var pat = (i % 8) >= 4 ? B : A, d = degs[pat[i % 4]];
+    return {root:(h.tonic + d[0]) % 12, minor:!!d[1]};
+  });
+}
+/* move the chords and bass notes from the original harmony to `bars` */
+function applyProgression(f, bars){
+  var h = f.harm, hp = harmParts(f);
+  hp.chords.concat(hp.bass).forEach(function(p){
+    if(!p.origN) p.origN = p.a.notes.map(function(n){ return n.n; });
+    p.a.notes.forEach(function(n, i){
+      var b = Math.floor(n.t / h.seg), from = h.orig[b], to = bars ? bars[b] : null;
+      var v = p.origN[i];
+      if(from && to){
+        var d = ((to.root - from.root) % 12 + 12) % 12; if(d > 6) d -= 12;
+        v += d;
+        var iv = ((v - to.root) % 12 + 12) % 12;
+        if(!from.minor && to.minor && iv === 4) v -= 1;
+        else if(from.minor && !to.minor && iv === 3) v += 1;
+      }
+      n.n = Math.max(0, Math.min(127, v));
+    });
+    p.a = analyse(p.tr, f.parsed.division);
+  });
+  h.cur = bars;
+  renderParts(f); renderHarmony();
+  if(playing){ stop(); start(); }
+}
+$("harmRnd").addEventListener("click", function(){
+  var f = files[cur]; if(!f) return;
+  if(!f.harm) f.harm = analyseHarmony(f);
+  applyProgression(f, drawProgression(f.harm));
+});
+$("harmReset").addEventListener("click", function(){
+  var f = files[cur]; if(!f || !f.harm) return;
+  applyProgression(f, null);
+});
+
 /* ---------------- drum slots ---------------- */
 function drumNotesUsed(){
   var hits = {};
@@ -1296,11 +1488,12 @@ function renderDrums(){
   for(var n = SLOT_LO; n <= SLOT_HI; n++){
     (function(n){
       var d = document.createElement("div");
-      d.className = "slot" + (target[n] ? " used" : "");
+      d.className = "slot" + (target[n] ? " used" : "") + (soundAt(n) ? "" : " mute");
       var lab = target[n] ? target[n].map(function(g){ return GM_SHORT[g] || ("n" + g); }).join("+") : "—";
       d.innerHTML = '<div class="n">' + n + '</div><div class="nm"></div>';
       d.querySelector(".nm").textContent = lab;
-      d.title = n + " " + noteName(n) + (target[n] ? " ← " + target[n].map(function(g){return GM_DRUMS[g]||g;}).join(", ") : " — empty");
+      d.title = n + " " + noteName(n) + " · " + soundLabel(n) +
+          (target[n] ? " ← " + target[n].map(function(g){return GM_DRUMS[g]||g;}).join(", ") : " — empty");
       host.appendChild(d);
     })(n);
   }
@@ -1339,7 +1532,7 @@ function renderDrums(){
 }
 
 /* ---------------- audio preview ---------------- */
-var audio = null, master = null, noiseBuf = null;
+var audio = null, master = null, drums = null;
 function initAudio(){
   if(audio) return;
   var AC = window.AudioContext || window.webkitAudioContext;
@@ -1348,72 +1541,54 @@ function initAudio(){
   var comp = audio.createDynamicsCompressor();
   comp.threshold.value = -14; comp.ratio.value = 3; comp.attack.value = .004; comp.release.value = .18;
   master.connect(comp); comp.connect(audio.destination);
-  var len = audio.sampleRate * 2, b = audio.createBuffer(1, len, audio.sampleRate), d = b.getChannelData(0);
-  for(var i=0;i<len;i++) d[i] = Math.random()*2-1;
-  noiseBuf = b;
+  drums = DrumKits.engine(audio);
 }
-function env(g, t, peak, dec, att){
-  att = att || 0.003;
-  g.gain.setValueAtTime(0.0001, t);
-  g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), t + att);
-  g.gain.exponentialRampToValueAtTime(0.0001, t + att + dec);
-}
-function noise(){ var s = audio.createBufferSource(); s.buffer = noiseBuf; s.loop = true; return s; }
 
-function drumVoice(gm, t, vel){
-  var v = vel / 127, g, o, s, f;
-  if(gm === 35 || gm === 36){
-    o = audio.createOscillator(); o.type = "sine";
-    o.frequency.setValueAtTime(165, t); o.frequency.exponentialRampToValueAtTime(48, t + .08);
-    g = audio.createGain(); env(g, t, 0.95*v, .34); o.connect(g); g.connect(master);
-    o.start(t); o.stop(t + .5);
-    s = noise(); f = audio.createBiquadFilter(); f.type = "highpass"; f.frequency.value = 1400;
-    var kg = audio.createGain(); env(kg, t, .22*v, .012, .001);
-    s.connect(f); f.connect(kg); kg.connect(master); s.start(t); s.stop(t + .05);
-  } else if(gm === 38 || gm === 40){
-    s = noise(); f = audio.createBiquadFilter(); f.type = "bandpass"; f.frequency.value = 2100; f.Q.value = .6;
-    g = audio.createGain(); env(g, t, .5*v, .19); s.connect(f); f.connect(g); g.connect(master);
-    s.start(t); s.stop(t + .3);
-    [[190,.2,.1],[330,.11,.09]].forEach(function(tn){
-      var oo = audio.createOscillator(); oo.type = "triangle";
-      oo.frequency.setValueAtTime(tn[0]*1.3, t); oo.frequency.exponentialRampToValueAtTime(tn[0], t+.05);
-      var gg = audio.createGain(); env(gg, t, tn[1]*v, tn[2]);
-      oo.connect(gg); gg.connect(master); oo.start(t); oo.stop(t + .3);
-    });
-  } else if(gm === 39){
-    for(var i=0;i<4;i++){
-      var tt = t + i*.011, last = i === 3;
-      var sn = noise(), ff = audio.createBiquadFilter();
-      ff.type = "bandpass"; ff.frequency.value = 1500; ff.Q.value = 1.4;
-      var gg2 = audio.createGain(); env(gg2, tt, (last?.5:.3)*v, last?.16:.012, .001);
-      sn.connect(ff); ff.connect(gg2); gg2.connect(master); sn.start(tt); sn.stop(tt + .3);
-    }
-  } else if(gm === 37){
-    o = audio.createOscillator(); o.type = "triangle";
-    o.frequency.setValueAtTime(900, t); o.frequency.exponentialRampToValueAtTime(420, t + .03);
-    g = audio.createGain(); env(g, t, .45*v, .05, .001); o.connect(g); g.connect(master);
-    o.start(t); o.stop(t + .12);
-  } else if(gm === 42 || gm === 44 || gm === 46) {
-    var dec = gm === 46 ? .3 : (gm === 44 ? .04 : .05);
-    s = noise(); f = audio.createBiquadFilter(); f.type = "highpass"; f.frequency.value = 7000;
-    g = audio.createGain(); env(g, t, .42*v, dec, .001);
-    s.connect(f); f.connect(g); g.connect(master); s.start(t); s.stop(t + dec + .1);
-  } else if(gm >= 41 && gm <= 50) {
-    var base = 90 + (gm - 41) * 16;
-    o = audio.createOscillator(); o.type = "sine";
-    o.frequency.setValueAtTime(base*1.6, t); o.frequency.exponentialRampToValueAtTime(base, t + .16);
-    g = audio.createGain(); env(g, t, .7*v, .3); o.connect(g); g.connect(master);
-    o.start(t); o.stop(t + .5);
-  } else {
-    var ratios = [1,1.48,2.05,2.94,3.6,4.9], mix = audio.createGain(); mix.gain.value = .07;
-    for(var r=0;r<ratios.length;r++){
-      var oc = audio.createOscillator(); oc.type = "square"; oc.frequency.value = 380*ratios[r];
-      oc.connect(mix); oc.start(t); oc.stop(t + .9);
-    }
-    f = audio.createBiquadFilter(); f.type = "highpass"; f.frequency.value = 3200;
-    g = audio.createGain(); env(g, t, .4*v, .7, .001);
-    mix.connect(f); f.connect(g); g.connect(master);
-  }
+/* ---------------- drum kits ----------------
+   The same four stand-in machines as Instant Haus Web, from
+   _lib/drum-kits.js. What a slot sounds like follows the factory-kit layout
+   (DrumKits.OPXY_SLOTS), so the preview plays the slot a drum lands on, not
+   the GM note it came from — moving a drum in the map changes what you hear.
+   -------------------------------------------- */
+var KITS = DrumKits.KITS, KIT_ORDER = DrumKits.KIT_ORDER, SOUND_NAMES = DrumKits.SOUND_NAMES;
+var kit = KITS["909"];
+try{ var _k = localStorage.getItem("opxy-kit"); if(_k && KITS[_k]) kit = KITS[_k]; }catch(e){}
+function kitId(){
+  for(var i=0;i<KIT_ORDER.length;i++) if(KITS[KIT_ORDER[i]] === kit) return KIT_ORDER[i];
+  return "909";
+}
+/* Which of the current kit's sounds a slot plays, or null: an empty pad. */
+function soundAt(slot){ return DrumKits.soundIn(kit, DrumKits.OPXY_SLOTS[slot]); }
+function soundLabel(slot){
+  var id = DrumKits.OPXY_SLOTS[slot];
+  if(!id) return "nothing on the factory layout";
+  return soundAt(slot) ? SOUND_NAMES[id] + " on the " + kit.name : "no " + SOUND_NAMES[id].toLowerCase() + " on the " + kit.name;
+}
+function setKit(id){
+  kit = KITS[id];
+  try{ localStorage.setItem("opxy-kit", id); }catch(e){}
+  Array.prototype.forEach.call($("kitSeg").children, function(b){
+    b.setAttribute("aria-pressed", b.dataset.kit === id ? "true" : "false");
+  });
+  $("kitNote").textContent = kit.label;
+  if(cur >= 0) renderDrums();
+}
+(function(){
+  var seg = $("kitSeg");
+  KIT_ORDER.forEach(function(id){
+    var b = document.createElement("button"); b.type = "button"; b.dataset.kit = id;
+    b.textContent = KITS[id].name; b.title = KITS[id].label;
+    b.addEventListener("click", function(){ setKit(id); });
+    seg.appendChild(b);
+  });
+  setKit(kitId());
+})();
+/* One drum of the current kit: `slot` is the OP-XY note the drum lands on,
+   `vel` the MIDI velocity 1–127. */
+function drumVoice(slot, t, vel){
+  var id = soundAt(slot);
+  if(!id) return;                      /* empty pad: nothing to play */
+  drums.play(kit, id, t, Math.max(0.06, vel / 110), master);
 }
 function toneVoice(role, t, midi, vel, dur){
   var v = vel/127, hz = 440 * Math.pow(2, (midi - 69)/12);
@@ -1440,8 +1615,9 @@ function toneVoice(role, t, midi, vel, dur){
 function buildEvents(f){
   var div = f.parsed.division, spt = 60 / bpm / div;  /* seconds per tick, at the transport tempo */
   var ev = [];
+  /* parts that are off stay in the list; the preview asks the part at play time,
+     so switching one on or off while playing is heard at once, like muting a file */
   f.parts.forEach(function(p){
-    if(!p.on) return;
     p.a.notes.forEach(function(n){
       var out = n.n;
       if(p.role === "drums"){
@@ -1450,7 +1626,7 @@ function buildEvents(f){
         out = s;
       }
       ev.push({t:n.t * spt, dur:n.d * spt, gm:n.n, note:out, vel:n.v,
-               role:p.role, track:p.track});
+               role:p.role, track:p.track, part:p});
     });
   });
   ev.sort(function(a,b){ return a.t - b.t; });
@@ -1493,15 +1669,15 @@ function tick(){
       var e = L.ev[L.evi], when = t0 + L.cycle*L.dur + e.t;
       if(when > ahead) return;
       L.evi++;
-      if(!L.f.play) continue;                          /* muted: keep the place, make no sound */
-      if(e.role === "drums") drumVoice(e.gm, when, e.vel);
+      if(!L.f.play || !e.part.on) continue;            /* muted file or part off: keep the place, make no sound */
+      if(e.role === "drums") drumVoice(e.note, when, e.vel);
       else toneVoice(e.role, when, e.note, e.vel, e.dur);
     }
   });
   if(lanes.every(function(L){ return L.done; })) stop();   /* once mode: over when the longest file is */
 }
 function stop(){
-  playing = false; clearInterval(timer); timer = null;
+  playing = false; clearInterval(timer); timer = null; if(drums) drums.reset();
   $("play").setAttribute("aria-pressed","false");
   $("playGlyph").textContent = "▶"; $("playLabel").textContent = "Preview";
 }
@@ -1585,7 +1761,7 @@ $("sendLive").addEventListener("click", function(){
   var b = {ev:[], dur:0};
   buildLanes().forEach(function(L){
     if(!L.f.play) return;
-    b.ev = b.ev.concat(L.ev); b.dur = Math.max(b.dur, L.dur);
+    b.ev = b.ev.concat(L.ev.filter(function(e){ return e.part.on; })); b.dur = Math.max(b.dur, L.dur);
   });
   if(!b.ev.length) return;
   var now = performance.now() + 300, tick = 60000 / bpm / 24;
@@ -1716,6 +1892,90 @@ document.addEventListener("keydown", function(e){
       loadBytes(b64bytes(EX_DATA[x.id]), x.name);
     });
     host.appendChild(b);
+  });
+})();
+
+/* ------------------------------------------------------------------
+   The library picker. Whatever `../_lib/*.js` libraries registered
+   themselves on window.MidiLibraries becomes one dropdown, an optgroup
+   each. A pick is fetched and handed to loadBytes — the same road in as a
+   dropped file, so the parser and the guessing see nothing special. The
+   row hides itself when no library is loaded.
+   ------------------------------------------------------------------ */
+(function(){
+  var libs = window.MidiLibraries || [];
+  var row = $("libRow"), sel = $("libSel"), note = $("libNote");
+  if(!libs.length || !row) return;
+  row.hidden = false;
+
+  var flat = [];
+  libs.forEach(function(lib){
+    var og = document.createElement("optgroup");
+    og.label = lib.name;
+    (lib.items || []).forEach(function(it){
+      var o = document.createElement("option");
+      o.value = String(flat.length);
+      o.textContent = it.name + (it.bpm ? "  \u00b7  " + it.bpm + " BPM" : "");
+      og.appendChild(o);
+      flat.push({lib:lib, item:it});
+    });
+    sel.appendChild(og);
+  });
+  if(!flat.length){ row.hidden = true; return; }
+
+  function describe(){
+    var e = flat[+sel.value];
+    if(!e){ note.textContent = ""; return; }
+    var bits = [];
+    if(e.item.bars) bits.push(e.item.bars + (e.item.bars === 1 ? " bar" : " bars"));
+    if(e.item.swing) bits.push("swing " + e.item.swing + "% on the device");
+    if(e.item.note) bits.push(e.item.note);
+    note.textContent = bits.join("  \u00b7  ");
+  }
+  sel.addEventListener("change", describe);
+  describe();
+
+  var busy = false;
+  function fetchOne(entry, done){
+    /* already in the strip: switch to it rather than load it twice */
+    for(var i=0;i<files.length;i++) if(files[i].label === entry.item.name){ activate(i); return done(); }
+    fetch(entry.item.url).then(function(r){
+      if(!r.ok) throw new Error("HTTP " + r.status);
+      return r.arrayBuffer();
+    }).then(function(buf){
+      loadBytes(new Uint8Array(buf), entry.item.name);
+      done();
+    })["catch"](function(err){
+      showError(entry.item.name, "the library file could not be fetched (" + err.message +
+                "). Opened from disk rather than served? fetch needs http.");
+      done();
+    });
+  }
+  function run(queue){
+    if(busy || !queue.length) return;
+    busy = true;
+    $("libLoad").disabled = $("libAll").disabled = true;
+    (function next(i){
+      if(i >= queue.length){
+        busy = false;
+        $("libLoad").disabled = $("libAll").disabled = false;
+        describe();
+        return;
+      }
+      if(queue.length > 1) note.textContent = "Loading " + queue[i].item.name +
+                                              "  \u00b7  " + (i+1) + " of " + queue.length + "\u2026";
+      fetchOne(queue[i], function(){ next(i+1); });
+    })(0);
+  }
+
+  $("libLoad").addEventListener("click", function(){
+    var e = flat[+sel.value];
+    if(e) run([e]);
+  });
+  $("libAll").addEventListener("click", function(){
+    var pick = flat[+sel.value];
+    var lib = pick ? pick.lib : libs[0];
+    run(flat.filter(function(e){ return e.lib === lib && !e.item.skipAll; }));
   });
 })();
 
