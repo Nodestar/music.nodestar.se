@@ -208,6 +208,11 @@ till en generisk trumma — kick, snare, rimshot, clap, tre toms, tre hattar
 två congas — och den trumman spelas ur kitets tabell. Skriv 39 i Perc under GM
 och spåret är en clap; 56 är en cowbell; 49 en crash.
 
+Kit-tabellen, notkartorna och trumrösterna ligger i `static/demos/_lib/drum-kits.js`
+(objektet `DrumKits`), delat med OP-XY Song Loader, som spelar sina trummor med
+samma kit. Sidan laddar filen med en vanlig script-tagg; ändra ett ljud där och
+båda demona följer med.
+
 | Kit | Trummor | Saknar |
 |---|---|---|
 | 707 | kick, snare, 3 toms, rim, clap, tamburin, cowbell, CH/PH/OH, crash, ride | congas, claves, maracas, cabasa |
