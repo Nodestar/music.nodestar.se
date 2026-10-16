@@ -49,7 +49,7 @@ stegknappar sitter kvar där de satt.
 
 ### Noter — GM eller OP-XY
 
-Två notkartor, växlade med **Notes: GM / OP-XY** i konsolen bredvid Init:
+Två notkartor, växlade med **Notes: GM / OP-XY** i sektionen *Out* under rutnätet:
 
 | Röst | GM | | OP-XY | |
 |---|---|---|---|---|
@@ -258,8 +258,19 @@ på 20 ms), snaren är mest brus med kort kropp, och hattarna är mörkare än
 
 ## MIDI-ut
 
-Web MIDI: `Enable` → portväljare → kanal (default 10, GM-trummor). Noterna är
-spårets `Note`-fält, velocity är Vel Hi/Lo, note-off 40 ms senare. Tidsstämplar
+Allt som rör vad som går ut på kabeln — notkartan, porten och kanalerna — ligger
+i en egen sektion, *Out*, under rutnätet. Transporten ovanför är bara groovet.
+
+Web MIDI: `Enable` → portväljare, och en kanal per röst. Default är kick och
+snare på kanal 1, CH, OH och perc på kanal 2 — på en OP-XY två trumspår, kitets
+botten och topp var för sig. Kanalerna sparas i localStorage och ingår inte i
+presets: routing hör till uppsättningen, inte till groovet. Byts en kanal
+under uppspelning skickas all-notes-off på den gamla. Noterna är
+spårets `Note`-fält, velocity är Vel Hi/Lo, note-off 40 ms senare.
+
+**Loop / Once** i transporten, som i Song Loader. Once spelar takten en gång
+och stannar. Byter man till Once mitt i spelas den påbörjade takten klart, och
+tillbaka till Loop innan den tagit slut fortsätter den bara. Tidsstämplar
 räknas om från Web Audios `currentTime` till `performance.now()` med en offset
 tagen när kontexten skapas, så MIDI och internt ljud ligger i fas.
 Chromium-baserade webbläsare bara — Safari och Firefox saknar Web MIDI.

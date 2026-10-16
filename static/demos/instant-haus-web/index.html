@@ -453,6 +453,12 @@ footer a{color:inherit}
 .midi .dot{width:7px;height:7px;border-radius:50%;background:var(--line);flex:0 0 7px}
 .midi .dot.on{background:var(--acc)}
 .midi .mlab{font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.midi:first-child{margin-left:0}
+.chan{display:inline-flex;align-items:center;gap:5px}
+.outbody{padding:0 18px 14px;display:flex;flex-direction:column;gap:12px}
+.outbody .console:first-child{border-top:0}
+.outbody .midi.chans{margin-left:0}
+.chan .mlab{border-left:3px solid var(--mc);padding-left:5px}
 .grid{grid-template-columns:196px repeat(var(--steps,16),minmax(26px,1fr));min-width:calc(196px + var(--steps,16) * 29px)}
 .badge{
   font-family:"IBM Plex Mono",monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;
@@ -573,6 +579,10 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <label for="tempo">Tempo <b><span id="tempoVal">124</span> BPM</b></label>
         <input type="range" id="tempo" min="90" max="150" step="1" value="124">
       </div>
+      <div class="seg" role="group" aria-label="Loop" id="loopSeg">
+        <button type="button" data-loop="1" aria-pressed="true">Loop</button>
+        <button type="button" data-loop="0" aria-pressed="false">Once</button>
+      </div>
       <div class="seg" role="group" aria-label="Kit" id="kitSeg"></div>
       <div class="knob">
         <label for="drive">Drive <b><span id="driveVal">0</span>%</b></label>
@@ -587,21 +597,9 @@ h1{font-size:clamp(28px,4.8vw,46px)}
       <button class="mini" id="rVel">Vel</button>
       <button class="mini" id="rShift">Shift</button>
       <button class="mini sq" id="rInit">Init</button>
-      <span class="rlab" style="margin-left:10px">Notes</span>
-      <div class="seg" role="group" aria-label="Note map" id="noteSeg">
-        <button type="button" data-map="gm" aria-pressed="false">GM</button>
-        <button type="button" data-map="opxy" aria-pressed="true">OP-XY</button>
-      </div>
       <span class="rlab" style="margin-left:10px">Tracks</span>
       <button class="mini sq" id="allOn">All On</button>
       <button class="mini sq" id="allOff">All Off</button>
-      <div class="midi">
-        <span class="dot" id="midiDot"></span>
-        <span class="mlab">MIDI out</span>
-        <button class="mini sq" id="midiEnable">Enable</button>
-        <select id="midiPort" aria-label="MIDI output port" disabled><option>—</option></select>
-        <select id="midiChan" aria-label="MIDI channel" disabled></select>
-      </div>
     </div>
     <div class="console rnd" role="group" aria-label="Presets">
       <span class="rlab">Presets</span>
@@ -624,6 +622,33 @@ h1{font-size:clamp(28px,4.8vw,46px)}
       <div class="grid" id="grid"></div>
     </div>
     <p class="annot"><span class="tick">▲</span><span id="pAnnot"></span></p>
+  </section>
+
+  <section class="stage out" aria-label="Out to the device">
+    <div class="stagehead">
+      <div>
+        <h2>Out</h2>
+        <p class="tagline">What the page sends down the cable: which note map, which port, which channel per drum. Set up for an OP-XY by default — a TR-6S or a drum rack answers to GM.</p>
+      </div>
+    </div>
+    <div class="outbody">
+      <div class="console rnd" role="group" aria-label="Note map and port">
+        <span class="rlab">Notes</span>
+        <div class="seg" role="group" aria-label="Note map" id="noteSeg">
+          <button type="button" data-map="gm" aria-pressed="false">GM</button>
+          <button type="button" data-map="opxy" aria-pressed="true">OP-XY</button>
+        </div>
+        <div class="midi">
+          <span class="dot" id="midiDot"></span>
+          <span class="mlab">MIDI out</span>
+          <button class="mini sq" id="midiEnable">Enable</button>
+          <select id="midiPort" aria-label="MIDI output port" disabled><option>—</option></select>
+        </div>
+      </div>
+      <div class="console rnd" role="group" aria-label="MIDI channels">
+        <div class="midi chans" id="midiChans"><span class="rlab">Channels</span></div>
+      </div>
+    </div>
   </section>
 
   <section class="notes">
@@ -655,14 +680,14 @@ h1{font-size:clamp(28px,4.8vw,46px)}
         <thead><tr><th>Voice</th><th>Note</th><th>Name</th><th>Sound</th><th>In the device</th></tr></thead>
         <tbody id="mapBody"></tbody>
       </table>
-      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and the grid label, this table and the MIDI output all follow. It also picks the <b>sound</b>, the way a pad on a drum rack would: under GM, 37 is a rimshot, 39 a clap, 56 a cowbell, 49 a crash; under OP-XY the same drums sit on A, A#, G# and G an octave up. Every kit carries all the drums the real machine had, so the Perc track can be a conga on the 808 and a cabasa on the LinnDrum. A note the kit has no drum for is an empty pad — silent, and struck through in the grid label.</p><p><b>Notes: GM / OP-XY</b> in the console switches the whole set at once. <b>GM</b> is the General MIDI percussion map the device itself ships — 36 kick, 38 snare, 42 and 46 hats — which is also where an Ableton drum rack starts. <b>OP-XY</b> is what a Teenage Engineering drum kit answers to: F for the kick, G for the snare, D and D# for the two hats. Picking one loads its notes straight away, and it is what <b>Init</b> restores. <b>Randomize &#8250; Note</b> rolls only among the notes that have a drum on the current kit — eleven of them on the 909, sixteen on the 808 — so a roll always lands on a sound rather than an empty pad. The last column is always the device&#39;s own value, for comparison.</p>
+      <p style="margin-top:12px">The <b>Note</b> field on each track is the note the track sends, and it is live: change it and the grid label, this table and the MIDI output all follow. It also picks the <b>sound</b>, the way a pad on a drum rack would: under GM, 37 is a rimshot, 39 a clap, 56 a cowbell, 49 a crash; under OP-XY the same drums sit on A, A#, G# and G an octave up. Every kit carries all the drums the real machine had, so the Perc track can be a conga on the 808 and a cabasa on the LinnDrum. A note the kit has no drum for is an empty pad — silent, and struck through in the grid label.</p><p><b>Notes: GM / OP-XY</b> under <b>Out</b>, below the grid, switches the whole set at once. <b>GM</b> is the General MIDI percussion map the device itself ships — 36 kick, 38 snare, 42 and 46 hats — which is also where an Ableton drum rack starts. <b>OP-XY</b> is what a Teenage Engineering drum kit answers to: F for the kick, G for the snare, D and D# for the two hats. Picking one loads its notes straight away, and it is what <b>Init</b> restores. <b>Randomize &#8250; Note</b> rolls only among the notes that have a drum on the current kit — eleven of them on the 909, sixteen on the 808 — so a roll always lands on a sound rather than an empty pad. The last column is always the device&#39;s own value, for comparison.</p>
     </div>
     <div>
       <h3>Reading the grid</h3>
       <p>Five rows, one per voice: <b>Kick</b>, <b>Snare</b>, <b>CH</b> and <b>OH</b> off the hi-hat track, and <b>Perc</b>. Each column is a 16th; bold numbers are beats. A filled cell is an accent (Vel Hi), a half-lit cell a ghost (Vel Lo). Click a cell to cycle it off → ghost → accent; the pattern number then reads <b>edit</b> until you dial a new one.</p>
       <p><b>Swing</b> runs 50–100 % as in the original, where 50 is straight. It delays only the odd 16ths — the ‘e’ and the ‘a’ — so a figure that lives on the ‘&amp;’, like the plain offbeat hat line, does not move at all however far you turn the knob. 66 is a triplet shuffle; past 80 the note is nearly on top of the next 16th. <b>Shift</b> is 0–25 ms and moves everything in the track. The original leaves the kick’s shift out of its randomiser, so there is always something to be late against.</p><p>Both are visible in the grid itself: the slot stays where the 16th is, and the <b>block inside it slides right</b> by shift plus, on odd steps, swing. A thin arrow runs from the block back to the 16th it belongs to, and a block pushed far enough overlaps its neighbour — which is what happens in time too. The line under the grid gives the same figures in milliseconds at the current tempo.</p>
       <p><b>Randomize</b> reproduces the device's own ranges: <b>Patt</b> rolls 0–11 (0–23 for hats), <b>Swing</b> 50–99, <b>Shift</b> 0–25 on everything but the kick, and <b>Vel</b> gives kick, snare and perc an accent of 100–126 against a ghost of 0–99, while both hat voices get a free 0–127 for either — which is why hats come back wilder than the rest. <b>Init</b> restores the shipped defaults.</p>
-      <p><b>MIDI out</b> is not in the original — it did not need one, since Live was downstream. Enable it, pick a port, and the page sends note on/off on the chosen channel alongside its own audio, so it can drive an OP-XY, a TR-6S or a drum rack. Chromium-based browsers only; Safari and Firefox have no Web MIDI.</p>
+      <p><b>MIDI out</b> is not in the original — it did not need one, since Live was downstream. Enable it, pick a port, and the page sends note on/off alongside its own audio, so it can drive an OP-XY, a TR-6S or a drum rack. Every voice has its own <b>channel</b>: kick and snare start on 1, the hats and perc on 2 — on an OP-XY that is two drum tracks, the bottom and the top of the kit apart. The channels are remembered in the browser and are not part of a preset. <b>Once</b> plays the bar a single time and stops, which is the take to record into a sequencer; <b>Loop</b> goes round until stopped. Chromium-based browsers only; Safari and Firefox have no Web MIDI.</p>
     </div>
   </section>
 
@@ -1327,18 +1352,38 @@ function setDrive(v){
 }
 
 /* ---------------- MIDI out ---------------- */
-var midiAccess = null, midiOut = null, midiChan = 0;
-function midiSend(note, vel, t){
+/* A channel per voice, 0-based. Kick and snare share one, hats and perc
+   another: on an OP-XY that is two drum tracks, so the top and the bottom of
+   the kit can be muted, sampled and sequenced apart. Routing belongs to the
+   setup, not the groove, so it lives beside the port rather than in presets. */
+var MIDI_CHAN_DEFAULTS = {kick:0, snare:0, ch:1, oh:1, perc:1};
+var midiAccess = null, midiOut = null, midiChans = {};
+(function(){
+  var saved = null;
+  try{ saved = JSON.parse(localStorage.getItem("ihw-midichans") || "null"); }catch(e){}
+  Object.keys(MIDI_CHAN_DEFAULTS).forEach(function(id){
+    var c = saved && saved[id];
+    midiChans[id] = (typeof c === "number" && c >= 0 && c <= 15) ? c : MIDI_CHAN_DEFAULTS[id];
+  });
+})();
+function midiSend(note, vel, t, ch){
   if(!midiOut) return;
   var dom = perfOffset + t*1000;
   try{
-    midiOut.send([0x90|midiChan, note & 127, Math.max(1, vel & 127)], dom);
-    midiOut.send([0x80|midiChan, note & 127, 0], dom + 40);
+    midiOut.send([0x90|ch, note & 127, Math.max(1, vel & 127)], dom);
+    midiOut.send([0x80|ch, note & 127, 0], dom + 40);
   }catch(e){}
 }
-function midiPanic(){
+/* All notes off on every channel a voice is on — or was on, when a
+   channel has just been changed. */
+function midiPanic(extra){
   if(!midiOut) return;
-  try{ midiOut.send([0xB0|midiChan, 123, 0]); }catch(e){}
+  var seen = {};
+  VOICES.forEach(function(v){ seen[midiChans[v.id]] = true; });
+  if(typeof extra === "number") seen[extra] = true;
+  Object.keys(seen).forEach(function(c){
+    try{ midiOut.send([0xB0|(+c), 123, 0]); }catch(e){}
+  });
 }
 
 /* one voice hit: audio + MIDI, velocity in MIDI units */
@@ -1346,7 +1391,7 @@ function fire(v, t, vel){
   if(vel <= 0) return;
   var note = state[v.mod.id].v[v.id].note;
   synth(v.id, note, t, Math.max(0.06, vel/110));
-  midiSend(note, vel, t);
+  midiSend(note, vel, t, midiChans[v.id]);
 }
 
 
@@ -1502,6 +1547,10 @@ function buildPresets(){
 
 /* ---------------- scheduler ---------------- */
 var step = 0, nextTime = 0, timer = null, queue = [];
+/* Once plays the bar to its end and stops; ending is when that bar runs out.
+   Flipping to Once mid-play finishes the bar under way, flipping back to Loop
+   before it runs out carries straight on. */
+var loop = true, ending = null;
 function stepDur(){ return (60/bpm)/4; }
 function swingOffset(i, swing){
   if(i % 2 === 0) return 0;
@@ -1520,10 +1569,17 @@ function scheduleStep(i, t){
   queue.push({s:i, t:t});
 }
 function scheduler(){
+  if(ending !== null){
+    if(loop) ending = null;
+    /* wait out the swing, the shift and the 40 ms note-offs before stopping,
+       since stop() sends all-notes-off */
+    else { if(audio.currentTime > ending + 0.15) stop(); return; }
+  }
   while(nextTime < audio.currentTime + 0.14){
     scheduleStep(step, nextTime);
     nextTime += stepDur();
     step = (step+1) % STEPS;
+    if(step === 0 && !loop){ ending = nextTime; return; }
   }
 }
 function draw(){
@@ -1550,7 +1606,7 @@ function start(){
   initAudio();
   if(audio.state === "suspended") audio.resume();
   perfOffset = performance.now() - audio.currentTime*1000;
-  playing = true; step = 0; queue = []; nextTime = audio.currentTime + 0.06;
+  playing = true; step = 0; queue = []; ending = null; nextTime = audio.currentTime + 0.06;
   grid.classList.add("playing");
   timer = setInterval(scheduler, 25);
   requestAnimationFrame(draw);
@@ -1560,7 +1616,7 @@ function start(){
 }
 function stop(){
   playing = false;
-  clearInterval(timer); timer = null; queue = [];
+  clearInterval(timer); timer = null; queue = []; ending = null;
   grid.classList.remove("playing");
   headEls.forEach(function(h){ h.classList.remove("on"); });
   VOICES.forEach(function(v){ els["led_"+v.id].classList.remove("lit"); });
@@ -1585,6 +1641,17 @@ document.getElementById("tempo").addEventListener("input", function(e){
 document.getElementById("drive").addEventListener("input", function(e){
   initAudio(); setDrive((+e.target.value)/100);
 });
+(function(){
+  var seg = document.getElementById("loopSeg");
+  Array.prototype.forEach.call(seg.children, function(b){
+    b.addEventListener("click", function(){
+      loop = b.dataset.loop === "1";
+      Array.prototype.forEach.call(seg.children, function(x){
+        x.setAttribute("aria-pressed", x === b ? "true" : "false");
+      });
+    });
+  });
+})();
 (function(){
   var seg = document.getElementById("bankSeg");
   Array.prototype.forEach.call(seg.children, function(b){
@@ -1677,14 +1744,29 @@ document.getElementById("allOff").addEventListener("click", function(){ setAll(f
 (function(){
   var btn = document.getElementById("midiEnable");
   var portSel = document.getElementById("midiPort");
-  var chanSel = document.getElementById("midiChan");
   var dot = document.getElementById("midiDot");
-  for(var c=1;c<=16;c++){
-    var o = document.createElement("option"); o.value = c-1; o.textContent = "Ch " + c;
-    if(c===10) o.selected = true;
-    chanSel.appendChild(o);
-  }
-  midiChan = 9;
+  /* one channel picker per voice; usable before MIDI is enabled, so the
+     routing can be set up first */
+  var chanHost = document.getElementById("midiChans");
+  VOICES.forEach(function(v){
+    var w = document.createElement("label"); w.className = "chan";
+    w.style.setProperty("--mc", "var(" + v.c + ")");
+    var l = document.createElement("span"); l.className = "mlab"; l.textContent = v.name;
+    var s = document.createElement("select");
+    s.setAttribute("aria-label", v.name + " MIDI channel");
+    for(var c=1;c<=16;c++){
+      var o = document.createElement("option"); o.value = c-1; o.textContent = "Ch " + c;
+      if(c-1 === midiChans[v.id]) o.selected = true;
+      s.appendChild(o);
+    }
+    s.addEventListener("change", function(){
+      var was = midiChans[v.id];
+      midiChans[v.id] = +s.value;
+      midiPanic(was);
+      try{ localStorage.setItem("ihw-midichans", JSON.stringify(midiChans)); }catch(e){}
+    });
+    w.appendChild(l); w.appendChild(s); chanHost.appendChild(w);
+  });
   if(!navigator.requestMIDIAccess){
     btn.disabled = true; btn.textContent = "No Web MIDI";
     btn.title = "This browser has no Web MIDI API — Chromium-based browsers only.";
@@ -1710,7 +1792,6 @@ document.getElementById("allOff").addEventListener("click", function(){ setAll(f
     navigator.requestMIDIAccess({sysex:false}).then(function(acc){
       midiAccess = acc;
       btn.textContent = "Enabled"; btn.disabled = true;
-      chanSel.disabled = false;
       fill();
       acc.onstatechange = fill;
     }, function(){
@@ -1722,7 +1803,6 @@ document.getElementById("allOff").addEventListener("click", function(){ setAll(f
     midiOut = midiAccess ? midiAccess.outputs.get(portSel.value) : null;
     dot.classList.toggle("on", !!midiOut);
   });
-  chanSel.addEventListener("change", function(){ midiPanic(); midiChan = +chanSel.value; });
 })();
 
 (function(){
